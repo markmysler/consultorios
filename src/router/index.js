@@ -6,10 +6,16 @@ import LoginView from "../views/LoginView.vue";
 import SignUpView from "../views/SignUpView.vue";
 import AreaView from "../views/AreaView.vue";
 import ConsultorioView from "../views/ConsultorioView.vue";
+import LandingView from "../views/LandingView.vue";
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
 	routes: [
+		{
+			path: "/",
+			name: "LandingPage",
+			component: LandingView,
+		},
 		{
 			path: "/inicio",
 			name: "Inicio",
