@@ -1,24 +1,51 @@
 <template>
-	<h2>Signup</h2>
-	<p><input type="text" placeholder="Email" v-model="email" /></p>
-	<p>
-		<input
-			type="text"
-			placeholder="Nombre de usuario"
-			v-model="displayName"
-		/>
-	</p>
-	<p><input type="password" placeholder="Contraseña" v-model="password" /></p>
-	<p>
-		<input
-			type="password"
-			placeholder="Repetir contraseña"
-			v-model="password2"
-		/>
-	</p>
-	<p><button @click="register">Crear cuenta</button></p>
-	<div v-for="error in errors" :key="error">
-		<p>{{ error }}</p>
+	<div class="w-11 columnAlignCenter">
+		<h2>Registrarse</h2>
+		<div class="w-full columnAlignCenter gap-7 mt-8">
+			<FloatLabel>
+				<InputText
+					id="displayName"
+					v-model="displayName"
+					autocomplete="true"
+				/>
+				<label for="displayName">Nombre de usuario</label>
+			</FloatLabel>
+			<FloatLabel>
+				<InputText id="email" v-model="email" autocomplete="true" />
+				<label for="email">Correo electrónico</label>
+			</FloatLabel>
+			<FloatLabel>
+				<Password id="password" v-model="password" :feedback="false" />
+				<label for="password">Contraseña</label>
+			</FloatLabel>
+			<FloatLabel>
+				<Password
+					id="password2"
+					v-model="password2"
+					:feedback="false"
+				/>
+				<label for="password2">Repetir contraseña</label>
+			</FloatLabel>
+
+			<div class="w-full columnAlignCenter gap-3">
+				<Button
+					label="Crear cuenta"
+					class="primaryButton"
+					@click="register"
+				/>
+				<div v-for="error in errors" :key="error">
+					<p class="font-bold text-red-500">
+						{{ errorMap[error] ? errorMap[error] : error }}
+					</p>
+				</div>
+				<div class="flex align-items-center gap-2">
+					<p>¿Ya tenés una cuenta?</p>
+					<router-link :to="ROUTES_NAMES.IniciarSesion"
+						>Iniciar sesión</router-link
+					>
+				</div>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -26,6 +53,7 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useUserStore } from "../stores/user.js";
+import { ROUTES_NAMES } from "@/constants/ROUTES_NAMES";
 import {
 	createUserWithEmailAndPassword,
 	getAuth,
@@ -49,11 +77,14 @@ const register = () => {
 	errors.value = [];
 	if (password.value === password2.value) {
 		createUserWithEmailAndPassword(auth, email.value, password.value)
-			.then((userCredential) => {
+			.then(async (userCredential) => {
 				const user = userCredential.user;
 				store.user = user;
-				updateProfile(user, { displayName: displayName.value });
-				router.push("/inicio");
+				await updateProfile(user, {
+					displayName: displayName.value,
+				}).then(() => {
+					router.push("/inicio");
+				});
 			})
 			.catch((error) => {
 				const errorCode = error.code;
@@ -68,3 +99,11 @@ const register = () => {
 	}
 };
 </script>
+
+<style scoped>
+a {
+	text-decoration: underline;
+	color: white;
+	align-self: flex-end;
+}
+</style>

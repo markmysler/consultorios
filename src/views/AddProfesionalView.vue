@@ -1,8 +1,8 @@
 <template>
-	<h2>Create Profile</h2>
+	<h2>AddProfesionalViewe</h2>
 </template>
 <script>
 export default {
-	name: "CreateProfileView",
+	name: "AddProfesionalView",
 };
 </script>

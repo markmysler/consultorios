@@ -9,12 +9,22 @@ import { VueFire, VueFireAuth } from "vuefire";
 import App from "./App.vue";
 import router from "./router";
 import Button from "primevue/button";
+import InputText from "primevue/inputtext";
+import Password from "primevue/password";
+import FloatLabel from "primevue/floatlabel";
 import { firebaseApp } from "./firebase/init";
+import Ripple from "primevue/ripple";
+
 const app = createApp(App);
 app.component("Button", Button);
+app.component("InputText", InputText);
+app.component("Password", Password);
+app.component("FloatLabel", FloatLabel);
 
 app.use(createPinia());
 app.use(router);
+app.use(PrimeVue, { ripple: true });
+app.directive("ripple", Ripple);
 app.use(VueFire, {
 	// imported above but could also just be created here
 	firebaseApp,
@@ -23,5 +33,4 @@ app.use(VueFire, {
 		VueFireAuth(),
 	],
 });
-app.use(PrimeVue);
 app.mount("#app");
