@@ -1,4 +1,5 @@
 <template>
+	<!-- REVISAR ESTE TEMPLATE Y VER SI LO VAMOS A USAR PARA EL MVP -->
 	<div
 		style="max-height: 90vh"
 		class="w-full h-screen flex flex-column justify-content-center align-items-center gap-5"
@@ -23,3 +24,5 @@ const goTo = (url) => {
 	router.push(url);
 };
 </script>
+
+<!-- REVISAR ESTE TEMPLATE Y VER SI LO VAMOS A USAR PARA EL MVP -->

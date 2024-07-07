@@ -1,37 +1,40 @@
 <template>
-	<div class="w-11 columnAlignCenter">
+	<div class="columnAlignCenter">
 		<h2>Iniciar sesión</h2>
-		<div class="w-full columnAlignCenter gap-7 mt-8">
-			<FloatLabel>
-				<InputText id="email" v-model="email" autocomplete="true" />
+		<div class="w-full columnAlignCenter gap-5 mt-5">
+			<div class="column">
 				<label for="email">Correo electrónico</label>
-			</FloatLabel>
-			<FloatLabel>
-				<Password id="password" v-model="password" :feedback="false" />
+				<InputText type="email" id="email" v-model="email" autocomplete="true" />
+			</div>
+			<div class="column">
 				<label for="password">Contraseña</label>
-			</FloatLabel>
+				<Password type="password" id="password" v-model="password" toggleMask :feedback="false" />
+			</div>
 
-			<router-link class="mr-7" :to="ROUTES_NAMES.ResetPassword"
-				>¿Olvidaste tu contraseña?</router-link
-			>
+			<router-link :to="ROUTES_NAMES.ResetPassword">¿Olvidaste tu contraseña?</router-link>
 
 			<div class="w-full columnAlignCenter gap-3">
-				<Button label="Ingresar" class="primaryButton" @click="login" />
+				<PrimaryButtonComponent label="Iniciar Sesión" @click="login" />
 				<div v-for="error in errors" :key="error">
 					<p class="font-bold text-red-500">
 						{{ errorMap[error] ? errorMap[error] : error }}
 					</p>
 				</div>
-				<div class="flex align-items-center gap-2">
-					<p>¿No tenés una cuenta?</p>
-					<router-link :to="ROUTES_NAMES.Registrarse"
-						>Registrate</router-link
-					>
-				</div>
 			</div>
 		</div>
 	</div>
 </template>
+
+<script>
+import PrimaryButtonComponent from "@/components/buttons/PrimaryButtonComponent.vue"
+
+export default {
+	components: {
+		PrimaryButtonComponent,
+	}
+}
+</script>
+
 <script setup>
 import { ref } from "vue";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
@@ -76,8 +79,6 @@ const login = () => {
 
 <style scoped>
 a {
-	text-decoration: underline;
-	color: white;
-	align-self: flex-end;
+	color: var(--color-black);
 }
 </style>

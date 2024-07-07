@@ -93,12 +93,15 @@ export default {
 <style scoped>
 .header {
 	width: 100%;
-	background-color: var(--color-grey);
+	background-color: var(--color-light-blue);
 	color: var(--color-blue);
 }
 .header h1 {
 	font-weight: 600;
 }
+
+/* REVISAR */
+
 .hamburger {
 	color: var(--color-blue);
 }
