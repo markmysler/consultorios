@@ -1,71 +1,91 @@
+/* Setup styles */
+
 :root {
-  --color-light-blue: #B2D5FF;
-  --color-blue: #003794;
-  --color-gray: #E3E5EA;
-  --color-black: #000F27;
+	--color-light-blue: #b2d5ff;
+	--color-blue: #003794;
+	--color-gray: #e3e5ea;
+	--color-black: #000f27;
 }
 
 *,
 *::before,
 *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: "DM Sans", sans-serif;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	font-family: "DM Sans", sans-serif;
 }
 
 body {
-  max-width: 100%;
-  min-height: 100vh;
-  transition:
-    color 0.5s,
-    background-color 0.5s;
-  line-height: 1.6;
-  place-items: normal;
-  background: var(--color-gray);
-  color: white;
-  transition: none;
-  padding: 0;
-  margin: 0;
+	max-width: 100%;
+	min-height: 100vh;
+	transition: color 0.5s, background-color 0.5s;
+	line-height: 1.6;
+	place-items: normal;
+	background: var(--color-gray);
+	color: white;
+	transition: none;
+	padding: 0;
+	margin: 0;
 }
 
 #app {
-  width: 100%;
-  max-width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0;
-  padding: 0;
+	width: 100%;
+	max-width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 0;
+	padding: 0;
 }
 
-/* Estilos generales y Fuentes */
+/* General styles and fonts */
 
 h1 {
-  color: var(--color-blue);
-  font-size: 2rem;
+	color: var(--color-blue);
 }
 
 h2,
 h3,
 p,
 label {
-  color: var(--color-black);
+	color: var(--color-black);
 }
 
 h2 {
-  font-size: 1.7rem;
+	font-size: 1.7rem;
 }
 
-/* Clases */
+footer {
+	background-color: var(--color-light-blue);
+}
+
+/* Combos */
 
 .columnAlignCenter {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
 .column {
-  display: flex;
-  flex-direction: column;
+	display: flex;
+	flex-direction: column;
+}
+
+/* Buttons */
+
+.primaryButton,
+.secondaryButton {
+	width: 100%;
+	border-radius: 0.75rem;
+	padding: 0.75rem 0;
+}
+.primaryButton {
+	background: var(--color-blue);
+	color: var(--color-gray);
+}
+.secondaryButton {
+	background: var(--color-gray);
+	color: var(--color-blue);
 }

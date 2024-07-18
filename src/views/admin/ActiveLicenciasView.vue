@@ -1,9 +1,9 @@
 <template>
-	<h2>Area</h2>
+	<h2>Licencias activas</h2>
 </template>
 
 <script>
 export default {
-	name: "AreaView",
+	name: "ActiveLicenciasView",
 };
 </script>

@@ -1,8 +1,9 @@
 <template>
-	<h2>Create reservation</h2>
+	<h2>Perfil</h2>
 </template>
+
 <script>
 export default {
-	name: "CreateReservationView",
+	name: "ProfileView",
 };
 </script>

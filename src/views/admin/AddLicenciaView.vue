@@ -1,8 +1,9 @@
 <template>
-	<h2>Consultorio</h2>
+	<h2>Agregar Licencia</h2>
 </template>
+
 <script>
 export default {
-	name: "ConsultorioView",
+	name: "AddLicenciaView",
 };
 </script>

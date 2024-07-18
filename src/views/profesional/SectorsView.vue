@@ -1,8 +1,9 @@
 <template>
-	<h2>AddProfesionalViewe</h2>
+	<h2>Sectores</h2>
 </template>
+
 <script>
 export default {
-	name: "AddProfesionalView",
+	name: "SectorsView",
 };
 </script>

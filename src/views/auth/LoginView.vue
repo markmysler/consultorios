@@ -4,14 +4,27 @@
 		<div class="w-full columnAlignCenter gap-5 mt-5">
 			<div class="column">
 				<label for="email">Correo electrónico</label>
-				<InputText type="email" id="email" v-model="email" autocomplete="true" />
+				<InputText
+					type="email"
+					id="email"
+					v-model="email"
+					autocomplete="true"
+				/>
 			</div>
 			<div class="column">
 				<label for="password">Contraseña</label>
-				<Password type="password" id="password" v-model="password" toggleMask :feedback="false" />
+				<Password
+					type="password"
+					id="password"
+					v-model="password"
+					toggleMask
+					:feedback="false"
+				/>
 			</div>
 
-			<router-link :to="ROUTES_NAMES.ResetPassword">¿Olvidaste tu contraseña?</router-link>
+			<router-link :to="ROUTES_NAMES.ResetPassword"
+				>¿Olvidaste tu contraseña?</router-link
+			>
 
 			<div class="w-full columnAlignCenter gap-3">
 				<PrimaryButtonComponent label="Iniciar Sesión" @click="login" />
@@ -26,20 +39,20 @@
 </template>
 
 <script>
-import PrimaryButtonComponent from "@/components/buttons/PrimaryButtonComponent.vue"
+import PrimaryButtonComponent from "@/components/buttons/ButtonComponent.vue";
 
 export default {
 	components: {
 		PrimaryButtonComponent,
-	}
-}
+	},
+};
 </script>
 
 <script setup>
 import { ref } from "vue";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "vue-router";
-import { useUserStore } from "../stores/user.js";
+import { useUserStore } from "@/stores/user.js";
 import { ROUTES_NAMES } from "@/constants/ROUTES_NAMES";
 
 const store = useUserStore();
@@ -61,7 +74,7 @@ const login = () => {
 			.then((userCredential) => {
 				const user = userCredential.user;
 				store.user = user;
-				router.push("/inicio");
+				router.push(ROUTES_NAMES.Search);
 			})
 			.catch((error) => {
 				const errorCode = error.code;

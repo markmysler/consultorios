@@ -1,7 +1,7 @@
 <template>
 	<main>
 		<h2>Inicio</h2>
-
+		<router-link :to="routes.Admin">ADMIN</router-link>
 		<Button label="Felicidades" severity="warning" class="w-6" />
 		<p v-if="user">{{ user.displayName }}</p>
 		<Button
@@ -14,14 +14,20 @@
 </template>
 <script>
 export default {
-	name: "HomeView",
+	name: "SearchView",
+	data() {
+		return {
+			routes: ROUTES_NAMES,
+		};
+	},
 };
 </script>
 <script setup>
 import { signOut, getAuth } from "firebase/auth";
 import { useCurrentUser } from "vuefire";
-import { useUserStore } from "../stores/user.js";
+import { useUserStore } from "@/stores/user.js";
 import { useRouter } from "vue-router";
+import { ROUTES_NAMES } from "@/constants/ROUTES_NAMES";
 
 const auth = getAuth();
 const user = useCurrentUser();
