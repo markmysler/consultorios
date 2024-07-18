@@ -2,18 +2,15 @@
 	<div>
 		<HeaderComponent />
 		<router-view />
-		<FooterProfesionalComponent />
 	</div>
 </template>
 
 <script>
 import HeaderComponent from "@/components/layout/HeaderComponent.vue";
-import FooterProfesionalComponent from "@/components/layout/FooterProfesionalComponent.vue";
 export default {
-	name: "LayoutProfesional",
+	name: "LayoutNoAuth",
 	components: {
 		HeaderComponent,
-		FooterProfesionalComponent,
 	},
 };
 </script>

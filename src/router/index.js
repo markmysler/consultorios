@@ -29,9 +29,9 @@ import RejectedLicenciasView from "../views/admin/RejectedLicenciasView.vue";
 import AddLicenciaView from "../views/admin/AddLicenciaView.vue";
 
 // Layouts
+import LayoutNoAuth from "@/layouts/LayoutNoAuth.vue";
 import LayoutAuth from "@/layouts/LayoutAuth.vue";
-import LayoutAdmin from "@/layouts/LayoutAdmin.vue";
-import LayoutProfesional from "@/layouts/LayoutProfesional.vue";
+import { getAuth } from "firebase/auth";
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
@@ -39,17 +39,17 @@ const router = createRouter({
 		// Auth
 		{
 			path: ROUTES_NAMES.Landing,
-			component: LayoutAuth,
+			component: LayoutNoAuth,
 			children: [{ path: "", component: LandingView, name: "Landing" }],
 		},
 		{
 			path: ROUTES_NAMES.Login,
-			component: LayoutAuth,
+			component: LayoutNoAuth,
 			children: [{ path: "", component: LoginView, name: "Login" }],
 		},
 		{
 			path: ROUTES_NAMES.ResetPassword,
-			component: LayoutAuth,
+			component: LayoutNoAuth,
 			children: [
 				{
 					path: "",
@@ -60,7 +60,7 @@ const router = createRouter({
 		},
 		{
 			path: ROUTES_NAMES.ResetPasswordConfirmation,
-			component: LayoutAuth,
+			component: LayoutNoAuth,
 			children: [
 				{
 					path: "",
@@ -72,7 +72,7 @@ const router = createRouter({
 		// Profesional
 		{
 			path: ROUTES_NAMES.Search,
-			component: LayoutProfesional,
+			component: LayoutAuth,
 			children: [
 				{
 					path: "",
@@ -84,7 +84,7 @@ const router = createRouter({
 		},
 		{
 			path: ROUTES_NAMES.SearchResults,
-			component: LayoutProfesional,
+			component: LayoutAuth,
 			children: [
 				{
 					path: "",
@@ -96,7 +96,7 @@ const router = createRouter({
 		},
 		{
 			path: ROUTES_NAMES.Sectors,
-			component: LayoutProfesional,
+			component: LayoutAuth,
 			children: [
 				{
 					path: "",
@@ -108,7 +108,7 @@ const router = createRouter({
 		},
 		{
 			path: ROUTES_NAMES.SectorDetails,
-			component: LayoutProfesional,
+			component: LayoutAuth,
 			children: [
 				{
 					path: "",
@@ -120,7 +120,7 @@ const router = createRouter({
 		},
 		{
 			path: ROUTES_NAMES.ConsultorioDetails,
-			component: LayoutProfesional,
+			component: LayoutAuth,
 			children: [
 				{
 					path: "",
@@ -132,7 +132,7 @@ const router = createRouter({
 		},
 		{
 			path: ROUTES_NAMES.ProfesionalDetails,
-			component: LayoutProfesional,
+			component: LayoutAuth,
 			children: [
 				{
 					path: "",
@@ -144,7 +144,7 @@ const router = createRouter({
 		},
 		{
 			path: ROUTES_NAMES.Profile,
-			component: LayoutProfesional,
+			component: LayoutAuth,
 			children: [
 				{
 					path: "",
@@ -156,7 +156,7 @@ const router = createRouter({
 		},
 		{
 			path: ROUTES_NAMES.ChangePassword,
-			component: LayoutProfesional,
+			component: LayoutAuth,
 			children: [
 				{
 					path: "",
@@ -168,7 +168,7 @@ const router = createRouter({
 		},
 		{
 			path: ROUTES_NAMES.ChangePasswordConfirmation,
-			component: LayoutProfesional,
+			component: LayoutAuth,
 			children: [
 				{
 					path: "",
@@ -180,7 +180,7 @@ const router = createRouter({
 		},
 		{
 			path: ROUTES_NAMES.Support,
-			component: LayoutProfesional,
+			component: LayoutAuth,
 			children: [
 				{
 					path: "",
@@ -192,7 +192,7 @@ const router = createRouter({
 		},
 		{
 			path: ROUTES_NAMES.SupportConfirmation,
-			component: LayoutProfesional,
+			component: LayoutAuth,
 			children: [
 				{
 					path: "",
@@ -205,7 +205,7 @@ const router = createRouter({
 		// Admin
 		{
 			path: ROUTES_NAMES.Admin,
-			component: LayoutAdmin,
+			component: LayoutAuth,
 			children: [
 				{
 					path: "",
@@ -213,11 +213,11 @@ const router = createRouter({
 					name: "Admin",
 				},
 			],
-			meta: { requiresAuth: true },
+			meta: { requiresAuth: true, requiresRole: "admin" },
 		},
 		{
 			path: ROUTES_NAMES.Reports,
-			component: LayoutAdmin,
+			component: LayoutAuth,
 			children: [
 				{
 					path: "",
@@ -225,11 +225,11 @@ const router = createRouter({
 					name: "Reports",
 				},
 			],
-			meta: { requiresAuth: true },
+			meta: { requiresAuth: true, requiresRole: "admin" },
 		},
 		{
 			path: ROUTES_NAMES.Licencias,
-			component: LayoutAdmin,
+			component: LayoutAuth,
 			children: [
 				{
 					path: "",
@@ -237,11 +237,11 @@ const router = createRouter({
 					name: "Licencias",
 				},
 			],
-			meta: { requiresAuth: true },
+			meta: { requiresAuth: true, requiresRole: "admin" },
 		},
 		{
 			path: ROUTES_NAMES.ActiveLicencias,
-			component: LayoutAdmin,
+			component: LayoutAuth,
 			children: [
 				{
 					path: "",
@@ -249,11 +249,11 @@ const router = createRouter({
 					name: "ActiveLicencias",
 				},
 			],
-			meta: { requiresAuth: true },
+			meta: { requiresAuth: true, requiresRole: "admin" },
 		},
 		{
 			path: ROUTES_NAMES.PendingLicencias,
-			component: LayoutAdmin,
+			component: LayoutAuth,
 			children: [
 				{
 					path: "",
@@ -261,11 +261,11 @@ const router = createRouter({
 					name: "PendingLicencias",
 				},
 			],
-			meta: { requiresAuth: true },
+			meta: { requiresAuth: true, requiresRole: "admin" },
 		},
 		{
 			path: ROUTES_NAMES.RejectedLicencias,
-			component: LayoutAdmin,
+			component: LayoutAuth,
 			children: [
 				{
 					path: "",
@@ -273,11 +273,11 @@ const router = createRouter({
 					name: "RejectedLicencias",
 				},
 			],
-			meta: { requiresAuth: true },
+			meta: { requiresAuth: true, requiresRole: "admin" },
 		},
 		{
 			path: ROUTES_NAMES.AddLicencia,
-			component: LayoutAdmin,
+			component: LayoutAuth,
 			children: [
 				{
 					path: "",
@@ -285,25 +285,28 @@ const router = createRouter({
 					name: "AddLicencia",
 				},
 			],
-			meta: { requiresAuth: true },
+			meta: { requiresAuth: true, requiresRole: "admin" },
 		},
 	],
 });
 
 router.beforeEach((to, from, next) => {
-	const auth = useUserStore(); // Your authentication store
-	if (to.matched.some((record) => record.meta.requiresAuth)) {
+	const auth = getAuth(); // Your authentication store
+	const user = auth.currentUser;
+	const store = useUserStore();
+	const userRole = store.userRole;
+
+	if (to.matched.some((record) => record.meta.requiresAuth) && !user) {
 		// Restricted route requires authentication
-		if (!auth.user) {
-			// User is not logged in, redirect to login page
-			next("/");
+		next(ROUTES_NAMES.Login);
+	} else {
+		if (to.meta.requiresRole && to.meta.requiresRole !== userRole) {
+			// User role does not match the required role, redirect or show an error
+			next(ROUTES_NAMES.Search); // Redirect to home or any other page
 		} else {
-			// User is logged in, proceed to the restricted route
+			// Role is correct or not required, proceed
 			next();
 		}
-	} else {
-		// Non-restricted route, proceed
-		next();
 	}
 });
 
