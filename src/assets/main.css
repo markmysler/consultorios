@@ -5,11 +5,10 @@
 	--color-blue: #003794;
 	--color-gray: #e3e5ea;
 	--color-black: #000f27;
+	--color-red: #DE5E5E;
 }
 
-*,
-*::before,
-*::after {
+* {
 	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
@@ -53,7 +52,7 @@ label {
 }
 
 h2 {
-	font-size: 1.7rem;
+	font-size: 1.125rem;
 }
 
 footer {
@@ -73,19 +72,44 @@ footer {
 	flex-direction: column;
 }
 
+.rowCenter {
+	display: flex;
+	align-items: center;
+}
+
 /* Buttons */
 
 .primaryButton,
 .secondaryButton {
 	width: 100%;
 	border-radius: 0.75rem;
+	box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.08), 0px 3px 4px rgba(0, 0, 0, 0.1), 0px 1px 4px -1px rgba(0, 0, 0, 0.1);
 	padding: 0.75rem 0;
 }
+
 .primaryButton {
 	background: var(--color-blue);
+	border: 2px solid var(--color-blue);
 	color: var(--color-gray);
 }
-.secondaryButton {
+
+.primaryButton:hover {
 	background: var(--color-gray);
 	color: var(--color-blue);
+}
+
+/* Errors */
+.error {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+}
+
+.error span {
+	color: var(--color-red);
+}
+
+.error p {
+	font-size: 0.625rem;
+	color: var(--color-red);
 }

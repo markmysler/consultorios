@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="w-full">
 		<HeaderComponent />
 		<router-view />
 		<FooterAdminComponent v-if="store.userRole === 'admin'" />

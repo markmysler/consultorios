@@ -11,7 +11,6 @@ import router from "./router";
 import Button from "primevue/button";
 import InputText from "primevue/inputtext";
 import Password from "primevue/password";
-import FloatLabel from "primevue/floatlabel";
 import { firebaseApp } from "./firebase/init";
 import Ripple from "primevue/ripple";
 
@@ -19,7 +18,6 @@ const app = createApp(App);
 app.component("Button", Button);
 app.component("InputText", InputText);
 app.component("Password", Password);
-app.component("FloatLabel", FloatLabel);
 
 app.use(createPinia());
 app.use(router);
