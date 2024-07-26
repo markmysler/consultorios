@@ -72,13 +72,22 @@ const sendEmail = async () => {
 	validateEmail();
 	if (!validationErrors.value) {
 		loading.value = true;
+		const actionCodeSettings = {
+			url: `${window.location.origin}${ROUTES_NAMES.Login}`,
+			handleCodeInApp: true,
+		}
 		error.value = null;
 		await checkUserExists(email.value).then((exists) => {
 			if (exists) {
-				sendPasswordResetEmail(auth, email.value)
+				sendPasswordResetEmail(auth, email.value, actionCodeSettings)
 					.then(() => {
 						loading.value = false;
-						router.push(ROUTES_NAMES.ResetPasswordConfirmation);
+						router.push({
+							path: ROUTES_NAMES.ResetPasswordConfirmation,
+							query: {
+								email: email.value
+							}
+						});
 					})
 					.catch((error) => {
 						console.log(error);
@@ -92,6 +101,7 @@ const sendEmail = async () => {
 		});
 	}
 };
+
 async function checkUserExists(email) {
 	try {
 		const q = query(collection(db, "users"), where("email", "==", email));

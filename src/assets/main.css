@@ -80,22 +80,30 @@ footer {
 /* Buttons */
 
 .primaryButton,
-.secondaryButton {
+.secondaryButton,
+.primaryButtonLink {
 	width: 100%;
 	border-radius: 0.75rem;
 	box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.08), 0px 3px 4px rgba(0, 0, 0, 0.1), 0px 1px 4px -1px rgba(0, 0, 0, 0.1);
 	padding: 0.75rem 0;
 }
 
-.primaryButton {
+.primaryButton,
+.primaryButtonLink {
 	background: var(--color-blue);
 	border: 2px solid var(--color-blue);
 	color: var(--color-gray);
 }
 
-.primaryButton:hover {
+.primaryButton:hover,
+.primaryButtonLink:hover {
 	background: var(--color-gray);
 	color: var(--color-blue);
+}
+
+.primaryButtonLink {
+	text-align: center;
+	text-decoration: none;
 }
 
 /* Errors */
