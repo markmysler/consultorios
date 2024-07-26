@@ -34,7 +34,10 @@
           <p>{{ validationErrors.password }}</p>
         </div>
       </div>
-      <div class="align-self-start align-items-start error mt-1" v-for="error in errors" :key="error">
+      <div
+        class="align-self-start align-items-start error mt-1"
+        v-for="error in errors"
+        :key="error">
         <span class="pi pi-exclamation-circle"></span>
         <p>
           {{ errorMap[error] ? errorMap[error] : error }}
@@ -44,7 +47,7 @@
         >¿Olvidaste tu contraseña?</router-link
       >
       <div class="w-full columnAlignCenter gap-3">
-        <Button class="primaryButton" label="Ingresar" type="submit"></Button>
+        <Button :loading="loading" class="primaryButton" label="Ingresar" type="submit"></Button>
       </div>
     </form>
   </div>
@@ -65,9 +68,11 @@
   });
   const errorMap = {
     "auth/invalid-email": "El email es inválido",
-    "auth/invalid-credential": "El correo electrónico y/o la contraseña son incorrectos. Intente de nuevamente.",
+    "auth/invalid-credential":
+      "El correo electrónico y/o la contraseña son incorrectos. Intente de nuevamente.",
     "auth/missing-password": "Escribe una contraseña",
   };
+  const loading = ref(false);
   const email = ref("");
   const password = ref("");
   const auth = getAuth();
@@ -96,16 +101,17 @@
     () => !validationErrors.value.email && !validationErrors.value.password
   );
 
-  const login = () => {
+  const login = async () => {
+    loading.value = true;
     validateEmail();
     validatePassword();
-    console.log(isValid);
     if (isValid.value) {
       errors.value = [];
-      signInWithEmailAndPassword(auth, email.value, password.value)
+      await signInWithEmailAndPassword(auth, email.value, password.value)
         .then((userCredential) => {
           const user = userCredential.user;
           store.user = user;
+          loading.value = false;
           router.push(ROUTES_NAMES.Search);
         })
         .catch((error) => {
@@ -115,17 +121,25 @@
           } else {
             errors.value.push(errorCode);
           }
+          loading.value = false;
         });
+    } else {
+      loading.value = false;
     }
   };
 </script>
 
 <style>
-  .loginContainer .p-inputtext {
+  label {
+    font-size: 0.875rem;
+  }
+
+  .p-inputtext {
     width: 100%;
     border-radius: 5px;
     background: var(--color-gray);
     border: 1px solid var(--color-blue);
+    color: var(--color-black);
     font-size: 0.875rem;
     line-height: 18px;
     padding: 0.5rem 0.875rem;
