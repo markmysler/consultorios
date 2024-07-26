@@ -36,7 +36,9 @@ const router = useRouter();
 const logout = async () => {
 	await signOut(auth).then(() => {
 		store.user = null;
-		router.push("/");
+		store.userData = null;
+		store.userRole = null;
+		router.push(ROUTES_NAMES.Login);
 	});
 };
 </script>

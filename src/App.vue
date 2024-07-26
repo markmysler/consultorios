@@ -21,19 +21,16 @@ export default {
 		const router = useRouter();
 		onAuthStateChanged(auth, async (currentUser) => {
 			store.user = currentUser;
-			if (!store.userData || !store.userRole) {
-				const userDoc = doc(db, "users", currentUser.uid);
-				const docSnap = await getDoc(userDoc);
-				if (docSnap.exists()) {
-					store.userData = docSnap.data();
-					store.userRole = store.userData.role;
-				}
-			}
-
 			if (currentUser) {
+				if (!store.userData || !store.userRole) {
+					const userDoc = doc(db, "users", currentUser.uid);
+					const docSnap = await getDoc(userDoc);
+					if (docSnap.exists()) {
+						store.userData = docSnap.data();
+						store.userRole = store.userData.role;
+					}
+				}
 				router.push(ROUTES_NAMES.Search);
-			} else {
-				router.push(ROUTES_NAMES.Login);
 			}
 		});
 	},
