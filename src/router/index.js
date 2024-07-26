@@ -39,8 +39,7 @@ const router = createRouter({
 		// Auth
 		{
 			path: ROUTES_NAMES.Landing,
-			component: LayoutNoAuth,
-			children: [{ path: "", component: LandingView, name: "Landing" }],
+			redirect: ROUTES_NAMES.Search,
 		},
 		{
 			path: ROUTES_NAMES.Login,
