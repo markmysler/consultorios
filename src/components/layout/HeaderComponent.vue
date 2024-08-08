@@ -1,7 +1,7 @@
 <template>
-	<div class="header py-3 px-4">
+	<header class="w-full bg-light-blue text-center py-3 px-4">
 		<h1 class="text-xl">App Consultorios Externos</h1>
-	</div>
+	</header>
 </template>
 
 <script>
@@ -11,12 +11,6 @@ export default {
 </script>
 
 <style scoped>
-.header {
-	width: 100%;
-	background-color: var(--color-light-blue);
-	color: var(--color-blue);
-	text-align: center;
-}
 .header h1 {
 	font-weight: 600;
 }

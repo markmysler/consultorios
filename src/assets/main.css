@@ -55,8 +55,20 @@ h2 {
 	font-size: 1.125rem;
 }
 
+main {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 1.875rem 1.25rem;
+}
+
 footer {
-	background-color: var(--color-light-blue);
+	padding: 0.5rem 1.25rem;
+}
+
+footer a {
+	font-size: 0.75rem;
 }
 
 /* Combos */
@@ -67,6 +79,19 @@ footer {
 	align-items: center;
 }
 
+.columnCenter {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.columnSpaceBetweenCenter {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+}
+
 .column {
 	display: flex;
 	flex-direction: column;
@@ -75,6 +100,46 @@ footer {
 .rowCenter {
 	display: flex;
 	align-items: center;
+}
+
+.rowSpaceBetween {
+	display: flex;
+	justify-content: space-between;
+}
+
+/* Images */
+.icon {
+	height: 1.125rem;
+	width: 1.125rem;
+	background-position: center;
+	background-size: contain;
+	background-repeat: no-repeat;
+}
+
+.iconConsultorios {
+	background-image: url("./icons/consultorios.svg");
+}
+
+.iconSearch {
+	background-image: url("./icons/search.svg");
+}
+
+.iconProfile {
+	background-image: url("./icons/profile.svg");
+}
+
+.iconAdmin {
+	background-image: url("./icons/admin.svg");
+}
+
+/* Backgrounds and Texts */
+
+.bg-light-blue {
+	background-color: var(--color-light-blue);
+}
+
+.text-blue {
+	color: var(--color-blue);
 }
 
 /* Buttons */

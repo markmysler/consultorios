@@ -15,6 +15,7 @@ import Button from "primevue/button";
 import InputText from "primevue/inputtext";
 import Password from "primevue/password";
 import Skeleton from "primevue/skeleton";
+import ProgressSpinner from "primevue/progressspinner";
 
 const app = createApp(App);
 // componentes
@@ -22,6 +23,7 @@ app.component("Button", Button);
 app.component("InputText", InputText);
 app.component("Password", Password);
 app.component("Skeleton", Skeleton);
+app.component("ProgressSpinner", ProgressSpinner);
 
 app.use(createPinia());
 app.use(router);
