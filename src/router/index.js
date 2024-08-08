@@ -297,6 +297,7 @@ router.beforeEach((to, from, next) => {
 
 	if (to.matched.some((record) => record.meta.requiresAuth) && !user) {
 		// Restricted route requires authentication
+		store.loading = true;
 		next(ROUTES_NAMES.Login);
 	} else {
 		if (to.meta.requiresRole && to.meta.requiresRole !== userRole) {

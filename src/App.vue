@@ -1,5 +1,16 @@
 <template>
-	<RouterView></RouterView>
+	<template v-if="store && !store.loading">
+		<RouterView></RouterView>
+	</template>
+	<template v-if="store && store.loading">
+		<ProgressSpinner
+			style="width: 50px; height: 50px"
+			strokeWidth="8"
+			fill="transparent"
+			animationDuration=".5s"
+			aria-label="Custom ProgressSpinner"
+		/>
+	</template>
 </template>
 
 <script>
@@ -9,9 +20,18 @@ import { useRouter } from "vue-router";
 import { ROUTES_NAMES } from "./constants/ROUTES_NAMES";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "./firebase/init";
+import ProgressSpinner from "primevue/progressspinner";
 
 export default {
 	name: "App",
+	data() {
+		return {
+			store: useUserStore(),
+		};
+	},
+	components: {
+		ProgressSpinner,
+	},
 	mounted() {
 		this.$primevue.config.ripple = true;
 	},
@@ -22,6 +42,7 @@ export default {
 		onAuthStateChanged(auth, async (currentUser) => {
 			store.user = currentUser;
 			if (currentUser) {
+				store.loading = true;
 				if (!store.userData || !store.userRole) {
 					const userDoc = doc(db, "users", currentUser.uid);
 					const docSnap = await getDoc(userDoc);
@@ -30,7 +51,10 @@ export default {
 						store.userRole = store.userData.role;
 					}
 				}
+				store.loading = false;
 				router.push(ROUTES_NAMES.Search);
+			} else {
+				store.loading = false;
 			}
 		});
 	},
