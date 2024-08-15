@@ -8,9 +8,9 @@ export const ROUTES_NAMES = {
 	Search: "/buscador",
 	SearchResults: "/buscador/resultados",
 	Sectors: "/sectores",
-	SectorDetails: "/sectores/:sector_id",
-	ConsultorioDetails: "/sectores/:sector_id/:consultorio_id",
-	ProfesionalDetails: "/profesional/:profesional_id",
+	SectorDetails: "/sectores",
+	ConsultorioDetails: "/sectores",
+	ProfesionalDetails: "/profesional",
 	Profile: "/perfil",
 	// Mis licencias?
 	ChangePassword: "/perfil/cambiar-contrasena",

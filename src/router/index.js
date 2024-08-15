@@ -106,7 +106,7 @@ const router = createRouter({
 			meta: { requiresAuth: true },
 		},
 		{
-			path: ROUTES_NAMES.SectorDetails,
+			path: `${ROUTES_NAMES.SectorDetails}/:sector_id`,
 			component: LayoutAuth,
 			children: [
 				{
@@ -118,7 +118,7 @@ const router = createRouter({
 			meta: { requiresAuth: true },
 		},
 		{
-			path: ROUTES_NAMES.ConsultorioDetails,
+			path: `${ROUTES_NAMES.ConsultorioDetails}/:sector_id/:consultorio_id`,
 			component: LayoutAuth,
 			children: [
 				{
@@ -130,7 +130,7 @@ const router = createRouter({
 			meta: { requiresAuth: true },
 		},
 		{
-			path: ROUTES_NAMES.ProfesionalDetails,
+			path: `${ROUTES_NAMES.ProfesionalDetails}/:profesional_id`,
 			component: LayoutAuth,
 			children: [
 				{
