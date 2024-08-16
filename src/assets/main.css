@@ -172,6 +172,24 @@ footer a {
 	text-decoration: none;
 }
 
+/* Breadcrumbs */
+.breadcrumb {
+	width: 100%;
+	background-color: var(--color-gray);
+	font-size: 0.625rem;
+	color: var(--color-blue);
+}
+
+.breadcrumb .p-breadcrumb-list {
+	display: flex;
+	align-items: center;
+	gap: 0.25rem;
+}
+
+.breadcrumb .p-icon {
+	width: 0.5rem;
+}
+
 /* Errors */
 .error {
 	display: flex;

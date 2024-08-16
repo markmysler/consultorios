@@ -46,6 +46,7 @@ a {
 	text-align: center;
 	background-color: var(--color-dark-gray);
 	box-shadow: 0px 4px 4px 0px #00000040;
+	border-radius: 5px;
 	text-decoration: none;
 	font-size: 0.875rem;
 	color: var(--color-blue);

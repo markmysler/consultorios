@@ -2,7 +2,6 @@
   <main>
     <h2>Buscar por:</h2>
     <router-link :to="routes.Admin">ADMIN</router-link>
-    <Button label="Felicidades" severity="warning" class="w-6" />
     <p v-if="user">{{ user.displayName }}</p>
   </main>
 </template>
