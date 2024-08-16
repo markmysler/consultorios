@@ -1,6 +1,6 @@
 <template>
   <main>
-    <h2>Juan Perez</h2>
+    <h2>{{ejemplo.nombre}} {{ ejemplo.apellido }}</h2>
     <div class="especialidades"></div>
   </main>
 </template>
