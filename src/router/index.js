@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory, useRoute } from "vue-router";
 import { useUserStore } from "@/stores/user";
 import { ROUTES_NAMES } from "@/constants/ROUTES_NAMES";
 
@@ -290,13 +290,13 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-	const auth = getAuth(); // Your authentication store
-	const user = auth.currentUser;
 	const store = useUserStore();
+	const user = store.user;
 	const userRole = store.userRole;
 
 	if (to.matched.some((record) => record.meta.requiresAuth) && !user) {
 		// Restricted route requires authentication
+		store.route_from = to.fullPath;
 		store.loading = true;
 		next(ROUTES_NAMES.Login);
 	} else {
