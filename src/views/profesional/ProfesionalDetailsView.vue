@@ -1,9 +1,19 @@
 <template>
-	<h2>Detalle profesional</h2>
+  <main>
+    <h2>Juan Perez</h2>
+    <div class="especialidades"></div>
+  </main>
 </template>
 
 <script>
+import { profesionales } from "@/constants/models.js";
+
 export default {
-	name: "ProfesionalDetailsView",
+  name: "ProfesionalDetailsView",
+	data() {
+		return {
+			ejemplo: profesionales[0]
+		}
+	}
 };
 </script>

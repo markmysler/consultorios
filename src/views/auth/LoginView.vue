@@ -136,27 +136,6 @@ const login = () => {
 };
 </script>
 
-<style>
-label {
-	font-size: 0.875rem;
-}
-
-.p-inputtext {
-	width: 100%;
-	border-radius: 5px;
-	background: var(--color-gray);
-	border: 1px solid var(--color-blue);
-	color: var(--color-black);
-	font-size: 0.875rem;
-	line-height: 18px;
-	padding: 0.5rem 0.875rem;
-}
-
-.loginContainer .p-icon-field > .p-input-icon {
-	top: 27.5%;
-}
-</style>
-
 <style scoped>
 a {
 	color: var(--color-black);
