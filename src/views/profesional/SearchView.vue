@@ -1,8 +1,7 @@
 <template>
-  <main>
+  <main class="w-full">
     <h2>Buscar por:</h2>
-    <router-link :to="routes.Admin">ADMIN</router-link>
-    <p v-if="user">{{ user.displayName }}</p>
+    <TabMenu class="w-full bg-dark-gray mt-4" :model="items" />
   </main>
 </template>
 
@@ -21,5 +20,11 @@
 
 <script setup>
   import { useCurrentUser } from "vuefire";
+  import { ref } from "vue";
+
   const user = useCurrentUser();
+  const items = ref([
+    { label: 'Profesional' },
+    { label: 'Consultorio' },
+  ])
 </script>

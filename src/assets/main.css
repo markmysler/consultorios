@@ -200,6 +200,36 @@ label {
 	top: 27.5%;
 }
 
+/* Tabs */
+
+.p-tabmenu .p-tabmenu-nav {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	background-color: var(--color-gray);
+}
+
+.p-tabmenu .p-tabmenu-nav .p-tabmenuitem {
+	width: 100%;
+}
+
+.p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	background-color: var(--color-gray);
+	color: var(--color-blue);
+	padding: 0.313rem 1.688rem;
+}
+
+.p-tabmenu .p-tabmenu-nav .p-tabmenuitem.p-highlight .p-menuitem-link {
+	border-color: var(--color-blue);
+}
+
+.p-tabmenu .p-tabmenu-nav .p-tabmenuitem:not(.p-highlight):hover .p-menuitem-link {
+	border: none;
+}
+
 /* Breadcrumbs */
 .breadcrumb {
 	width: 100%;

@@ -5,7 +5,7 @@ import Skeleton from "primevue/skeleton";
 import ProgressSpinner from "primevue/progressspinner";
 import Breadcrumb from "primevue/breadcrumb";
 import Calendar from "primevue/calendar";
-
+import TabMenu from 'primevue/tabmenu';
 
 export function importComponents(app) {
   app.component("Button", Button);
@@ -15,4 +15,5 @@ export function importComponents(app) {
   app.component("ProgressSpinner", ProgressSpinner);
   app.component("Breadcrumb", Breadcrumb);
   app.component("Calendar", Calendar);
+  app.component("TabMenu", TabMenu);
 }
