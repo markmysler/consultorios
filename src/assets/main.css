@@ -139,6 +139,10 @@ footer a {
 	background-color: var(--color-light-blue);
 }
 
+.bg-dark-gray {
+	background-color: var(--color-dark-gray);
+}
+
 .text-blue {
 	color: var(--color-blue);
 }

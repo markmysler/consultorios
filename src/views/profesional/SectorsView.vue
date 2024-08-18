@@ -49,6 +49,7 @@ a {
 	border-radius: 5px;
 	text-decoration: none;
 	font-size: 0.875rem;
+	font-weight: 600;
 	color: var(--color-blue);
 	padding: 0.625rem;
 }
