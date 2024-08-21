@@ -1,11 +1,16 @@
 import Button from "primevue/button";
+import IconField from 'primevue/iconfield';
+import InputIcon from 'primevue/inputicon';
 import InputText from "primevue/inputtext";
 import Password from "primevue/password";
 import Skeleton from "primevue/skeleton";
 import ProgressSpinner from "primevue/progressspinner";
 import Breadcrumb from "primevue/breadcrumb";
 import Calendar from "primevue/calendar";
-import TabMenu from 'primevue/tabmenu';
+import TabView from 'primevue/tabview';
+import TabPanel from 'primevue/tabpanel';
+import Accordion from 'primevue/accordion';
+import AccordionTab from 'primevue/accordiontab';
 
 export function importComponents(app) {
   app.component("Button", Button);
@@ -15,5 +20,10 @@ export function importComponents(app) {
   app.component("ProgressSpinner", ProgressSpinner);
   app.component("Breadcrumb", Breadcrumb);
   app.component("Calendar", Calendar);
-  app.component("TabMenu", TabMenu);
+  app.component("TabView", TabView);
+  app.component("TabPanel", TabPanel);
+  app.component("IconField", IconField);
+  app.component("InputIcon", InputIcon);
+  app.component("Accordion", Accordion);
+  app.component("AccordionTab", AccordionTab);
 }

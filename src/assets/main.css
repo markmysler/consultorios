@@ -202,7 +202,7 @@ label {
 
 /* Tabs */
 
-.p-tabmenu .p-tabmenu-nav {
+.p-tabview-nav {
 	width: 100%;
 	display: flex;
 	justify-content: center;
@@ -213,21 +213,44 @@ label {
 	width: 100%;
 }
 
-.p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {
+.p-tabview .p-tabview-nav li .p-tabview-nav-link {
 	width: 100%;
 	display: flex;
 	justify-content: center;
 	background-color: var(--color-gray);
-	color: var(--color-blue);
+	color: var(--color-black);
 	padding: 0.313rem 1.688rem;
 }
 
-.p-tabmenu .p-tabmenu-nav .p-tabmenuitem.p-highlight .p-menuitem-link {
+.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
 	border-color: var(--color-blue);
 }
 
-.p-tabmenu .p-tabmenu-nav .p-tabmenuitem:not(.p-highlight):hover .p-menuitem-link {
+.p-tabview .p-tabview-nav li:not(.p-highlight):hover .p-tabview-nav-link {
 	border: none;
+}
+
+.p-tabview .p-tabview-panels {
+	background-color: var(--color-gray);
+}
+
+/* Accordion */
+
+.p-accordion .p-accordion-header .p-accordion-header-link {
+	display: flex;
+	flex-direction: row-reverse;
+	justify-content: space-between;
+	border: none;
+	border-radius: 0;
+	border-bottom: 1px solid var(--color-blue);
+	background-color: var(--color-gray);
+	color: var(--color-blue);
+	padding: 0.625rem 0;
+}
+
+.accordions .pi {
+	font-size: 0.7rem;
+	color: var(--color-blue);
 }
 
 /* Breadcrumbs */
