@@ -236,20 +236,99 @@ label {
 
 /* Accordion */
 
+.p-accordion {
+	border-bottom: 1px solid var(--color-blue);
+	padding-bottom: 0.625rem;
+}
+
 .p-accordion .p-accordion-header .p-accordion-header-link {
 	display: flex;
 	flex-direction: row-reverse;
 	justify-content: space-between;
 	border: none;
 	border-radius: 0;
-	border-bottom: 1px solid var(--color-blue);
 	background-color: var(--color-gray);
 	color: var(--color-blue);
-	padding: 0.625rem 0;
+	padding-top: 0.625rem;
 }
 
 .accordions .pi {
 	font-size: 0.7rem;
+	color: var(--color-blue);
+}
+
+.p-accordion .p-accordion-content {
+	background-color: var(--color-gray);
+	border: none;
+	border-radius: 0;
+	padding-top: 0.625rem;
+}
+
+/* Accordion + Dropdown */
+
+.p-dropdown {
+	background-color: var(--color-gray);
+	border: 1px solid var(--color-blue);
+	border-radius: 5px;
+}
+
+.p-dropdown .p-inputtext {
+	background-color: transparent;
+	border: none;
+	border-radius: 0;
+}
+
+.p-dropdown-trigger {
+	width: 0.7rem;
+	color: var(--color-blue);
+	margin-right: 0.625rem;
+}
+
+.p-dropdown-panel {
+	background-color: var(--color-dark-gray);
+	border: 1px solid var(--color-blue);
+	margin-top: 5px !important;
+	padding: 0.45rem;
+}
+
+.p-dropdown-panel .p-dropdown-header {
+	background-color: var(--color-dark-gray);
+}
+
+.p-dropdown-panel .p-dropdown-header .p-dropdown-filter {
+	background: transparent;
+	border-radius: 2.5px;
+}
+
+.p-dropdown-panel .p-dropdown-header .p-dropdown-filter-icon {
+	top: 27.5%;
+	color: var(--color-blue);
+}
+
+.p-dropdown-items-wrapper {
+	margin-top: 5px;
+}
+
+.p-dropdown-panel .p-dropdown-items {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+}
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item {
+	color: var(--color-blue);
+	font-weight: 600;
+	border-radius: 5px;
+	padding: 0.313rem 0.5rem;
+}
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item:not(.p-highlight):not(.p-disabled).p-focus {
+	background-color: var(--color-gray);
+}
+
+.p-dropdown-clear-icon {
+	width: 0.7rem;
+	top: 27.5%;
 	color: var(--color-blue);
 }
 

@@ -11,6 +11,8 @@ import TabView from 'primevue/tabview';
 import TabPanel from 'primevue/tabpanel';
 import Accordion from 'primevue/accordion';
 import AccordionTab from 'primevue/accordiontab';
+import Dropdown from 'primevue/dropdown';
+import Checkbox from 'primevue/checkbox';
 
 export function importComponents(app) {
   app.component("Button", Button);
@@ -26,4 +28,6 @@ export function importComponents(app) {
   app.component("InputIcon", InputIcon);
   app.component("Accordion", Accordion);
   app.component("AccordionTab", AccordionTab);
+  app.component("Dropdown", Dropdown);
+  app.component("Checkbox", Checkbox);
 }

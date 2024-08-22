@@ -3,28 +3,116 @@
     <h2>Buscar por:</h2>
     <TabView class="mt-3">
       <TabPanel header="Profesional">
-        <div class="pt-3">
+        <form class="pt-3">
           <IconField class="searchInput">
             <InputIcon class="text-blue pi pi-search" />
             <InputText placeholder="Nombre, Apellido, CUIL" class="i" />
           </IconField>
           <div class="accordions pt-2">
             <Accordion expand-icon="pi pi-plus" collapse-icon="pi pi-minus">
-              <AccordionTab header="Especialidad"> Especialidad </AccordionTab>
+              <AccordionTab header="Especialidad">
+                <Dropdown
+                  class="w-full"
+                  v-model="profesional.especialidad"
+                  placeholder="Seleccione una especialidad"
+                  :options="especialidades"
+                  filter
+                  showClear
+                />
+              </AccordionTab>
             </Accordion>
             <Accordion expand-icon="pi pi-plus" collapse-icon="pi pi-minus">
-              <AccordionTab header="Turno"> Turno </AccordionTab>
+              <AccordionTab header="Turno">
+                <div class="checkboxes rowCenter">
+                  <div class="rowCenter gap-1">
+                    <Checkbox
+                      v-model="profesional.turno"
+                      inputId="matutino"
+                      name="turno"
+                      value="matutino"
+                    />
+                    <label class="text-blue" for="matutino">Matutino</label>
+                  </div>
+                  <div class="rowCenter gap-1">
+                    <Checkbox
+                      v-model="profesional.turno"
+                      inputId="vespertino"
+                      name="turno"
+                      value="vespertino"
+                    />
+                    <label class="text-blue" for="vespertino">Vespertino</label>
+                  </div>
+                </div>
+              </AccordionTab>
             </Accordion>
             <Accordion expand-icon="pi pi-plus" collapse-icon="pi pi-minus">
-              <AccordionTab header="Disponibilidad">
-                Disponibilidad
+              <AccordionTab header="Horario Laboral">
+                <div class="rowCenter gap-2">
+                  <Calendar
+                    v-model="profesional.fecha"
+                    showIcon
+                    fluid
+                    iconDisplay="input"
+                    dateFormat="dd/mm/yy"
+                    id="date"
+                  />
+                  <Calendar
+                    id="time"
+                    v-model="profesional.horario"
+                    showIcon
+                    fluid
+                    timeOnly
+                    iconDisplay="input"
+                  >
+                    <template #inputicon="slotProps">
+                      <i class="pi pi-clock" @click="slotProps.clickCallback" />
+                    </template>
+                  </Calendar>
+                </div>
               </AccordionTab>
             </Accordion>
           </div>
-        </div>
+          <Button
+            :loading="loading"
+            class="primaryButton mt-5"
+            label="Buscar"
+            type="submit"
+          ></Button>
+        </form>
       </TabPanel>
       <TabPanel header="Consultorio">
-        <div class="pt-3"></div>
+        <form class="pt-3">
+          <div class="rowCenter gap-2">
+            <Dropdown
+              class="w-full"
+              v-model="consultorio.sector"
+              placeholder="Sector"
+              :options="Object.keys(consultorios)"
+              showClear
+            />
+            <Dropdown
+              class="w-full"
+              v-model="consultorio.numero"
+              placeholder="Número"
+              :options="consultorios.A"
+              showClear
+            />
+          </div>
+          <div class="accordions pt-2">
+            <Accordion expand-icon="pi pi-plus" collapse-icon="pi pi-minus">
+              <AccordionTab header="Especialidad">
+                <Dropdown
+                  class="w-full"
+                  v-model="profesional.especialidad"
+                  placeholder="Seleccione una especialidad"
+                  :options="especialidades"
+                  filter
+                  showClear
+                />
+              </AccordionTab>
+            </Accordion>
+          </div>
+        </form>
       </TabPanel>
     </TabView>
   </main>
@@ -32,12 +120,34 @@
 
 <script>
 import { ROUTES_NAMES } from "@/constants/ROUTES_NAMES";
+import { consultorios } from "@/constants/models";
 
 export default {
   name: "SearchView",
   data() {
     return {
       routes: ROUTES_NAMES,
+      loading: false,
+      profesional: {
+        especialidad: null,
+        turno: null,
+        fecha: new Date(),
+        horario: new Date(),
+      },
+      consultorio: {
+        sector: null,
+        numero: null,
+      },
+      especialidades: [
+        "Traumatologia",
+        "Cardiologia",
+        "Neurología",
+        "Dermatología",
+        "Oncología",
+        "Ginecología",
+        "Pediatría",
+        "Psiquiatría",
+      ],
     };
   },
 };
@@ -59,6 +169,50 @@ const items = ref([{ label: "Profesional" }, { label: "Consultorio" }]);
 }
 
 .searchInput .p-inputtext {
+  font-weight: 600;
   padding-left: 2.188rem;
+}
+
+.accordions .p-inputtext {
+  font-weight: 600;
+}
+
+.accordions .p-accordion-header-text {
+  font-size: 0.875rem;
+}
+
+.checkboxes {
+  gap: 3.125rem;
+}
+
+.checkboxes label {
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.accordions .p-checkbox .p-checkbox-box {
+  width: 1.125rem;
+  height: 1.125rem;
+  background: var(--color-gray);
+  border: 1px solid var(--color-blue);
+  border-radius: 5px;
+}
+
+.accordions .p-checkbox.p-highlight .p-checkbox-box {
+  background: var(--color-blue);
+}
+
+.accordions .p-calendar .p-inputtext {
+  color: var(--color-blue);
+  padding-left: 2.25rem;
+}
+
+.accordions .p-calendar .p-datepicker-trigger-icon,
+.accordions .pi-clock {
+  font-size: 1rem;
+  position: absolute;
+  top: 27.5%;
+  left: 0.688rem;
+  color: var(--color-blue);
 }
 </style>
