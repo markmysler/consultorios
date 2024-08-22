@@ -87,14 +87,14 @@
               class="w-full"
               v-model="consultorio.sector"
               placeholder="Sector"
-              :options="Object.keys(consultorios)"
+              :options="Object.keys(sectors)"
               showClear
             />
             <Dropdown
               class="w-full"
               v-model="consultorio.numero"
               placeholder="Número"
-              :options="consultorios.A"
+              :options="consultorios[sectors[consultorio.sector]]"
               showClear
             />
           </div>
@@ -120,6 +120,7 @@
 
 <script>
 import { ROUTES_NAMES } from "@/constants/ROUTES_NAMES";
+import { sectorSearch } from "@/constants/sectorsMap.js";
 import { consultorios } from "@/constants/models";
 
 export default {
@@ -127,6 +128,7 @@ export default {
   data() {
     return {
       routes: ROUTES_NAMES,
+      sectors: sectorSearch,
       loading: false,
       profesional: {
         especialidad: null,

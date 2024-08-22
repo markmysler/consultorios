@@ -29,6 +29,7 @@
           </template>
         </Calendar>
       </div>
+      <router-link :to="goTo(1)">Consultorio Ejemplo</router-link>
     </div>
   </main>
 </template>
@@ -45,6 +46,11 @@ export default {
       router: useRouter(),
       route: useRoute(),
     };
+  },
+  methods: {
+    goTo(consultorio) {
+      return `${ROUTES_NAMES.ConsultorioDetails}/${this.sectorId}/${consultorio}`;
+    }
   },
   computed: {
     sectorId() {

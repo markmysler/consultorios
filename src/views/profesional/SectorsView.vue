@@ -17,21 +17,14 @@
 
 <script>
 import { ROUTES_NAMES } from "@/constants/ROUTES_NAMES";
+import { sectorSlug } from "@/constants/sectorsMap.js"
 
 export default {
 	name: "SectorsView",
 	data() {
 		return {
 			routes: ROUTES_NAMES,
-			slugs: {
-				A: "/A",
-				B: "/B",
-				C: "/C",
-				Infectología: "/Infectologia",
-				Oncología: "/OncologiaCuidadosPaliativos",
-				"C. de prácticas": "/CentralPracticas",
-				"Pasillo ala Ruggeri": "/PasilloRuggeri",
-			},
+			slugs: sectorSlug,
 		};
 	},
 };
