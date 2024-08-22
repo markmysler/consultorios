@@ -13,6 +13,7 @@ import Accordion from 'primevue/accordion';
 import AccordionTab from 'primevue/accordiontab';
 import Dropdown from 'primevue/dropdown';
 import Checkbox from 'primevue/checkbox';
+import RadioButton from 'primevue/radiobutton';
 
 export function importComponents(app) {
   app.component("Button", Button);
@@ -30,4 +31,5 @@ export function importComponents(app) {
   app.component("AccordionTab", AccordionTab);
   app.component("Dropdown", Dropdown);
   app.component("Checkbox", Checkbox);
+  app.component("RadioButton", RadioButton);
 }

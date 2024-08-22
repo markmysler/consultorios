@@ -1,7 +1,7 @@
 <template>
   <main class="w-full">
     <h2>Buscar por:</h2>
-    <TabView class="mt-3">
+    <TabView class="w-full mt-3">
       <TabPanel header="Profesional">
         <form class="pt-3">
           <IconField class="searchInput">
@@ -57,12 +57,12 @@
                     id="date"
                   />
                   <Calendar
-                    id="time"
                     v-model="profesional.horario"
                     showIcon
                     fluid
                     timeOnly
                     iconDisplay="input"
+                    id="time"
                   >
                     <template #inputicon="slotProps">
                       <i class="pi pi-clock" @click="slotProps.clickCallback" />
@@ -103,7 +103,7 @@
               <AccordionTab header="Especialidad">
                 <Dropdown
                   class="w-full"
-                  v-model="profesional.especialidad"
+                  v-model="consultorio.especialidad"
                   placeholder="Seleccione una especialidad"
                   :options="especialidades"
                   filter
@@ -111,7 +111,67 @@
                 />
               </AccordionTab>
             </Accordion>
+            <Accordion expand-icon="pi pi-plus" collapse-icon="pi pi-minus">
+              <AccordionTab header="Disponibilidad">
+                <div class="rowCenter gap-6">
+                  <div class="rowCenter gap-1">
+                    <RadioButton
+                      v-model="consultorio.disponibilidad"
+                      inputId="libre"
+                      name="disponibilidad"
+                      value="libre"
+                    />
+                    <label class="text-blue" for="libre">Libre</label>
+                  </div>
+                  <div class="rowCenter gap-1">
+                    <RadioButton
+                      v-model="consultorio.disponibilidad"
+                      inputId="ocupado"
+                      name="disponibilidad"
+                      value="ocupado"
+                    />
+                    <label for="ocupado">Ocupado</label>
+                  </div>
+                </div>
+              </AccordionTab>
+            </Accordion>
+            <Accordion
+              v-if="consultorio.disponibilidad === 'libre'"
+              expand-icon="pi pi-plus"
+              collapse-icon="pi pi-minus"
+            >
+              <AccordionTab header="Fecha y hora">
+                <div class="rowCenter gap-2">
+                  <Calendar
+                    v-model="consultorio.fecha"
+                    showIcon
+                    fluid
+                    iconDisplay="input"
+                    dateFormat="dd/mm/yy"
+                    id="date"
+                  />
+                  <Calendar
+                    v-model="consultorio.horario"
+                    showIcon
+                    fluid
+                    timeOnly
+                    iconDisplay="input"
+                    id="time"
+                  >
+                    <template #inputicon="slotProps">
+                      <i class="pi pi-clock" @click="slotProps.clickCallback" />
+                    </template>
+                  </Calendar>
+                </div>
+              </AccordionTab>
+            </Accordion>
           </div>
+          <Button
+            :loading="loading"
+            class="primaryButton mt-5"
+            label="Buscar"
+            type="submit"
+          ></Button>
         </form>
       </TabPanel>
     </TabView>
@@ -128,6 +188,7 @@ export default {
   data() {
     return {
       routes: ROUTES_NAMES,
+      consultorios: consultorios,
       sectors: sectorSearch,
       loading: false,
       profesional: {
@@ -139,6 +200,9 @@ export default {
       consultorio: {
         sector: null,
         numero: null,
+        disponibilidad: null,
+        fecha: new Date(),
+        horario: new Date(),
       },
       especialidades: [
         "Traumatologia",
@@ -155,15 +219,14 @@ export default {
 };
 </script>
 
-<script setup>
-import { useCurrentUser } from "vuefire";
-import { ref } from "vue";
-
-const user = useCurrentUser();
-const items = ref([{ label: "Profesional" }, { label: "Consultorio" }]);
-</script>
-
 <style>
+/* Tabs */
+.p-tabview {
+  max-width: 400px;
+}
+
+/* Search + Icon */
+
 .searchInput .p-input-icon {
   top: 27.5%;
   left: 0.625rem;
@@ -182,6 +245,8 @@ const items = ref([{ label: "Profesional" }, { label: "Consultorio" }]);
 .accordions .p-accordion-header-text {
   font-size: 0.875rem;
 }
+
+/* Checkbox */
 
 .checkboxes {
   gap: 3.125rem;
@@ -216,5 +281,12 @@ const items = ref([{ label: "Profesional" }, { label: "Consultorio" }]);
   top: 27.5%;
   left: 0.688rem;
   color: var(--color-blue);
+}
+
+/* Radio */
+
+.accordions .p-radiobutton.p-highlight .p-radiobutton-box {
+  border-color: var(--color-blue);
+  background: var(--color-blue);
 }
 </style>
