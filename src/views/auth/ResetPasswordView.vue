@@ -45,6 +45,7 @@
 <script setup>
 import { ROUTES_NAMES } from "@/constants/ROUTES_NAMES.js";
 import { db } from "@/firebase/init";
+import { sendResetEmail } from "@/utils/sendPasswordReset";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { ref } from "vue";
@@ -75,24 +76,19 @@ const sendEmail = async () => {
 		const actionCodeSettings = {
 			url: `${window.location.origin}${ROUTES_NAMES.Login}`,
 			handleCodeInApp: true,
-		}
+		};
 		error.value = null;
-		await checkUserExists(email.value).then((exists) => {
+		await checkUserExists(email.value).then(async (exists) => {
 			if (exists) {
-				sendPasswordResetEmail(auth, email.value, actionCodeSettings)
-					.then(() => {
-						loading.value = false;
-						router.push({
-							path: ROUTES_NAMES.ResetPasswordConfirmation,
-							query: {
-								email: email.value
-							}
-						});
-					})
-					.catch((error) => {
-						console.log(error);
-						loading.value = false;
-					});
+				await sendResetEmail(
+					auth,
+					router,
+					email.value,
+					actionCodeSettings,
+					ROUTES_NAMES.ResetPasswordConfirmation
+				).then(() => {
+					loading.value = false;
+				});
 			} else {
 				loading.value = false;
 				error.value =

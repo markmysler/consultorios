@@ -238,6 +238,14 @@ const agendas = [
 	},
 	{
 		cuil: 20182930584,
+		dia: 1,
+		horario: "13:00-16:30",
+		consultorio: { sector: "A", nombre: "1" },
+		nombre_agenda: "Consulta Traumatologia",
+		especialidad: "traumatologia",
+	},
+	{
+		cuil: 20182930584,
 		dia: 3,
 		horario: "7:00-11:30",
 		consultorio: { sector: "A", nombre: "1" },
