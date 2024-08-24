@@ -15,7 +15,6 @@ import SectorDetailsView from "../views/profesional/SectorDetailsView.vue";
 import ConsultorioDetailsView from "../views/profesional/ConsultorioDetailsView.vue";
 import ProfesionalDetailsView from "../views/profesional/ProfesionalDetailsView.vue";
 import ProfileView from "../views/profesional/ProfileView.vue";
-import ChangePasswordView from "../views/profesional/ChangePasswordView.vue";
 import ChangePasswordConfirmationView from "../views/profesional/ChangePasswordConfirmationView.vue";
 import SupportView from "../views/profesional/SupportView.vue";
 import SupportConfirmationView from "../views/profesional/SupportConfirmationView.vue";
@@ -149,18 +148,6 @@ const router = createRouter({
 					path: "",
 					component: ProfileView,
 					name: "Profile",
-				},
-			],
-			meta: { requiresAuth: true },
-		},
-		{
-			path: ROUTES_NAMES.ChangePassword,
-			component: LayoutAuth,
-			children: [
-				{
-					path: "",
-					component: ChangePasswordView,
-					name: "ChangePassword",
 				},
 			],
 			meta: { requiresAuth: true },

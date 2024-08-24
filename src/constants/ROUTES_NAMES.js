@@ -13,7 +13,6 @@ export const ROUTES_NAMES = {
 	ProfesionalDetails: "/profesional",
 	Profile: "/perfil",
 	// Mis licencias?
-	ChangePassword: "/perfil/cambiar-contrasena",
 	ChangePasswordConfirmation: "/perfil/cambiar-contrasena/confirmacion",
 	Support: "/soporte",
 	SupportConfirmation: "/soporte/confirmacion",
