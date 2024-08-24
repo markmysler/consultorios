@@ -147,14 +147,20 @@ footer a {
 	color: var(--color-blue);
 }
 
+.text-red {
+	color: var(--color-red);
+}
+
 /* Buttons */
 
 .primaryButton,
 .secondaryButton,
-.primaryButtonLink {
+.primaryButtonLink,
+.secondaryButtonLink {
 	width: 100%;
 	border-radius: 0.75rem;
 	box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.08), 0px 3px 4px rgba(0, 0, 0, 0.1), 0px 1px 4px -1px rgba(0, 0, 0, 0.1);
+	transition: all 0.3s;
 	padding: 0.75rem 0;
 }
 
@@ -171,7 +177,18 @@ footer a {
 	color: var(--color-blue);
 }
 
-.primaryButtonLink {
+.secondaryButtonLink {
+	background-color: var(--color-light-blue);
+	border: 2px solid var(--color-light-blue);
+	color: var(--color-blue);
+}
+
+.secondaryButtonLink:hover {
+	background-color: var(--color-gray);
+}
+
+.primaryButtonLink,
+.secondaryButtonLink {
 	text-align: center;
 	text-decoration: none;
 }
