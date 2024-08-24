@@ -1,7 +1,7 @@
 <template>
 	<main class="w-full justify-content-between">
 		<div class="w-full">
-			<h2>Perfil</h2>
+			<h2 class="text-center">Mi perfil</h2>
 			<div class="w-full mt-4">
 				<div class="rowCenter gap-1 mb-3">
 					<p class="nombreCompleto">{{ perfil.nombre }}</p>
@@ -62,7 +62,7 @@
 					>Licencias</router-link
 				>
 			</div>
-			<div class="w-full rowSpaceBetween links mt-3 mb-6">
+			<div class="w-full contrasenaSesion rowSpaceBetween links mt-4 mb-6">
 				<Button
 					class="text-blue"
 					label="Cambiar contraseña"
@@ -200,22 +200,27 @@ const sendEmail = async () => {
 	border-bottom-right-radius: 10px;
 	border-bottom-left-radius: 10px;
 }
+
+.contrasenaSesion .p-button .p-button-label {
+	font-weight: 600;
+}
 </style>
 
 <style scoped>
 .nombreCompleto {
-	font-weight: 1rem;
-	font-weight: 500;
+	font-size: 1rem;
+	font-weight: 600;
 }
 
 p {
 	font-size: 0.875rem;
+	font-weight: 500;
 	line-height: 18.23px;
 }
 
 .titulo {
 	font-size: 0.625rem;
-	font-weight: 500;
+	font-weight: 600;
 }
 
 .primaryButtonLink,

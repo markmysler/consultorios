@@ -1,5 +1,5 @@
 <template>
-	<div class="w-full flex justify-content-end mb-3">
+	<div class="w-full flex justify-content-end">
 		<router-link
 			class="rowCenter gap-2 bg-dark-gray border-round-2xl text-blue no-underline py-1 px-3"
 			:to="routes.Support"
