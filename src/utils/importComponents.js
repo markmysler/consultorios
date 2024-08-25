@@ -15,7 +15,7 @@ import Dropdown from 'primevue/dropdown';
 import Checkbox from 'primevue/checkbox';
 import RadioButton from 'primevue/radiobutton';
 import Dialog from 'primevue/dialog';
-
+import Textarea from 'primevue/textarea';
 
 export function importComponents(app) {
   app.component("Button", Button);
@@ -35,4 +35,5 @@ export function importComponents(app) {
   app.component("Checkbox", Checkbox);
   app.component("RadioButton", RadioButton);
   app.component("Dialog", Dialog);
+  app.component("Textarea", Textarea);
 }
