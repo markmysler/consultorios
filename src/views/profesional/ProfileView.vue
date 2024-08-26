@@ -59,7 +59,7 @@
 					>Ver mis consultorios</router-link
 				>
 				<router-link to="/" class="secondaryButtonLink"
-					>Licencias</router-link
+					>Solicitar una licencia</router-link
 				>
 			</div>
 			<div class="w-full contrasenaSesion rowSpaceBetween links mt-4 mb-6">
