@@ -16,6 +16,9 @@ import ConsultorioDetailsView from "../views/profesional/ConsultorioDetailsView.
 import ProfesionalDetailsView from "../views/profesional/ProfesionalDetailsView.vue";
 import ProfileView from "../views/profesional/ProfileView.vue";
 import ChangePasswordConfirmationView from "../views/profesional/ChangePasswordConfirmationView.vue";
+import MyLicenciasView from "@/views/profesional/MyLicenciasView.vue";
+import RequestLicenciaView from "@/views/profesional/RequestLicenciaView.vue";
+import RequestLicenciaConfirmationView from "@/views/profesional/RequestLicenciaConfirmationView.vue";
 import SupportView from "../views/profesional/SupportView.vue";
 import SupportConfirmationView from "../views/profesional/SupportConfirmationView.vue";
 // Admin
@@ -160,6 +163,42 @@ const router = createRouter({
 					path: "",
 					component: ChangePasswordConfirmationView,
 					name: "ChangePasswordConfirmation",
+				},
+			],
+			meta: { requiresAuth: true },
+		},
+		{
+			path: ROUTES_NAMES.MyLicencias,
+			component: LayoutAuth,
+			children: [
+				{
+					path: "",
+					component: MyLicenciasView,
+					name: "MyLicencias",
+				},
+			],
+			meta: { requiresAuth: true },
+		},
+		{
+			path: ROUTES_NAMES.RequestLicencia,
+			component: LayoutAuth,
+			children: [
+				{
+					path: "",
+					component: RequestLicenciaView,
+					name: "RequestLicencia",
+				},
+			],
+			meta: { requiresAuth: true },
+		},
+		{
+			path: ROUTES_NAMES.RequestLicenciaConfirmation,
+			component: LayoutAuth,
+			children: [
+				{
+					path: "",
+					component: RequestLicenciaConfirmationView,
+					name: "RequestLicenciaConfirmation",
 				},
 			],
 			meta: { requiresAuth: true },

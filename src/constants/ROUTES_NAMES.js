@@ -12,7 +12,9 @@ export const ROUTES_NAMES = {
 	ConsultorioDetails: "/sectores",
 	ProfesionalDetails: "/profesional",
 	Profile: "/perfil",
-	// Mis licencias?
+	MyLicencias: "/perfil/licencias",
+	RequestLicencia: "/perfil/licencias/solicitar",
+	RequestLicenciaConfirmation: "/perfil/licencias/solicitar/confirmacion",
 	ChangePasswordConfirmation: "/perfil/cambiar-contrasena/confirmacion",
 	Support: "/soporte",
 	SupportConfirmation: "/soporte/confirmacion",

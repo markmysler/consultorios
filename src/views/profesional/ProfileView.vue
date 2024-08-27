@@ -58,7 +58,7 @@
 				<router-link :to="`${routes.ProfesionalDetails}/aa`" class="primaryButtonLink"
 					>Ver mis consultorios</router-link
 				>
-				<router-link to="/" class="secondaryButtonLink"
+				<router-link :to="routes.MyLicencias" class="secondaryButtonLink"
 					>Solicitar una licencia</router-link
 				>
 			</div>
