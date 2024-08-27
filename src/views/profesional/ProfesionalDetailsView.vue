@@ -12,7 +12,7 @@
     </div>
     <div class="w-full column gap-3">
       <div
-        class="column gap-1"
+        class="column gap-2"
         v-for="(agendasPorDia, dia) in agendasAgrupadas"
         :key="dia"
       >
@@ -20,7 +20,7 @@
         <div
           v-for="agenda in agendasPorDia"
           :key="agenda.horario"
-          class="agenda bg-dark-gray border-round-md"
+          class="agenda bg-dark-gray border-round-md mb-1"
         >
           <div class="rowCenter">
             <div class="sector bg-light-blue py-2 px-3">

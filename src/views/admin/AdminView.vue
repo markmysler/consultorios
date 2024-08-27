@@ -1,9 +1,12 @@
 <template>
-	<h2>Admin</h2>
+  <main class="w-full">
+    <h2>Admin</h2>
+    <p>Próximamente...</p>
+  </main>
 </template>
 
 <script>
 export default {
-	name: "AdminView",
+  name: "AdminView",
 };
 </script>

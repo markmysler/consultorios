@@ -301,13 +301,13 @@ const licencias = [
 		estado: "pendiente",
 	},
 	{
-		cuil: 20123456784,
+		cuil: 20182930584,
 		inicio: "2024-09-15T03:00:00.000Z",
 		fin: "2024-10-30T03:00:00.000Z",
 		estado: "aprobada",
 	},
 	{
-		cuil: 20123451214,
+		cuil: 20182930584,
 		inicio: "2024-08-15T03:00:00.000Z",
 		fin: "2024-09-30T03:00:00.000Z",
 		estado: "rechazada",
