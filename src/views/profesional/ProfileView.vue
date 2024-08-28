@@ -1,6 +1,6 @@
 <template>
 	<main class="w-full justify-content-between">
-		<div class="w-full">
+		<div class="w-full" v-if="perfil">
 			<h2 class="text-center">Mi perfil</h2>
 			<div class="w-full mt-4">
 				<div class="rowCenter gap-1 mb-3">
@@ -55,14 +55,20 @@
 			</div>
 			<!-- Cambiar rutas de botones -->
 			<div class="w-full column gap-2 mt-5 mb-3">
-				<router-link :to="`${routes.ProfesionalDetails}/aa`" class="primaryButtonLink"
+				<router-link
+					:to="`${routes.ProfesionalDetails}/aa`"
+					class="primaryButtonLink"
 					>Ver mis consultorios</router-link
 				>
-				<router-link :to="routes.MyLicencias" class="secondaryButtonLink"
+				<router-link
+					:to="routes.MyLicencias"
+					class="secondaryButtonLink"
 					>Solicitar una licencia</router-link
 				>
 			</div>
-			<div class="w-full contrasenaSesion rowSpaceBetween links mt-4 mb-6">
+			<div
+				class="w-full contrasenaSesion rowSpaceBetween links mt-4 mb-6"
+			>
 				<Button
 					class="text-blue"
 					label="Cambiar contraseña"
@@ -141,13 +147,22 @@ export default {
 	data() {
 		return {
 			routes: ROUTES_NAMES,
-			perfil: profesionales[0],
+			store: useUserStore(),
+			perfil: null,
 			visibleContrasena: false,
 			visibleSesion: false,
 		};
 	},
 	methods: {
+		getUserProfile() {
+			this.perfil = profesionales.find(
+				(prof) => prof.mail == this.store.userData.email
+			);
+		},
 		capitalize,
+	},
+	mounted() {
+		this.getUserProfile();
 	},
 };
 </script>
