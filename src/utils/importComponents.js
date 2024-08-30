@@ -16,6 +16,8 @@ import Checkbox from 'primevue/checkbox';
 import RadioButton from 'primevue/radiobutton';
 import Dialog from 'primevue/dialog';
 import Textarea from 'primevue/textarea';
+import Stepper from 'primevue/stepper';
+import StepperPanel from 'primevue/stepperpanel';
 
 export function importComponents(app) {
   app.component("Button", Button);
@@ -36,4 +38,6 @@ export function importComponents(app) {
   app.component("RadioButton", RadioButton);
   app.component("Dialog", Dialog);
   app.component("Textarea", Textarea);
+  app.component("Stepper", Stepper);
+  app.component("StepperPanel", StepperPanel);
 }

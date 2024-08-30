@@ -143,6 +143,10 @@ footer a {
 	background-color: var(--color-dark-gray);
 }
 
+.bg-gray {
+	background-color: var(--color-gray);
+}
+
 .text-blue {
 	color: var(--color-blue);
 }
@@ -162,7 +166,7 @@ footer a {
 	box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.08), 0px 3px 4px rgba(0, 0, 0, 0.1), 0px 1px 4px -1px rgba(0, 0, 0, 0.1);
 	font-weight: 600;
 	transition: all 0.3s;
-	padding: 0.75rem 0;
+	padding: 0.65rem 0;
 }
 
 .primaryButton,
@@ -371,6 +375,42 @@ label {
 
 .p-breadcrumb .p-breadcrumb-list li .p-menuitem-link .p-menuitem-text {
 	color: var(--color-blue);
+}
+
+/* Stepper */
+.p-stepper-header,
+.p-stepper-panels {
+	background-color: var(--color-gray);
+}
+
+.p-stepper-nav {
+	padding: 0 0.1rem 0.4rem 0.1rem;
+	margin: 1.25rem 0;
+}
+
+.p-stepper .p-stepper-header .p-stepper-action {
+	background: var(--color-gray);
+}
+
+.p-stepper .p-stepper-header.p-highlight .p-stepper-action .p-stepper-number {
+	background: var(--color-light-blue);
+	border: 2px solid var(--color-light-blue);
+	color: var(--color-blue);
+	box-shadow: 0px 4px 4px 0px #00000040;
+}
+
+.p-stepper .p-stepper-header .p-stepper-action .p-stepper-number {
+	background: transparent;
+	border: 2px solid var(--color-blue);
+	color: var(--color-blue);
+	font-weight: 700;
+}
+
+.p-stepper .p-stepper-separator {
+	width: 50%;
+	flex: none;
+	background-color: var(--color-blue);
+	margin: 0 auto;
 }
 
 /* Errors */
