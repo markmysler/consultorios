@@ -1,5 +1,7 @@
 <template>
-	<h2>Reportes</h2>
+	<main class="w-full">
+		<h2>Reportes</h2>
+	</main>
 </template>
 
 <script>

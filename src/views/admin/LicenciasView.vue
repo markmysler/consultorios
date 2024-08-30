@@ -1,5 +1,7 @@
 <template>
-	<h2>Licencias</h2>
+	<main class="w-full">
+		<h2>Licencias</h2>
+	</main>
 </template>
 
 <script>

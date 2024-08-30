@@ -133,6 +133,14 @@ footer a {
 	background-image: url("./icons/admin.svg");
 }
 
+.iconReportes {
+	background-image: url("./icons/reportes.svg");
+}
+
+.iconLicencias {
+	background-image: url("./icons/licencias.svg");
+}
+
 /* Backgrounds and Texts */
 
 .bg-light-blue {
