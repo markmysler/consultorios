@@ -108,6 +108,11 @@ footer a {
 	justify-content: space-between;
 }
 
+.justifyCenter {
+	display: flex;
+	justify-content: center;
+}
+
 /* Images */
 .icon {
 	height: 1.125rem;

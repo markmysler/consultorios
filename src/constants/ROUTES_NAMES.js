@@ -22,8 +22,6 @@ export const ROUTES_NAMES = {
 	Admin: "/admin",
 	Reports: "/admin/reports",
 	Licencias: "/admin/licencias",
-	ActiveLicencias: "/admin/licencias/activas",
-	PendingLicencias: "/admin/licencias/pendientes",
-	RejectedLicencias: "/admin/licencias/rechazadas",
-	AddLicencia: "/admin/licencias/agregar",
+	BlockAgenda: "/admin/bloquear-agenda",
+	BlockAgendaConfirmation: "/admin/bloquear-agenda/confirmacion",
 };

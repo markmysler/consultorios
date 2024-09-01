@@ -25,10 +25,8 @@ import SupportConfirmationView from "../views/profesional/SupportConfirmationVie
 import AdminView from "../views/admin/AdminView.vue";
 import ReportsView from "../views/admin/ReportsView.vue";
 import LicenciasView from "../views/admin/LicenciasView.vue";
-import ActiveLicenciasView from "../views/admin/ActiveLicenciasView.vue";
-import PendingLicenciasView from "../views/admin/PendingLicenciasView.vue";
-import RejectedLicenciasView from "../views/admin/RejectedLicenciasView.vue";
-import AddLicenciaView from "../views/admin/AddLicenciaView.vue";
+import BlockAgendaView from "../views/admin/BlockAgendaView.vue";
+import BlockAgendaConfirmationView from "../views/admin/BlockAgendaConfirmationView.vue";
 
 // Layouts
 import LayoutNoAuth from "@/layouts/LayoutNoAuth.vue";
@@ -265,49 +263,25 @@ const router = createRouter({
 			meta: { requiresAuth: true, requiresRole: "admin" },
 		},
 		{
-			path: ROUTES_NAMES.ActiveLicencias,
+			path: ROUTES_NAMES.BlockAgenda,
 			component: LayoutAuth,
 			children: [
 				{
 					path: "",
-					component: ActiveLicenciasView,
-					name: "ActiveLicencias",
+					component: BlockAgendaView,
+					name: "BlockAgenda",
 				},
 			],
 			meta: { requiresAuth: true, requiresRole: "admin" },
 		},
 		{
-			path: ROUTES_NAMES.PendingLicencias,
+			path: ROUTES_NAMES.BlockAgendaConfirmation,
 			component: LayoutAuth,
 			children: [
 				{
 					path: "",
-					component: PendingLicenciasView,
-					name: "PendingLicencias",
-				},
-			],
-			meta: { requiresAuth: true, requiresRole: "admin" },
-		},
-		{
-			path: ROUTES_NAMES.RejectedLicencias,
-			component: LayoutAuth,
-			children: [
-				{
-					path: "",
-					component: RejectedLicenciasView,
-					name: "RejectedLicencias",
-				},
-			],
-			meta: { requiresAuth: true, requiresRole: "admin" },
-		},
-		{
-			path: ROUTES_NAMES.AddLicencia,
-			component: LayoutAuth,
-			children: [
-				{
-					path: "",
-					component: AddLicenciaView,
-					name: "AddLicencia",
+					component: BlockAgendaConfirmationView,
+					name: "BlockAgendaConfirmation",
 				},
 			],
 			meta: { requiresAuth: true, requiresRole: "admin" },
