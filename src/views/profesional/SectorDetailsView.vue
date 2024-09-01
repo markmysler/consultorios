@@ -11,8 +11,7 @@
           fluid
           iconDisplay="input"
           dateFormat="dd/mm/yy"
-          id="date"
-        />
+          id="date" />
       </div>
       <div class="time column gap-1">
         <label for="time">Seleccione un horario</label>
@@ -22,77 +21,133 @@
           showIcon
           fluid
           timeOnly
-          iconDisplay="input"
-        >
+          iconDisplay="input">
           <template #inputicon="slotProps">
             <i class="pi pi-clock" @click="slotProps.clickCallback" />
           </template>
         </Calendar>
       </div>
-      <router-link :to="goTo(1)">Consultorio Ejemplo</router-link>
+      <div class="consultoriosLayout">
+        <div
+          v-for="consultorio in filteredConsultorios"
+          :key="consultorio"
+          :class="getConsultorioClass(consultorio)"
+          @click="selectConsultorio(consultorio)">
+          {{ consultorio }}
+        </div>
+      </div>
+      <router-link :to="goTo(selectedConsultorio)"
+        >Consultorio {{ selectedConsultorio }}</router-link
+      >
     </div>
   </main>
 </template>
 
 <script>
-import { ROUTES_NAMES } from "@/constants/ROUTES_NAMES";
-import { useRouter, useRoute } from "vue-router";
+  import { ROUTES_NAMES } from "@/constants/ROUTES_NAMES";
+  import { consultorios } from "@/constants/models.js";
+  import { useRouter, useRoute } from "vue-router";
 
-export default {
-  data() {
-    return {
-      date: new Date(),
-      time: new Date(),
-      router: useRouter(),
-      route: useRoute(),
-    };
-  },
-  methods: {
-    goTo(consultorio) {
-      return `${ROUTES_NAMES.ConsultorioDetails}/${this.sectorId}/${consultorio}`;
-    }
-  },
-  computed: {
-    sectorId() {
-      return this.route.params.sector_id;
+  export default {
+    data() {
+      return {
+        date: new Date(),
+        time: new Date(),
+        selectedConsultorio: null,
+        router: useRouter(),
+        route: useRoute(),
+      };
     },
-    items() {
-      return [
-        {
-          label: "Sectores",
-          command: () => this.router.push({ path: ROUTES_NAMES.Sectors }),
-        },
-        {
-          label: `Sector ${this.sectorId}`,
-        },
-      ];
+    computed: {
+      sectorId() {
+        return this.route.params.sector_id;
+      },
+      items() {
+        return [
+          {
+            label: "Sectores",
+            command: () => this.router.push({ path: ROUTES_NAMES.Sectors }),
+          },
+          {
+            label: `Sector ${this.sectorId}`,
+          },
+        ];
+      },
+      filteredConsultorios() {
+        return consultorios[this.sectorId] || [];
+      },
     },
-  },
-};
+    methods: {
+      goTo(consultorio) {
+        return `${ROUTES_NAMES.ConsultorioDetails}/${this.sectorId}/${consultorio}`;
+      },
+      getConsultorioClass(consultorio) {
+        // Simulacion Disponibilidad
+        const isAvailable = Math.random() > 0.5; // Simulación de disponibilidad
+        return {
+          available: isAvailable,
+          unavailable: !isAvailable,
+          selected: this.selectedConsultorio === consultorio,
+        };
+      },
+      selectConsultorio(consultorio) {
+        this.selectedConsultorio = consultorio;
+        this.$router.push(this.goTo(consultorio))
+      },
+    },
+  };
 </script>
 
 <style>
-.sectorDetails .calendar .p-inputtext,
-.time .p-inputtext {
-  font-weight: 500;
-  padding-left: 2.5rem;
-}
+  .sectorDetails .calendar .p-inputtext,
+  .time .p-inputtext {
+    font-weight: 500;
+    padding-left: 2.5rem;
+  }
 
-.sectorDetails .p-calendar:not(.p-calendar-disabled).p-focus > .p-inputtext {
-  box-shadow: none;
-}
+  .sectorDetails .p-calendar:not(.p-calendar-disabled).p-focus > .p-inputtext {
+    box-shadow: none;
+  }
 
-.sectorDetails .calendar .p-icon,
-.sectorDetails .time i {
-  position: absolute;
-  top: 27.5%;
-  left: 0.875rem;
-  color: var(--color-blue);
-}
+  .sectorDetails .calendar .p-icon,
+  .sectorDetails .time i {
+    position: absolute;
+    top: 27.5%;
+    left: 0.875rem;
+    color: var(--color-blue);
+  }
 </style>
 
 <style scoped>
-label {
-  font-weight: 500;
-}
+  label {
+    font-weight: 500;
+  }
+
+  .consultoriosLayout {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0.5rem;
+  }
+
+  .consultoriosLayout div {
+    padding: 0.375rem 0.625rem;
+    text-align: center;
+    border: 1px solid black;
+    border-radius: 0.25rem;
+    color: black;
+    cursor: pointer;
+  }
+
+  .available {
+    background-color: rgba(141, 222, 94, 1);
+  }
+
+  .unavailable {
+    background-color: rgba(222, 94, 94, 1);
+  }
+
+  .selected {
+    border: 1px solid #2196f3;
+  }
 </style>
