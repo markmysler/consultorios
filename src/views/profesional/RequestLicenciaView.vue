@@ -16,7 +16,12 @@
                 iconDisplay="input"
                 dateFormat="dd/mm/yy"
                 id="fechaInicio"
+                @change="validateFechaInicio"
               />
+              <div class="error mt-1" v-if="validationErrors.fechaInicio">
+                <span class="pi pi-exclamation-circle"></span>
+                <p>{{ validationErrors.fechaInicio }}</p>
+              </div>
             </div>
             <div class="w-full inputCalendar column gap-1">
               <label for="fechaFin">Seleccione una fecha de fin</label>
@@ -29,42 +34,55 @@
                 iconDisplay="input"
                 dateFormat="dd/mm/yy"
                 id="fechaFin"
+                @change="validateFechaFin"
               />
+              <div class="error mt-1" v-if="validationErrors.fechaFin">
+                <span class="pi pi-exclamation-circle"></span>
+                <p>{{ validationErrors.fechaFin }}</p>
+              </div>
             </div>
           </div>
           <div class="column align-items-end">
             <Button
               label="Continuar"
-              class="w-6 primaryButton"
-              @click="nextCallback"
+              class="w-7 primaryButton px-3"
+              icon="pi pi-arrow-right"
+              iconPos="right"
+              @click="validarFechas(nextCallback)"
             />
           </div>
         </template>
       </StepperPanel>
       <StepperPanel>
         <template #content="{ prevCallback }">
-          <div class="column gap-3">
-            <div class="datoLicencia column gap-1">
-              <p>Profesional</p>
-              <p>{{ licenciaSolicitada.profesional }}</p>
+          <div class="rowSpaceBetween">
+            <div class="column gap-3">
+              <div class="datoLicencia column gap-1">
+                <p>Profesional</p>
+                <p>{{ licenciaSolicitada.profesional }}</p>
+              </div>
+              <div class="datoLicencia column gap-1">
+                <p>Comienzo de licencia</p>
+                <p>{{ formatDate(licenciaSolicitada.fechaInicio) }}</p>
+              </div>
+              <div class="datoLicencia column gap-1">
+                <p>Fin de licencia</p>
+                <p>{{ formatDate(licenciaSolicitada.fechaFin) }}</p>
+              </div>
             </div>
-            <div class="datoLicencia column gap-1">
-              <p>Comienzo de licencia</p>
-              <p>{{ formatDate(licenciaSolicitada.fechaInicio) }}</p>
-            </div>
-            <div class="datoLicencia column gap-1">
-              <p>Fin de licencia</p>
-              <p>{{ formatDate(licenciaSolicitada.fechaFin) }}</p>
+            <div>
+              <Button
+                class="editar flex gap-2 bg-dark-gray border-none border-round-3xl text-blue py-1 px-3"
+                label="Editar"
+                icon="pi pi-pen-to-square"
+                iconPos="right"
+                @click="prevCallback"
+              />
             </div>
           </div>
           <div class="w-full rowCenter justify-content-between">
             <Button
-              class="w-3 primaryButton"
-              label="Atrás"
-              @click="prevCallback"
-            />
-            <Button
-              class="w-7 primaryButton"
+              class="primaryButton"
               label="Solicitar Licencia"
               @click="solicitarLicencia"
             />
@@ -82,12 +100,47 @@ export default {
     return {
       licenciaSolicitada: {
         profesional: "Juan Perez",
-        fechaInicio: new Date(),
-        fechaFin: new Date(),
+        fechaInicio: null,
+        fechaFin: null,
+      },
+      validationErrors: {
+        fechaInicio: null,
+        fechaFin: null,
       },
     };
   },
   methods: {
+    validateFechaInicio() {
+      if (!this.licenciaSolicitada.fechaInicio) {
+        this.validationErrors.fechaInicio =
+          "Debe seleccionar una fecha de inicio.";
+      } else {
+        this.validationErrors.fechaInicio = null;
+      }
+    },
+    validateFechaFin() {
+      if (!this.licenciaSolicitada.fechaFin) {
+        this.validationErrors.fechaFin = "Debe seleccionar una fecha de fin.";
+      } else if (
+        new Date(this.licenciaSolicitada.fechaFin) <=
+        new Date(this.licenciaSolicitada.fechaInicio)
+      ) {
+        this.validationErrors.fechaFin =
+          "La fecha de fin debe ser posterior a la fecha de inicio.";
+      } else {
+        this.validationErrors.fechaFin = null;
+      }
+    },
+    validarFechas(nextCallback) {
+      this.validateFechaInicio();
+      this.validateFechaFin();
+      if (
+        !this.validationErrors.fechaInicio &&
+        !this.validationErrors.fechaFin
+      ) {
+        nextCallback();
+      }
+    },
     solicitarLicencia() {
       console.log("Licencia Solicitada");
     },
@@ -137,6 +190,10 @@ export default {
 <style scoped>
 label {
   font-weight: 600;
+}
+
+.editar {
+  font-size: 0.875rem;
 }
 
 .datoLicencia p:first-child {
