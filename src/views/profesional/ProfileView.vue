@@ -56,7 +56,7 @@
 			<!-- Cambiar rutas de botones -->
 			<div class="w-full column gap-2 mt-5 mb-3">
 				<router-link
-					:to="`${routes.ProfesionalDetails}/aa`"
+					:to="`${routes.ProfesionalDetails}/${perfil.cuil}`"
 					class="primaryButtonLink"
 					>Ver mis consultorios</router-link
 				>
@@ -156,7 +156,7 @@ export default {
 	methods: {
 		getUserProfile() {
 			this.perfil = profesionales.find(
-				(prof) => prof.mail == this.store.userData.email
+				(prof) => prof.mail === this.store.userData.email
 			);
 		},
 		capitalize,
