@@ -36,9 +36,6 @@
           {{ consultorio }}
         </div>
       </div>
-      <router-link :to="goTo(selectedConsultorio)"
-        >Consultorio {{ selectedConsultorio }}</router-link
-      >
     </div>
   </main>
 </template>
