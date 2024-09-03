@@ -20,7 +20,7 @@
 				<router-link
 					v-for="agenda in agendasPorDia"
 					:key="agenda.horario"
-					class="agenda bg-dark-gray border-round-md mb-1"
+					class="agenda bg-dark-gray border-round-md mb-1 no-underline"
 					:to="
 						routes.ConsultorioDetails +
 						'/' +
