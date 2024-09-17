@@ -1,24 +1,31 @@
 <template>
-  <main class="w-full">
-    <h2>Admin</h2>
-    <div class="w-full linksAdmin rowCenter flex-wrap mt-3">
-      <router-link
-        v-for="(item, index) in admin"
-        :to="item.link"
-        class="columnAlignCenter gap-2 bg-dark-gray border-round-xl no-underline py-3"
-        :key="index">
-        <div class="icon" :class="item.icon"></div>
-        <p class="name text-blue text-center">{{ item.name }}</p>
-      </router-link>
-    </div>
+  <main class="w-full h-full justify-content-between">
+    <section>
+      <h2 class="text-center">Admin</h2>
+      <div class="w-full linksAdmin rowCenter flex-wrap mt-3">
+        <router-link
+          v-for="(item, index) in admin"
+          :to="item.link"
+          class="columnAlignCenter gap-2 bg-dark-gray border-round-xl no-underline py-3"
+          :key="index">
+          <div class="icon" :class="item.icon"></div>
+          <p class="name text-blue text-center">{{ item.name }}</p>
+        </router-link>
+      </div>
+    </section>
+    <SupportButtonComponent />
   </main>
 </template>
 
 <script>
   import { ROUTES_NAMES } from "@/constants/ROUTES_NAMES";
+  import SupportButtonComponent from "@/components/support/SupportButtonComponent.vue";
 
   export default {
     name: "AdminView",
+    components: {
+      SupportButtonComponent,
+    },
     data() {
       return {
         admin: [

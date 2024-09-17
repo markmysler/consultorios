@@ -53,7 +53,6 @@
 					</div>
 				</div>
 			</div>
-			<!-- Cambiar rutas de botones -->
 			<div class="w-full column gap-2 mt-5 mb-3">
 				<router-link
 					:to="`${routes.ProfesionalDetails}/${perfil.cuil}`"
@@ -137,7 +136,7 @@ import { ROUTES_NAMES } from "@/constants/ROUTES_NAMES";
 import { profesionales } from "@/constants/models.js";
 import { capitalize } from "vue";
 import { sendResetEmail } from "@/utils/sendPasswordReset";
-import SupportButtonComponent from "@/components/SupportButtonComponent.vue";
+import SupportButtonComponent from "@/components/support/SupportButtonComponent.vue";
 
 export default {
 	name: "ProfileView",
