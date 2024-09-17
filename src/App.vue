@@ -21,7 +21,14 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useUserStore } from "./stores/user";
 import { useRouter } from "vue-router";
 import { ROUTES_NAMES } from "./constants/ROUTES_NAMES";
-import { doc, getDoc } from "firebase/firestore";
+import {
+	collection,
+	doc,
+	getDoc,
+	getDocs,
+	query,
+	where,
+} from "firebase/firestore";
 import { db } from "./firebase/init";
 
 export default {
@@ -50,11 +57,45 @@ export default {
 						store.userRole = store.userData.role;
 					}
 				}
+
 				store.loading = false;
 
 				const redirectPath = store.route_from || ROUTES_NAMES.Search;
 				store.route_from = null; // Clear the saved route after redirecting
 				router.push(redirectPath);
+
+				if (store.userAgendas === null) {
+					const col = collection(db, "agendas");
+					const q = query(
+						col,
+						where("cuil", "==", store.userData.cuil)
+					);
+					const querySnapshot = await getDocs(q);
+
+					if (!querySnapshot.empty) {
+						store.userAgendas = querySnapshot.docs.map((doc) =>
+							doc.data()
+						);
+					} else {
+						store.userAgendas = [];
+					}
+				}
+				if (store.userLicencias === null) {
+					const col = collection(db, "licencias");
+					const q = query(
+						col,
+						where("cuil", "==", store.userData.cuil)
+					);
+					const querySnapshot = await getDocs(q);
+
+					if (!querySnapshot.empty) {
+						store.userLicencias = querySnapshot.docs.map((doc) =>
+							doc.data()
+						);
+					} else {
+						store.userLicencias = [];
+					}
+				}
 			} else {
 				store.loading = false;
 			}

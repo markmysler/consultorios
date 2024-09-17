@@ -6,6 +6,8 @@ export const useUserStore = defineStore("user", {
 			user: null,
 			userData: null,
 			userRole: null,
+			userAgendas: null,
+			userLicencias: null,
 			loading: false,
 			route_from: null,
 		};

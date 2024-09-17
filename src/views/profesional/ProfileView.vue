@@ -1,23 +1,24 @@
 <template>
 	<main class="w-full justify-content-between">
-		<div class="w-full" v-if="perfil">
+		<div class="w-full" v-if="store && store.userData">
 			<h2 class="text-center">Mi perfil</h2>
 			<div class="w-full mt-4">
 				<div class="rowCenter gap-1 mb-3">
-					<p class="nombreCompleto">{{ perfil.nombre }}</p>
-					<p class="nombreCompleto">{{ perfil.apellido }}</p>
+					<p class="nombreCompleto">{{ store.userData.nombre }}</p>
+					<p class="nombreCompleto">{{ store.userData.apellido }}</p>
 				</div>
 				<div class="column gap-3">
 					<div class="rowCenter gap-1">
 						<div class="w-6">
 							<p class="titulo text-blue">CUIL</p>
-							<p>{{ perfil.cuil }}</p>
+							<p>{{ store.userData.cuil }}</p>
 						</div>
 						<div class="w-6">
 							<p class="titulo text-blue">Turno</p>
 							<div class="rowCenter flex-wrap gap-2">
 								<p
-									v-for="(turno, index) in perfil.turnos"
+									v-for="(turno, index) in store.userData
+										.turnos"
 									:key="index"
 								>
 									{{ capitalize(turno) }}
@@ -29,9 +30,8 @@
 						<p class="titulo text-blue">Especialidad</p>
 						<div class="rowCenter flex-wrap gap-2">
 							<p
-								v-for="(
-									especialidad, index
-								) in perfil.especialidades"
+								v-for="(especialidad, index) in store.userData
+									.especialidades"
 								:key="index"
 							>
 								{{ capitalize(especialidad) }}
@@ -42,9 +42,8 @@
 						<p class="titulo text-blue">Sub Especialidad</p>
 						<div class="rowCenter flex-wrap gap-2">
 							<p
-								v-for="(
-									subespecialidad, index
-								) in perfil.subespecialidades"
+								v-for="(subespecialidad, index) in store
+									.userData.subespecialidades"
 								:key="index"
 							>
 								{{ capitalize(subespecialidad) }}
@@ -55,7 +54,7 @@
 			</div>
 			<div class="w-full column gap-2 mt-5 mb-3">
 				<router-link
-					:to="`${routes.ProfesionalDetails}/${perfil.cuil}`"
+					:to="`${routes.ProfesionalDetails}/${store.userData.cuil}`"
 					class="primaryButtonLink"
 					>Ver mis consultorios</router-link
 				>
@@ -133,7 +132,6 @@
 
 <script>
 import { ROUTES_NAMES } from "@/constants/ROUTES_NAMES";
-import { profesionales } from "@/constants/models.js";
 import { capitalize } from "vue";
 import { sendResetEmail } from "@/utils/sendPasswordReset";
 import SupportButtonComponent from "@/components/support/SupportButtonComponent.vue";
@@ -147,21 +145,12 @@ export default {
 		return {
 			routes: ROUTES_NAMES,
 			store: useUserStore(),
-			perfil: null,
 			visibleContrasena: false,
 			visibleSesion: false,
 		};
 	},
 	methods: {
-		getUserProfile() {
-			this.perfil = profesionales.find(
-				(prof) => prof.mail === this.store.userData.email
-			);
-		},
 		capitalize,
-	},
-	mounted() {
-		this.getUserProfile();
 	},
 };
 </script>
@@ -180,6 +169,8 @@ const logout = async () => {
 		store.user = null;
 		store.userData = null;
 		store.userRole = null;
+		store.userAgendas = null;
+		store.userLicencias = null;
 		router.push(ROUTES_NAMES.Login);
 	});
 };
