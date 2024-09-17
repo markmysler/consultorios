@@ -8,6 +8,7 @@ import LoginView from "../views/auth/LoginView.vue";
 import ResetPasswordView from "../views/auth/ResetPasswordView.vue";
 import ResetPasswordConfirmationView from "../views/auth/ResetPasswordConfirmationView.vue";
 // Profesional
+import ConfirmScheduleView from "../views/profesional/ConfirmScheduleView.vue";
 import SearchView from "../views/profesional/SearchView.vue";
 import SearchResultsView from "../views/profesional/SearchResultsView.vue";
 import SectorsView from "../views/profesional/SectorsView.vue";
@@ -69,6 +70,18 @@ const router = createRouter({
 			],
 		},
 		// Profesional
+		{
+			path: ROUTES_NAMES.ConfirmSchedule,
+			component: LayoutAuth,
+			children: [
+				{
+					path: "",
+					component: ConfirmScheduleView,
+					name: "ConfirmSchedule",
+				},
+			],
+			meta: { requiresAuth: true },
+		},
 		{
 			path: ROUTES_NAMES.Search,
 			component: LayoutAuth,

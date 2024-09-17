@@ -17,7 +17,7 @@
 <script>
 import { ROUTES_NAMES } from "@/constants/ROUTES_NAMES";
 import { useRoute, useRouter } from "vue-router";
-import SupportButtonComponent from "@/components/SupportButtonComponent.vue";
+import SupportButtonComponent from "@/components/support/SupportButtonComponent.vue";
 
 export default {
 	name: "ChangePasswordConfirmationView",
