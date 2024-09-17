@@ -9,6 +9,7 @@ import ResetPasswordView from "../views/auth/ResetPasswordView.vue";
 import ResetPasswordConfirmationView from "../views/auth/ResetPasswordConfirmationView.vue";
 // Profesional
 import ConfirmScheduleView from "../views/profesional/ConfirmScheduleView.vue";
+import ThanksScheduleView from "../views/profesional/ThanksScheduleView.vue";
 import SearchView from "../views/profesional/SearchView.vue";
 import SearchResultsView from "../views/profesional/SearchResultsView.vue";
 import SectorsView from "../views/profesional/SectorsView.vue";
@@ -32,6 +33,7 @@ import BlockAgendaConfirmationView from "../views/admin/BlockAgendaConfirmationV
 // Layouts
 import LayoutNoAuth from "@/layouts/LayoutNoAuth.vue";
 import LayoutAuth from "@/layouts/LayoutAuth.vue";
+import LayoutBeta from "@/layouts/LayoutBeta.vue";
 import { getAuth } from "firebase/auth";
 
 const router = createRouter({
@@ -72,12 +74,24 @@ const router = createRouter({
 		// Profesional
 		{
 			path: ROUTES_NAMES.ConfirmSchedule,
-			component: LayoutAuth,
+			component: LayoutBeta,
 			children: [
 				{
 					path: "",
 					component: ConfirmScheduleView,
 					name: "ConfirmSchedule",
+				},
+			],
+			meta: { requiresAuth: true },
+		},
+		{
+			path: ROUTES_NAMES.ThanksSchedule,
+			component: LayoutBeta,
+			children: [
+				{
+					path: "",
+					component: ThanksScheduleView,
+					name: "ThanksSchedule",
 				},
 			],
 			meta: { requiresAuth: true },

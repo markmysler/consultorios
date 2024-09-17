@@ -90,7 +90,7 @@
 			v-model:visible="visibleContrasena"
 		>
 			<div class="column gap-4 p-3">
-				<p>¿Estas seguro que queres cambiar tu contraseña?</p>
+				<p>¿Estás seguro que queres cambiar tu contraseña?</p>
 				<div class="w-full rowCenter gap-3">
 					<Button
 						class="w-6 h-3rem columnAlignCenter secondaryButtonLink"

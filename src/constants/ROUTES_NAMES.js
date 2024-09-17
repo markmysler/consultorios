@@ -6,6 +6,7 @@ export const ROUTES_NAMES = {
 	ResetPasswordConfirmation: "/restablecer-contrasena/confirmacion",
 	// Auth
 	ConfirmSchedule: "/confirmar-horarios",
+	ThanksSchedule: "/gracias-por-confirmar-horarios",
 	Search: "/buscador",
 	SearchResults: "/buscador/resultados",
 	Sectors: "/sectores",
