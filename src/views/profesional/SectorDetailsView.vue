@@ -1,7 +1,7 @@
 <template>
   <main class="w-full column">
     <Breadcrumb class="breadcrumb" :model="items" />
-    <h2 class="my-3">Sector {{ sectorId }}</h2>
+    <h2 class="my-3">Sector {{ sectorName }}</h2>
     <div class="w-full sectorDetails column gap-3">
       <div class="calendar column gap-1">
         <label for="date">Seleccione una fecha</label>
@@ -44,6 +44,7 @@
   import { ROUTES_NAMES } from "@/constants/ROUTES_NAMES";
   import { consultorios } from "@/constants/models.js";
   import { useRouter, useRoute } from "vue-router";
+  import { sectorSearch } from "@/constants/sectorsMap";
 
   export default {
     data() {
@@ -59,6 +60,12 @@
       sectorId() {
         return this.route.params.sector_id;
       },
+      sectorName() {
+        const sectorEntry = Object.entries(sectorSearch).find(
+          ([, value]) => value === this.sectorId
+        );
+        return sectorEntry ? sectorEntry[0] : `Sector ${this.sectorId}`
+      },
       items() {
         return [
           {
@@ -66,7 +73,7 @@
             command: () => this.router.push({ path: ROUTES_NAMES.Sectors }),
           },
           {
-            label: `Sector ${this.sectorId}`,
+            label: `Sector ${this.sectorName}`,
           },
         ];
       },
@@ -89,7 +96,7 @@
       },
       selectConsultorio(consultorio) {
         this.selectedConsultorio = consultorio;
-        this.$router.push(this.goTo(consultorio))
+        this.$router.push(this.goTo(consultorio));
       },
     },
   };
