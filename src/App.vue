@@ -59,9 +59,14 @@ export default {
 				}
 
 				store.loading = false;
+				let redirectPath;
+				if (store.userData.confirmo_horarios) {
+					redirectPath = store.route_from || ROUTES_NAMES.Search;
+					store.route_from = null; // Clear the saved route after redirecting
+				} else {
+					redirectPath = ROUTES_NAMES.ConfirmSchedule;
+				}
 
-				const redirectPath = store.route_from || ROUTES_NAMES.Search;
-				store.route_from = null; // Clear the saved route after redirecting
 				router.push(redirectPath);
 
 				if (store.userAgendas === null) {
