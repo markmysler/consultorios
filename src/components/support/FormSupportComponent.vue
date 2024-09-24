@@ -82,18 +82,10 @@ export default {
 			}
 
 			if (Object.keys(this.errors).length === 0) {
-				if (this.asunto) {
-					this.sendSupportEmail(
-						this.asunto,
-						this.mailSoporte.descripcion
-					);
-				} else {
-					this.sendSupportEmail(
-						this.mailSoporte.asunto,
-						this.mailSoporte.descripcion
-					);
-				}
-				console.log("Formulario enviado:", this.mailSoporte);
+				this.sendSupportEmail(
+					this.mailSoporte.asunto,
+					this.mailSoporte.descripcion
+				);
 				this.mailSoporte.asunto = "";
 				this.mailSoporte.descripcion = "";
 			}
