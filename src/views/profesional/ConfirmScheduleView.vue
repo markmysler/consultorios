@@ -1,68 +1,67 @@
 <template>
-	<main class="w-full" v-if="store.userData">
-		<h2>{{ store.userData.nombre }} {{ store.userData.apellido }}</h2>
-		<p class="supportText mt-1">
-			Por única vez, confirma que los horarios de tus consultorios sean
-			correctos. Si reconoces un error, por favor comunícalo en
-			<span
-				@click="supportDialog = true"
-				class="text-blue underline cursor-pointer"
-				>Soporte</span
-			>.
-		</p>
-		<div class="w-full column gap-3 my-3">
-			<DiaSemanaComponent
-				:routes="routes"
-				:agendasAgrupadas="agendasAgrupadas"
-			/>
-		</div>
-		<Button
-			@click="confirmDialog = true"
-			label="Confirmar mis horarios"
-			class="primaryButton"
-		/>
-		<Dialog
-			class="w-11 dialogSoporteContainer"
-			v-model:visible="supportDialog"
-			modal
-		>
-			<div class="w-full px-2 pb-2">
-				<h3 class="text-center">Soporte</h3>
-				<FormSupportComponentVue
-					:sendSupportEmail="sendSupportEmail"
-					:asunto="`Error con los horarios de ${this.store.userData.nombre} ${this.store.userData.apellido}`"
-				/>
-			</div>
-		</Dialog>
-		<Dialog
-			class="w-11 dialogConfirmContainer"
-			v-model:visible="confirmDialog"
-			modal
-			header=""
-		>
-			<div class="w-full dialogConfirm column gap-3 px-2 pb-2">
-				<p>¿Estás seguro de que tus horarios son correctos?</p>
-				<p class="pSmall">
-					Los horarios que confirmes serán los horarios que quedarán
-					en la App.
-				</p>
-				<div class="w-full rowCenter gap-3">
-					<Button
-						@click="confirmSchedule"
-						label="Si"
-						:to="routes.ThanksSchedule"
-						class="w-6 h-3rem columnAlignCenter secondaryButtonLink"
-					/>
+  <main class="w-full" v-if="store.userData">
+    <h2>{{ store.userData.nombre }} {{ store.userData.apellido }}</h2>
+    <p class="supportText mt-1">
+      Por única vez, confirma que los horarios de tus consultorios sean
+      correctos. Si reconoces un error, por favor comunícalo en
+      <span
+        @click="supportDialog = true"
+        class="text-blue underline cursor-pointer"
+        >Soporte</span
+      >.
+    </p>
+    <div class="w-full column gap-3 my-3">
+      <DiaSemanaComponent
+        :routes="routes"
+        :agendasAgrupadas="agendasAgrupadas"
+      />
+    </div>
+    <Button
+      @click="confirmDialog = true"
+      label="Confirmar mis horarios"
+      class="primaryButton"
+    />
+    <Dialog
+      class="w-11 dialogSoporteContainer"
+      v-model:visible="supportDialog"
+      modal
+    >
+      <div class="w-full px-2 pb-2">
+        <h3 class="text-center">Soporte</h3>
+        <FormScheduleComponent
+          :sendSupportEmail="sendSupportEmail"
+          :asunto="`Error con los horarios de ${this.store.userData.nombre} ${this.store.userData.apellido}`"
+        />
+      </div>
+    </Dialog>
+    <Dialog
+      class="w-11 dialogConfirmContainer"
+      v-model:visible="confirmDialog"
+      modal
+      header=""
+    >
+      <div class="w-full dialogConfirm column gap-3 px-2 pb-2">
+        <p>¿Estás seguro de que tus horarios son correctos?</p>
+        <p class="pSmall">
+          Los horarios que confirmes serán los horarios que quedarán en la App.
+        </p>
+        <div class="w-full rowCenter gap-3">
+          <Button
+            @click="confirmSchedule"
+            label="Si"
+            :to="routes.ThanksSchedule"
+            class="w-6 h-3rem columnAlignCenter secondaryButtonLink"
+          />
 
-					<Button
-						class="w-6 h-3rem primaryButton"
-						label="No"
-						@click="confirmDialog = false"
-					></Button>
-				</div>
-			</div>
-		</Dialog>
-	</main>
+          <Button
+            class="w-6 h-3rem primaryButton"
+            label="No"
+            @click="confirmDialog = false"
+          ></Button>
+        </div>
+      </div>
+    </Dialog>
+  </main>
 </template>
 
 <script>
@@ -71,104 +70,96 @@ import { useRoute, useRouter } from "vue-router";
 import { useUserStore } from "@/stores/user";
 
 import DiaSemanaComponent from "@/components/profesional/DiaSemanaComponent.vue";
-import FormSupportComponentVue from "@/components/support/FormSupportComponent.vue";
+import FormScheduleComponent from "@/components/support/FormScheduleComponent.vue";
 import { doc, updateDoc } from "firebase/firestore";
 import { db, functions } from "@/firebase/init";
 import { httpsCallable } from "firebase/functions";
+import { useToast } from 'primevue/usetoast';
 
 export default {
-	name: "ProfesionalDetailsView",
-	components: {
-		DiaSemanaComponent,
-		FormSupportComponentVue,
-	},
-	data() {
-		return {
-			route: useRoute(),
-			router: useRouter(),
-			routes: ROUTES_NAMES,
-			store: useUserStore(),
-			supportDialog: false,
-			confirmDialog: false,
-			opcionesAsuntos: [
-				"Opcion 1",
-				"Opcion 2",
-				"Opcion 3",
-				"Opcion 4",
-				"Opcion 5",
-				"Otro",
-			],
-		};
-	},
-	methods: {
-		async confirmSchedule() {
-			const ref = doc(db, "users", this.store.user.uid);
-			await updateDoc(ref, { confirmo_horarios: true })
-				.then((res) => {
-					console.log(res);
-					const routeTo = this.store.route_from || this.routes.Search;
-					this.store.route_from = null;
-					this.router.push(routeTo);
-				})
-				.catch((err) => {
-					console.log(err);
-				});
-		},
-		async sendSupportEmail(subject, text) {
-			const sendEmail = httpsCallable(functions, "sendEmail");
+  name: "ProfesionalDetailsView",
+  components: {
+    DiaSemanaComponent,
+    FormScheduleComponent,
+  },
+  data() {
+    return {
+      route: useRoute(),
+      router: useRouter(),
+      routes: ROUTES_NAMES,
+      store: useUserStore(),
+      supportDialog: false,
+      confirmDialog: false,
+    };
+  },
+  methods: {
+    async confirmSchedule() {
+      const ref = doc(db, "users", this.store.user.uid);
+      await updateDoc(ref, { confirmo_horarios: true })
+        .then(() => {
+          const routeTo = this.store.route_from || this.routes.Search;
+          this.store.route_from = null;
+          this.router.push(routeTo);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    async sendSupportEmail(subject, text) {
+      const sendEmail = httpsCallable(functions, "sendEmail");
+			this.supportDialog = false;
+      await sendEmail({
+        to: "liobensignor@gmail.com",
+        subject,
+        text,
+      }).then((result) => {
+        if (result.data.success) {
+					this.$toast.add({ severity: 'success', summary: "Email enviado", detail: "Su consulta será revisada por el equipo de soporte.", life: 3000 });
+        } else {
+					this.$toast.add({ severity: 'danger', summary: "El email no pudo ser enviado", detail: "Intentelo de nuevo más tarde", life: 3000 })
+        }
+      });
+    },
+  },
+  computed: {
+    agendasAgrupadas() {
+      const agendasPorDia = {};
+      if (this.store.userAgendas) {
+        this.store.userAgendas.forEach((agenda) => {
+          if (!agendasPorDia[agenda.dia]) {
+            agendasPorDia[agenda.dia] = [];
+          }
+          agendasPorDia[agenda.dia].push(agenda);
+        });
+      }
 
-			await sendEmail({
-				to: "liobensignor@gmail.com",
-				subject,
-				text,
-			}).then((result) => {
-				if (result.data.success) {
-					console.log("Email sent successfully!");
-				} else {
-					console.error("Failed to send email:", result.data.error);
-				}
-			});
-		},
-	},
-	computed: {
-		agendasAgrupadas() {
-			const agendasPorDia = {};
-			if (this.store.userAgendas) {
-				this.store.userAgendas.forEach((agenda) => {
-					if (!agendasPorDia[agenda.dia]) {
-						agendasPorDia[agenda.dia] = [];
-					}
-					agendasPorDia[agenda.dia].push(agenda);
-				});
-			}
-
-			return agendasPorDia;
-		},
-		profCuil() {
-			return this.store.userData.cuil;
-		},
-	},
+      return agendasPorDia;
+    },
+    profCuil() {
+      return this.store.userData.cuil;
+    },
+  },
 };
 </script>
 
 <style>
 .dialogConfirmContainer .p-dialog-header,
 .dialogSoporteContainer .p-dialog-header {
-	justify-content: flex-end;
+  justify-content: flex-end;
 }
 </style>
 
 <style scoped>
 .supportText {
-	font-size: 0.875rem;
+  font-size: 0.875rem;
 }
 
 .dialogConfirm p:first-of-type {
-	font-size: 0.875rem;
+  font-size: 0.875rem;
 }
 
 .dialogConfirm p:last-of-type {
-	font-size: 0.7rem;
+  font-size: 0.7rem;
 }
 </style>
 Si

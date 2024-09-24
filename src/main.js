@@ -12,6 +12,7 @@ import { firebaseApp } from "./firebase/init";
 import Ripple from "primevue/ripple";
 // componentes
 import { importComponents } from "@/utils/importComponents.js";
+import ToastService from 'primevue/toastservice';
 
 const app = createApp(App);
 // componentes
@@ -19,6 +20,7 @@ importComponents(app);
 app.use(createPinia());
 app.use(router);
 app.use(PrimeVue, { ripple: true });
+app.use(ToastService);
 app.directive("ripple", Ripple);
 app.use(VueFire, {
 	// imported above but could also just be created here

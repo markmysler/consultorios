@@ -1,4 +1,5 @@
 <template>
+	<Toast />
 	<template v-if="store && !store.loading">
 		<RouterView></RouterView>
 	</template>
