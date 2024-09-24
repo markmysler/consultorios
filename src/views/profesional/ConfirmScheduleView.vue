@@ -21,13 +21,13 @@
 			label="Confirmar mis horarios"
 			class="primaryButton"
 		/>
-		<Dialog class="w-11" v-model:visible="supportDialog">
+		<Dialog class="w-11 dialogSoporteContainer" v-model:visible="supportDialog" modal>
 			<div class="w-full px-2 pb-2">
 				<h3 class="text-center">Soporte</h3>
 				<FormSupportComponentVue :opcionesAsuntos="opcionesAsuntos" />
 			</div>
 		</Dialog>
-		<Dialog class="w-11" v-model:visible="confirmDialog">
+		<Dialog class="w-11 dialogConfirmContainer" v-model:visible="confirmDialog" modal header="">
 			<div class="w-full dialogConfirm column gap-3 px-2 pb-2">
 				<p>¿Estás seguro de que tus horarios son correctos?</p>
 				<p class="pSmall">
@@ -122,6 +122,12 @@ export default {
 	},
 };
 </script>
+
+<style>
+.dialogConfirmContainer .p-dialog-header, .dialogSoporteContainer .p-dialog-header {
+	justify-content: flex-end;
+}
+</style>
 
 <style scoped>
 .supportText {
