@@ -21,13 +21,25 @@
 			label="Confirmar mis horarios"
 			class="primaryButton"
 		/>
-		<Dialog class="w-11 dialogSoporteContainer" v-model:visible="supportDialog" modal>
+		<Dialog
+			class="w-11 dialogSoporteContainer"
+			v-model:visible="supportDialog"
+			modal
+		>
 			<div class="w-full px-2 pb-2">
 				<h3 class="text-center">Soporte</h3>
-				<FormSupportComponentVue :opcionesAsuntos="opcionesAsuntos" />
+				<FormSupportComponentVue
+					:sendSupportEmail="sendSupportEmail"
+					:asunto="`Error con los horarios de ${this.store.userData.nombre} ${this.store.userData.apellido}`"
+				/>
 			</div>
 		</Dialog>
-		<Dialog class="w-11 dialogConfirmContainer" v-model:visible="confirmDialog" modal header="">
+		<Dialog
+			class="w-11 dialogConfirmContainer"
+			v-model:visible="confirmDialog"
+			modal
+			header=""
+		>
 			<div class="w-full dialogConfirm column gap-3 px-2 pb-2">
 				<p>¿Estás seguro de que tus horarios son correctos?</p>
 				<p class="pSmall">
@@ -61,7 +73,8 @@ import { useUserStore } from "@/stores/user";
 import DiaSemanaComponent from "@/components/profesional/DiaSemanaComponent.vue";
 import FormSupportComponentVue from "@/components/support/FormSupportComponent.vue";
 import { doc, updateDoc } from "firebase/firestore";
-import { db } from "@/firebase/init";
+import { db, functions } from "@/firebase/init";
+import { httpsCallable } from "firebase/functions";
 
 export default {
 	name: "ProfesionalDetailsView",
@@ -101,6 +114,21 @@ export default {
 					console.log(err);
 				});
 		},
+		async sendSupportEmail(subject, text) {
+			const sendEmail = httpsCallable(functions, "sendEmail");
+
+			await sendEmail({
+				to: "liobensignor@gmail.com",
+				subject,
+				text,
+			}).then((result) => {
+				if (result.data.success) {
+					console.log("Email sent successfully!");
+				} else {
+					console.error("Failed to send email:", result.data.error);
+				}
+			});
+		},
 	},
 	computed: {
 		agendasAgrupadas() {
@@ -124,7 +152,8 @@ export default {
 </script>
 
 <style>
-.dialogConfirmContainer .p-dialog-header, .dialogSoporteContainer .p-dialog-header {
+.dialogConfirmContainer .p-dialog-header,
+.dialogSoporteContainer .p-dialog-header {
 	justify-content: flex-end;
 }
 </style>
