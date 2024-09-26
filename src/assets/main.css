@@ -4,6 +4,7 @@
 	--color-light-blue: #b2d5ff;
 	--color-blue: #003794;
 	--color-gray: #e3e5ea;
+	--color-disabled: #777777;
 	--color-dark-gray: #B5BACA;
 	--color-black: #000f27;
 	--color-red: #DE5E5E;
@@ -176,6 +177,10 @@ footer a {
 
 .text-red {
 	color: var(--color-red);
+}
+
+.text-disabled {
+	color: var(--color-disabled);
 }
 
 /* Buttons */
