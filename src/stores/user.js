@@ -49,14 +49,14 @@ export const useUserStore = defineStore("user", {
 
 				if (this.userAgendas === null) {
 					const agendaStore = useAgendaStore();
-					this.userAgendas = agendaStore.getAgendasUser(
+					this.userAgendas = await agendaStore.getAgendasUser(
 						this.userData.cuil
 					);
 				}
 				if (this.userLicencias === null) {
 					const licenciasStore = useLicenciaStore();
-					this.userLicencias = licenciasStore.getLicenciasUser(
-						currentUser.cuil
+					this.userLicencias = await licenciasStore.getLicenciasUser(
+						this.userData.cuil
 					);
 				}
 				this.loading = false;
