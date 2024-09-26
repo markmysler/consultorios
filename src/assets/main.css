@@ -166,6 +166,10 @@ footer a {
 	background-color: var(--color-gray);
 }
 
+.bg-red {
+	background-color: var(--color-red);
+}
+
 .text-blue {
 	color: var(--color-blue);
 }

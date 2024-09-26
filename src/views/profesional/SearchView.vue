@@ -13,7 +13,11 @@
             />
           </IconField>
           <div class="accordions pt-2">
-            <Accordion expand-icon="pi pi-plus" collapse-icon="pi pi-minus">
+            <Accordion
+              class="accordionEspecialidad"
+              expand-icon="pi pi-plus"
+              collapse-icon="pi pi-minus"
+            >
               <AccordionTab header="Especialidad">
                 <Dropdown
                   class="w-full"
@@ -104,16 +108,20 @@
               </AccordionTab>
             </Accordion>
           </div>
+          <div class="error mt-3" v-if="showError">
+            <span class="pi pi-exclamation-circle"></span>
+            <p>Complete al menos un campo antes de buscar.</p>
+          </div>
           <Button
             :loading="loading"
-            class="primaryButton mt-5"
+            class="primaryButton mt-3"
             label="Buscar"
             type="submit"
           ></Button>
         </form>
       </TabPanel>
       <TabPanel header="Consultorio">
-        <form class="pt-3">
+        <form class="pt-3" @submit.prevent="searchCons">
           <IconField class="searchInput mb-2">
             <InputIcon class="text-blue pi pi-search" />
             <InputText
@@ -124,14 +132,14 @@
           </IconField>
           <div class="rowCenter gap-2">
             <Dropdown
-              class="w-full"
+              class="w-full dropDownSector"
               v-model="consultorio.sector"
               placeholder="Sector"
               :options="Object.keys(sectors)"
               showClear
             />
             <Dropdown
-              class="w-full"
+              class="w-full dropDownNumero"
               v-model="consultorio.numero"
               placeholder="Número"
               :options="consultorios[sectors[consultorio.sector]]"
@@ -139,7 +147,11 @@
             />
           </div>
           <div class="accordions pt-2">
-            <Accordion expand-icon="pi pi-plus" collapse-icon="pi pi-minus">
+            <Accordion
+              class="accordionEspecialidad"
+              expand-icon="pi pi-plus"
+              collapse-icon="pi pi-minus"
+            >
               <AccordionTab header="Especialidad">
                 <Dropdown
                   class="w-full"
@@ -176,7 +188,10 @@
               </AccordionTab>
             </Accordion>
             <Accordion
-              v-if="consultorio.disponibilidad === 'libre' || consultorio.disponibilidad === 'ocupado'"
+              v-if="
+                consultorio.disponibilidad === 'libre' ||
+                consultorio.disponibilidad === 'ocupado'
+              "
               expand-icon="pi pi-plus"
               collapse-icon="pi pi-minus"
             >
@@ -206,9 +221,13 @@
               </AccordionTab>
             </Accordion>
           </div>
+          <div class="error mt-3" v-if="showError">
+            <span class="pi pi-exclamation-circle"></span>
+            <p>Complete al menos un campo antes de buscar.</p>
+          </div>
           <Button
             :loading="loading"
-            class="primaryButton mt-5"
+            class="primaryButton mt-3"
             label="Buscar"
             type="submit"
           ></Button>
@@ -219,73 +238,132 @@
 </template>
 
 <script>
+import { ref } from "vue";
 import { ROUTES_NAMES } from "@/constants/ROUTES_NAMES";
 import { sectorSearch } from "@/constants/sectorsMap.js";
 import { consultorios } from "@/constants/models";
+import { especialidades } from "@/constants/especialidades";
 import searchProfessional from "@/utils/searchProfessional";
 
 export default {
   name: "SearchView",
-  data() {
-    return {
-      routes: ROUTES_NAMES,
-      consultorios: consultorios,
-      sectors: sectorSearch,
-      loading: false,
-      profesional: {
-        input: "",
-        especialidad: null,
-        turno: null,
-        horarioLaboral: null,
-        fecha: new Date(),
-        horario: new Date(),
-      },
-      consultorio: {
-        input: "",
-        sector: null,
-        numero: null,
-        disponibilidad: null,
-        fecha: new Date(),
-        horario: new Date(),
-      },
-      especialidades: [
-        "Traumatologia",
-        "Cardiologia",
-        "Neurología",
-        "Dermatología",
-        "Oncología",
-        "Ginecología",
-        "Pediatría",
-        "Psiquiatría",
-      ],
+  setup() {
+    const routes = ref(ROUTES_NAMES);
+    const loading = ref(false);
+    const showError = ref(false);
+
+    const profesional = ref({
+      input: "",
+      especialidad: null,
+      turno: null,
+      horarioLaboral: "no",
+      fecha: new Date(),
+      horario: new Date(),
+    });
+
+    const consultorio = ref({
+      input: "",
+      sector: null,
+      numero: null,
+      especialidad: null,
+      disponibilidad: null,
+      fecha: new Date(),
+      horario: new Date(),
+    });
+
+    const isFormEmpty = (formData) => {
+      const isDefaultDate = (date) => {
+        const defaultDate = new Date();
+        return (
+          date.getDate() === defaultDate.getDate() &&
+          date.getMonth() === defaultDate.getMonth() &&
+          date.getFullYear() === defaultDate.getFullYear()
+        );
+      };
+
+      const isDefaultTime = (time) => {
+        const defaultTime = new Date();
+        return (
+          time.getHours() === defaultTime.getHours() &&
+          time.getMinutes() === defaultTime.getMinutes()
+        );
+      };
+
+      return Object.entries(formData).every(([key, value]) => {
+        if (key === "horarioLaboral" && value === "no") return true;
+        if (key === "fecha" && isDefaultDate(value)) return true;
+        if (key === "horario" && isDefaultTime(value)) return true;
+        return (
+          value === "" ||
+          value === null ||
+          (Array.isArray(value) && value.length === 0)
+        );
+      });
     };
-  },
-  methods: {
-    searchProf() {
+
+    const searchProf = () => {
+      if (isFormEmpty(profesional.value)) {
+        showError.value = true;
+        return;
+      }
+
+      showError.value = false;
+      loading.value = true;
+
       const search = {
-        input_text: this.profesional.input,
-        specialty: this.profesional.especialidad
-          ? this.profesional.especialidad
+        input_text: profesional.value.input,
+        specialty: profesional.value.especialidad
+          ? profesional.value.especialidad
               .toLowerCase()
               .normalize("NFD")
               .replace(/[\u0300-\u036f]/g, "")
           : null,
         shift:
-          this.profesional.turno && this.profesional.turno.length !== 0
-            ? [...this.profesional.turno]
+          profesional.value.turno && profesional.value.turno.length !== 0
+            ? [...profesional.value.turno]
             : null,
         date_string:
-          this.profesional.fecha && this.profesional.horarioLaboral === "si"
-            ? this.profesional.fecha.toLocaleDateString("en-US")
+          profesional.value.fecha && profesional.value.horarioLaboral === "si"
+            ? profesional.value.fecha.toLocaleDateString("en-US")
             : null,
         time:
-          this.profesional.horario && this.profesional.horarioLaboral === "si"
-            ? `${this.profesional.horario.getHours()}:${this.profesional.horario.getMinutes()}`
+          profesional.value.horario && profesional.value.horarioLaboral === "si"
+            ? `${profesional.value.horario.getHours()}:${profesional.value.horario.getMinutes()}`
             : null,
       };
+
       const response = searchProfessional(search);
       console.log(response);
-    },
+
+      loading.value = false;
+    };
+
+    const searchCons = () => {
+      if (isFormEmpty(consultorio.value)) {
+        showError.value = true;
+        return;
+      }
+
+      showError.value = false;
+      loading.value = true;
+
+      console.log(consultorio.value);
+
+      loading.value = false;
+    };
+
+    return {
+      routes,
+      consultorios,
+      sectors: sectorSearch,
+      especialidades,
+      loading,
+      showError,
+      profesional,
+      consultorio,
+      searchProf,
+      searchCons,
+    };
   },
 };
 </script>
@@ -315,6 +393,12 @@ export default {
 
 .accordions .p-accordion-header-text {
   font-size: 0.875rem;
+}
+
+.accordionEspecialidad .p-inputtext,
+.dropDownSector .p-inputtext,
+.dropDownNumero .p-inputtext {
+  color: var(--color-blue);
 }
 
 /* Checkbox */
