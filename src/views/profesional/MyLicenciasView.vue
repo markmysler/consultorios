@@ -99,19 +99,25 @@ export default {
 			return `${this.store.userData.nombre} ${this.store.userData.apellido}`;
 		},
 		licenciasAprobadas() {
-			return this.store.userLicencias.filter(
-				(licencia) => licencia.estado === "aprobada"
-			);
+			return Array.isArray(this.store.userLicencias)
+				? this.store.userLicencias.filter(
+						(licencia) => licencia.estado === "aprobada"
+				  )
+				: [];
 		},
 		licenciasPendientes() {
-			return this.store.userLicencias.filter(
-				(licencia) => licencia.estado === "pendiente"
-			);
+			return Array.isArray(this.store.userLicencias)
+				? this.store.userLicencias.filter(
+						(licencia) => licencia.estado === "pendiente"
+				  )
+				: [];
 		},
 		licenciasRechazadas() {
-			return this.store.userLicencias.filter(
-				(licencia) => licencia.estado === "rechazada"
-			);
+			return Array.isArray(this.store.userLicencias)
+				? this.store.userLicencias.filter(
+						(licencia) => licencia.estado === "rechazada"
+				  )
+				: [];
 		},
 		hayLicencias() {
 			return (
