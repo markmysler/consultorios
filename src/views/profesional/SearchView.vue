@@ -160,7 +160,16 @@
                   :options="especialidades"
                   filter
                   showClear
+                  :disabled="isEspecialidadDisabled"
+                  @change="onEspecialidadChange"
                 />
+                <small
+                  v-if="consultorio.disponibilidad === 'libre'"
+                  class="text-disabled mt-1 block"
+                >
+                  Si elige buscar por un consultorio libre, no puedes elegir una
+                  especialidad
+                </small>
               </AccordionTab>
             </Accordion>
             <Accordion expand-icon="pi pi-plus" collapse-icon="pi pi-minus">
@@ -172,8 +181,14 @@
                       inputId="ocupado"
                       name="disponibilidad"
                       value="ocupado"
+                      @change="onDisponibilidadChange('ocupado')"
+                      :disabled="isDisponibilidadDisabled('ocupado')"
                     />
-                    <label for="ocupado" class="text-blue">Ocupado</label>
+                    <label
+                      for="ocupado"
+                      :class="getDisponibilidadLabelClass('ocupado')"
+                      >Ocupado</label
+                    >
                   </div>
                   <div class="rowCenter gap-1">
                     <Checkbox
@@ -181,17 +196,27 @@
                       inputId="libre"
                       name="disponibilidad"
                       value="libre"
+                      @change="onDisponibilidadChange('libre')"
+                      :disabled="isDisponibilidadDisabled('libre')"
                     />
-                    <label for="libre" class="text-blue">Libre</label>
+                    <label
+                      for="libre"
+                      :class="getDisponibilidadLabelClass('libre')"
+                      >Libre</label
+                    >
                   </div>
                 </div>
+                <small
+                  v-if="consultorio.especialidad"
+                  class="text-disabled mt-1 block"
+                >
+                  Si elige buscar por una especialidad, no puedes elegir un
+                  consultorio libre
+                </small>
               </AccordionTab>
             </Accordion>
             <Accordion
-              v-if="
-                consultorio.disponibilidad === 'libre' ||
-                consultorio.disponibilidad === 'ocupado'
-              "
+              v-if="consultorio.disponibilidad.length > 0"
               expand-icon="pi pi-plus"
               collapse-icon="pi pi-minus"
             >
@@ -238,7 +263,6 @@
 </template>
 
 <script>
-import { ref } from "vue";
 import { ROUTES_NAMES } from "@/constants/ROUTES_NAMES";
 import { sectorSearch } from "@/constants/sectorsMap.js";
 import { consultorios } from "@/constants/models";
@@ -247,31 +271,69 @@ import searchProfessional from "@/utils/searchProfessional";
 
 export default {
   name: "SearchView",
-  setup() {
-    const routes = ref(ROUTES_NAMES);
-    const loading = ref(false);
-    const showError = ref(false);
+  data() {
+    return {
+      routes: ROUTES_NAMES,
+      loading: false,
+      showError: false,
+      sectors: sectorSearch,
+      consultorios: consultorios,
+      especialidades: especialidades,
+      profesional: {
+        input: "",
+        especialidad: null,
+        turno: null,
+        horarioLaboral: "no",
+        fecha: new Date(),
+        horario: new Date(),
+      },
+      consultorio: {
+        input: "",
+        sector: null,
+        numero: null,
+        especialidad: null,
+        disponibilidad: [],
+        fecha: new Date(),
+        horario: new Date(),
+      },
+    };
+  },
+  methods: {
+    onEspecialidadChange() {
+      if (this.consultorio.especialidad) {
+        this.consultorio.disponibilidad = ["ocupado"];
+      } else {
+        this.consultorio.disponibilidad = [];
+      }
+    },
 
-    const profesional = ref({
-      input: "",
-      especialidad: null,
-      turno: null,
-      horarioLaboral: "no",
-      fecha: new Date(),
-      horario: new Date(),
-    });
+    isDisponibilidadDisabled(value) {
+      if (value === "libre") {
+        return !!this.consultorio.especialidad;
+      }
+      return false;
+    },
 
-    const consultorio = ref({
-      input: "",
-      sector: null,
-      numero: null,
-      especialidad: null,
-      disponibilidad: null,
-      fecha: new Date(),
-      horario: new Date(),
-    });
+    getDisponibilidadLabelClass(value) {
+      if (this.isDisponibilidadDisabled(value)) {
+        return "text-disabled";
+      }
+      return this.consultorio.disponibilidad.includes(value) ? "text-blue" : "";
+    },
 
-    const isFormEmpty = (formData) => {
+    onDisponibilidadChange(value) {
+      if (this.consultorio.disponibilidad.includes(value)) {
+        this.consultorio.disponibilidad = [];
+      } else {
+        this.consultorio.disponibilidad = [value];
+      }
+
+      if (value === "libre") {
+        this.consultorio.especialidad = null;
+      }
+    },
+
+    isFormEmpty(formData) {
       const isDefaultDate = (date) => {
         const defaultDate = new Date();
         return (
@@ -293,77 +355,80 @@ export default {
         if (key === "horarioLaboral" && value === "no") return true;
         if (key === "fecha" && isDefaultDate(value)) return true;
         if (key === "horario" && isDefaultTime(value)) return true;
+        if (key === "disponibilidad" && Array.isArray(value))
+          return value.length === 0;
         return (
           value === "" ||
           value === null ||
           (Array.isArray(value) && value.length === 0)
         );
       });
-    };
+    },
 
-    const searchProf = () => {
-      if (isFormEmpty(profesional.value)) {
-        showError.value = true;
+    searchProf() {
+      if (this.isFormEmpty(this.profesional)) {
+        this.showError = true;
         return;
       }
 
-      showError.value = false;
-      loading.value = true;
+      this.showError = false;
+      this.loading = true;
 
       const search = {
-        input_text: profesional.value.input,
-        specialty: profesional.value.especialidad
-          ? profesional.value.especialidad
+        input_text: this.profesional.input,
+        specialty: this.profesional.especialidad
+          ? this.profesional.especialidad
               .toLowerCase()
               .normalize("NFD")
               .replace(/[\u0300-\u036f]/g, "")
           : null,
         shift:
-          profesional.value.turno && profesional.value.turno.length !== 0
-            ? [...profesional.value.turno]
+          this.profesional.turno && this.profesional.turno.length !== 0
+            ? [...this.profesional.turno]
             : null,
         date_string:
-          profesional.value.fecha && profesional.value.horarioLaboral === "si"
-            ? profesional.value.fecha.toLocaleDateString("en-US")
+          this.profesional.fecha && this.profesional.horarioLaboral === "si"
+            ? this.profesional.fecha.toLocaleDateString("en-US")
             : null,
         time:
-          profesional.value.horario && profesional.value.horarioLaboral === "si"
-            ? `${profesional.value.horario.getHours()}:${profesional.value.horario.getMinutes()}`
+          this.profesional.horario && this.profesional.horarioLaboral === "si"
+            ? `${this.profesional.horario.getHours()}:${this.profesional.horario.getMinutes()}`
             : null,
       };
 
       const response = searchProfessional(search);
       console.log(response);
 
-      loading.value = false;
-    };
+      this.loading = false;
+    },
 
-    const searchCons = () => {
-      if (isFormEmpty(consultorio.value)) {
-        showError.value = true;
+    searchCons() {
+      if (this.isFormEmpty(this.consultorio)) {
+        this.showError = true;
         return;
       }
 
-      showError.value = false;
-      loading.value = true;
+      this.showError = false;
+      this.loading = true;
 
-      console.log(consultorio.value);
+      console.log(this.consultorio);
 
-      loading.value = false;
-    };
-
-    return {
-      routes,
-      consultorios,
-      sectors: sectorSearch,
-      especialidades,
-      loading,
-      showError,
-      profesional,
-      consultorio,
-      searchProf,
-      searchCons,
-    };
+      this.loading = false;
+    },
+  },
+  computed: {
+    isEspecialidadDisabled() {
+      return this.consultorio.disponibilidad.includes("libre");
+    },
+  },
+  watch: {
+    "consultorio.especialidad"(newValue) {
+      if (newValue) {
+        this.consultorio.disponibilidad = ["ocupado"];
+      } else {
+        this.consultorio.disponibilidad = [];
+      }
+    },
   },
 };
 </script>
