@@ -10,6 +10,17 @@ export const useAgendaStore = defineStore("agenda", {
 		};
 	},
 	actions: {
+		async getAgendasUser(cuil) {
+			const col = collection(db, "agendas");
+			const q = query(col, where("cuil", "==", cuil));
+			const querySnapshot = await getDocs(q);
+
+			if (!querySnapshot.empty) {
+				return querySnapshot.docs.map((doc) => doc.data());
+			} else {
+				return [];
+			}
+		},
 		async getAgendasConsultorio(sector, nombre) {
 			if (this.agendas[sector] && this.agendas[sector][nombre]) {
 				return this.agendas[sector][nombre];
