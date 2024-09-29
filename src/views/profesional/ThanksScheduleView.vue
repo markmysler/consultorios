@@ -1,6 +1,6 @@
 <template>
   <main class="w-full">
-    <h2 class="text-center">Gracias por confirmar tus horarios</h2>
-    <p class="text-center mt-3">En las siguientes 2 semanas se podrá empezar a usar la App.</p>
+    <h2 class="text-center">Gracias por confirmar los horarios de tus consultorios.</h2>
+    <p class="text-center mt-3">Pronto podrás hacer uso de esta App.</p>
   </main>
 </template>
