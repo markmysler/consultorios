@@ -40,9 +40,14 @@
             name: "Licencias",
           },
           {
-            icon: "iconLicencias",
-            link: ROUTES_NAMES.BlockAgenda,
-            name: "Bloquear Agenda Profesional",
+            icon: "iconProfesionales",
+            link: ROUTES_NAMES.Profesionales,
+            name: "Profesionales",
+          },
+          {
+            icon: "iconHorariosConsultorios",
+            link: ROUTES_NAMES.ConsultorioHours,
+            name: "Horarios Consultorios",
           },
         ],
       };
@@ -57,6 +62,8 @@
   }
   a {
     width: 48.5%;
+    height: 5.938rem;
+    justify-content: center;
     box-shadow: 0px 4px 4px 0px #00000040;
   }
   .name {
