@@ -7,14 +7,31 @@
         rechace.
       </p>
       <div class="rowCenter gap-6">
-        <div class="fecha">
+        <div class="licenciaDiv">
           <p>Comienzo</p>
-          <p>{{ formatDate(fechaLicencia.comienzo) }}</p>
+          <p>{{ formatDate(licenciaSolicitada.comienzo) }}</p>
         </div>
-        <div class="fecha">
+        <div class="licenciaDiv">
           <p>Fin</p>
-          <p>{{ formatDate(fechaLicencia.fin) }}</p>
+          <p>{{ formatDate(licenciaSolicitada.fin) }}</p>
         </div>
+      </div>
+      <div class="rowCenter gap-6">
+        <div class="licenciaDiv">
+          <p>Tipo de licencia</p>
+          <p>{{ licenciaSolicitada.tipo }}</p>
+        </div>
+        <div v-if="licenciaSolicitada.anio" class="licenciaDiv">
+          <p>Año de la licencia</p>
+          <p>{{ licenciaSolicitada.anio }}</p>
+        </div>
+      </div>
+      <div class="rowCenter gap-6">
+        <div class="licenciaDiv">
+          <p>Certificado de licencia</p>
+          <p>{{ licenciaSolicitada.imagen }}</p>
+        </div>
+
       </div>
       <router-link class="primaryButtonLink" :to="routes.Profile">
         Volver a mi perfil
@@ -31,9 +48,12 @@ export default {
   data() {
     return {
       routes: ROUTES_NAMES,
-      fechaLicencia: {
+      licenciaSolicitada: {
         comienzo: new Date(),
         fin: new Date(),
+        tipo: "Ordinaria",
+        anio: 2023,
+        imagen: "NombreDeArchivo.jpg"
       },
     };
   },
@@ -52,13 +72,13 @@ export default {
   line-height: 18.23px;
 }
 
-.fecha p:first-child {
+.licenciaDiv p:first-child {
   font-size: 0.75rem;
   font-weight: 500;
   line-height: 15.62px;
 }
 
-.fecha p:last-child {
+.licenciaDiv p:last-child {
   font-weight: 700;
   color: var(--color-blue);
   line-height: 20.83px;

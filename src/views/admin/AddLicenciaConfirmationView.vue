@@ -1,27 +1,37 @@
 <template>
   <main class="w-full">
-    <h2>Agenda bloqueada</h2>
+    <h2>Licencia agregada</h2>
     <div class="w-full column gap-3 mt-3">
       <p class="solicitada">
-        Se ha confirmado el bloqueo de la agenda del profesional
+        Se ha agregado una licencia para el profesional
         <span class="font-bold">Juan Perez.</span>
       </p>
       <div class="rowCenter gap-6">
         <div class="fecha">
           <p>Comienzo</p>
-          <p>{{ formatDate(fechaBloqueoAgenda.comienzo) }}</p>
+          <p>{{ formatDate(licenciaAgregada.comienzo) }}</p>
         </div>
         <div class="fecha">
           <p>Fin</p>
-          <p>{{ formatDate(fechaBloqueoAgenda.fin) }}</p>
+          <p>{{ formatDate(licenciaAgregada.fin) }}</p>
+        </div>
+      </div>
+      <div class="rowCenter gap-6">
+        <div class="fecha">
+          <p>Tipo de licencia</p>
+          <p>{{ licenciaAgregada.tipoLicencia }}</p>
+        </div>
+        <div class="fecha">
+          <p>Año de la licencia</p>
+          <p>{{ licenciaAgregada.anio }}</p>
         </div>
       </div>
       <div class="w-full column gap-2 mt-3">
-        <router-link class="primaryButtonLink" :to="routes.Search">
-          Ir al inicio
+        <router-link class="primaryButtonLink" :to="routes.Licencias">
+          Ir al Licencias
         </router-link>
-        <router-link class="secondaryButtonLink" :to="routes.BlockAgenda">
-          Bloquear otra agenda
+        <router-link class="secondaryButtonLink" :to="routes.AddLicencia">
+          Agregar otra licencia
         </router-link>
       </div>
     </div>
@@ -36,9 +46,11 @@
     data() {
       return {
         routes: ROUTES_NAMES,
-        fechaBloqueoAgenda: {
+        licenciaAgregada: {
           comienzo: new Date(),
           fin: new Date(),
+          tipoLicencia: "Ordinaria",
+          anio: 2023,
         },
       };
     },

@@ -153,6 +153,14 @@ footer a {
 	background-image: url("./icons/licencias.svg");
 }
 
+.iconProfesionales {
+	background-image: url("./icons/profesionales.svg");
+}
+
+.iconHorariosConsultorios {
+	background-image: url("./icons/horariosConsultorios.svg");
+}
+
 /* Backgrounds and Texts */
 
 .bg-light-blue {

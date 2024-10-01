@@ -27,8 +27,10 @@ import SupportConfirmationView from "../views/profesional/SupportConfirmationVie
 import AdminView from "../views/admin/AdminView.vue";
 import ReportsView from "../views/admin/ReportsView.vue";
 import LicenciasView from "../views/admin/LicenciasView.vue";
-import BlockAgendaView from "../views/admin/BlockAgendaView.vue";
-import BlockAgendaConfirmationView from "../views/admin/BlockAgendaConfirmationView.vue";
+import AddLicenciaView from "../views/admin/AddLicenciaView.vue";
+import AddLicenciaConfirmationView from "../views/admin/AddLicenciaConfirmationView.vue";
+import ProfesionalesView from "../views/admin/ProfesionalesView.vue";
+import ConsultoriosHoursView from "../views/admin/ConsultoriosHoursView.vue";
 
 // Layouts
 import LayoutNoAuth from "@/layouts/LayoutNoAuth.vue";
@@ -290,25 +292,49 @@ const router = createRouter({
 			meta: { requiresAuth: true, requiresRole: "admin" },
 		},
 		{
-			path: ROUTES_NAMES.BlockAgenda,
+			path: ROUTES_NAMES.AddLicencia,
 			component: LayoutAuth,
 			children: [
 				{
 					path: "",
-					component: BlockAgendaView,
-					name: "BlockAgenda",
+					component: AddLicenciaView,
+					name: "AddLicencia",
 				},
 			],
 			meta: { requiresAuth: true, requiresRole: "admin" },
 		},
 		{
-			path: ROUTES_NAMES.BlockAgendaConfirmation,
+			path: ROUTES_NAMES.AddLicenciaConfirmation,
 			component: LayoutAuth,
 			children: [
 				{
 					path: "",
-					component: BlockAgendaConfirmationView,
-					name: "BlockAgendaConfirmation",
+					component: AddLicenciaConfirmationView,
+					name: "AddLicenciaConfirmation",
+				},
+			],
+			meta: { requiresAuth: true, requiresRole: "admin" },
+		},
+		{
+			path: ROUTES_NAMES.Profesionales,
+			component: LayoutAuth,
+			children: [
+				{
+					path: "",
+					component: ProfesionalesView,
+					name: "Profesionales",
+				},
+			],
+			meta: { requiresAuth: true, requiresRole: "admin" },
+		},
+		{
+			path: ROUTES_NAMES.ConsultorioHours,
+			component: LayoutAuth,
+			children: [
+				{
+					path: "",
+					component: ConsultoriosHoursView,
+					name: "ConsultorioHours",
 				},
 			],
 			meta: { requiresAuth: true, requiresRole: "admin" },

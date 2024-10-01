@@ -19,6 +19,8 @@ import Textarea from 'primevue/textarea';
 import Stepper from 'primevue/stepper';
 import StepperPanel from 'primevue/stepperpanel';
 import Toast from 'primevue/toast';
+import InputNumber from 'primevue/inputnumber';
+import FileUpload from 'primevue/fileupload';
 
 export function importComponents(app) {
   app.component("Button", Button);
@@ -42,4 +44,6 @@ export function importComponents(app) {
   app.component("Stepper", Stepper);
   app.component("StepperPanel", StepperPanel);
   app.component("Toast", Toast);
+  app.component("InputNumber", InputNumber);
+  app.component("FileUpload", FileUpload);
 }

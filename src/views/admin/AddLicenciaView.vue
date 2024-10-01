@@ -1,14 +1,41 @@
 <template>
   <main class="w-full">
-    <h2>Solicitar Licencia</h2>
-    <Stepper class="w-full h-full requestLicencia bg-gray">
+    <h2>Agregar una licencia</h2>
+    <Stepper class="stepperAgenda w-full h-full bg-gray">
+      <!-- Paso 1 -->
+      <StepperPanel class="h-full columnSpaceBetween">
+        <template #content="{ nextCallback }">
+          <div>
+            <label for="">Busque un profesional por nombre o CUIL</label>
+            <IconField class="searchInput inputAgenda mb-2">
+              <InputIcon class="text-blue pi pi-search" />
+              <InputText
+                placeholder="Nombre de Agenda"
+                class="i"
+                v-model="licenciaAgregada.input"
+              />
+            </IconField>
+          </div>
+          <div class="column align-items-end">
+            <Button
+              label="Continuar"
+              class="w-7 primaryButton px-3"
+              icon="pi pi-arrow-right"
+              iconPos="right"
+              @click="nextCallback"
+            />
+          </div>
+        </template>
+      </StepperPanel>
+
+      <!-- Paso 2: Selección de Fechas -->
       <StepperPanel>
         <template #content="{ nextCallback }">
           <div class="column gap-3">
             <div class="w-full inputCalendar column gap-1">
               <label for="fechaInicio">Seleccione una fecha de inicio</label>
               <Calendar
-                v-model="licenciaSolicitada.fechaInicio"
+                v-model="licenciaAgregada.fechaInicio"
                 class="w-full"
                 placeholder="Fecha de inicio"
                 showIcon
@@ -26,7 +53,7 @@
             <div class="w-full inputCalendar column gap-1">
               <label for="fechaFin">Seleccione una fecha de fin</label>
               <Calendar
-                v-model="licenciaSolicitada.fechaFin"
+                v-model="licenciaAgregada.fechaFin"
                 class="w-full"
                 placeholder="Fecha de fin"
                 showIcon
@@ -53,6 +80,8 @@
           </div>
         </template>
       </StepperPanel>
+
+      <!-- Paso 3: Tipo de Licencia -->
       <StepperPanel>
         <template #content="{ nextCallback }">
           <div class="column gap-3">
@@ -61,7 +90,7 @@
               <Dropdown
                 id="tipoLicencia"
                 class="w-full dropDownNumero"
-                v-model="licenciaSolicitada.tipoLicencia"
+                v-model="licenciaAgregada.tipoLicencia"
                 placeholder="Tipo de licencia"
                 :options="tiposLicencia"
                 showClear
@@ -72,14 +101,14 @@
               </div>
             </div>
             <div
-              v-if="licenciaSolicitada.tipoLicencia === 'Ordinaria'"
+              v-if="licenciaAgregada.tipoLicencia === 'Ordinaria'"
               class="w-full column gap-1"
             >
               <label for="anio">Ingrese el año de la licencia</label>
               <InputNumber
                 id="anio"
                 class="w-full"
-                v-model="licenciaSolicitada.anio"
+                v-model="licenciaAgregada.anio"
                 placeholder="Año de la licencia"
               />
               <div class="error mt-1" v-if="validationErrors.anio">
@@ -99,73 +128,47 @@
           </div>
         </template>
       </StepperPanel>
-      <StepperPanel>
-        <template #content="{ nextCallback }">
-          <div class="column gap-3">
-            <div class="w-full uploadImagen column gap-1">
-              <label for="imagen"
-                >Cargue la imágen de su certificado de licencia</label
-              >
-              <FileUpload
-                mode="basic"
-                name="demo[]"
-                accept="image/*"
-                :maxFileSize="1000000"
-                v-model="licenciaSolicitada.imagen"
-                :auto="true"
-                chooseLabel="Seleccione un archivo"
-              />
-              <div class="error mt-1" v-if="validationErrors.imagen">
-                <span class="pi pi-exclamation-circle"></span>
-                <p>{{ validationErrors.imagen }}</p>
-              </div>
-            </div>
-          </div>
-          <div class="column align-items-end">
-            <Button
-              label="Continuar"
-              class="w-7 primaryButton px-3"
-              icon="pi pi-arrow-right"
-              iconPos="right"
-              @click="validarImagen(nextCallback)"
-            />
-          </div>
-        </template>
-      </StepperPanel>
+
+      <!-- Paso 4: Confirmación -->
       <StepperPanel>
         <template #content>
           <div>
-            <div class="rowSpaceBetween py-2">
-              <div class="column gap-3">
+            <div class="rowSpaceBetween datosContainer py-2">
+              <div class="datoLicencia column gap-1">
+                <p>Profesional</p>
+                <p class="datos text-blue">{{ licenciaAgregada.input }}</p>
+              </div>
+            </div>
+            <div class="fechasContainer rowSpaceBetween py-2">
+              <div class="datosContainer column gap-3">
                 <div class="datoLicencia column gap-1">
                   <p>Comienzo de licencia</p>
-                  <p>{{ formatDate(licenciaSolicitada.fechaInicio) }}</p>
+                  <p class="datos text-blue">
+                    {{ formatDate(licenciaAgregada.fechaInicio) }}
+                  </p>
                 </div>
                 <div class="datoLicencia column gap-1">
                   <p>Fin de licencia</p>
-                  <p>{{ formatDate(licenciaSolicitada.fechaFin) }}</p>
-                </div>
-              </div>
-            </div>
-            <div class="tipoContainer rowSpaceBetween py-2">
-              <div class="column gap-3">
-                <div class="datoLicencia column gap-1">
-                  <p>Tipo de licencia</p>
-                  <p>{{ licenciaSolicitada.tipoLicencia }}</p>
-                </div>
-                <div
-                  v-if="licenciaSolicitada.anio"
-                  class="datoLicencia column gap-1"
-                >
-                  <p>Año de la licencia</p>
-                  <p>{{ formatDate(licenciaSolicitada.anio) }}</p>
+                  <p class="datos text-blue">
+                    {{ formatDate(licenciaAgregada.fechaFin) }}
+                  </p>
                 </div>
               </div>
             </div>
             <div class="rowSpaceBetween py-2">
-              <div class="datoLicencia column gap-1">
-                <p>Certificado de licencia</p>
-                <p>{{ licenciaSolicitada.imagen }}</p>
+              <div class="datosContainer column gap-3">
+                <div class="datoLicencia column gap-1">
+                  <p>Tipo de licencia</p>
+                  <p class="datos text-blue">
+                    {{ licenciaAgregada.tipoLicencia }}
+                  </p>
+                </div>
+                <div class="datoLicencia column gap-1">
+                  <p>Año de la licencia</p>
+                  <p class="datos text-blue">
+                    {{ licenciaAgregada.anio }}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -174,7 +177,7 @@
             <Button
               class="primaryButton"
               label="Confirmar datos"
-              @click="solicitarLicencia"
+              @click="agregarLicencia"
             />
           </div>
         </template>
@@ -185,30 +188,28 @@
 
 <script>
 export default {
-  name: "RequestLicenciaView",
+  name: "AddLicenciaView",
   data() {
     return {
-      licenciaSolicitada: {
-        profesional: "Juan Perez",
+      licenciaAgregada: {
+        input: "",
         fechaInicio: null,
         fechaFin: null,
         tipoLicencia: null,
         anio: null,
-        imagen: null,
       },
       validationErrors: {
         fechaInicio: null,
         fechaFin: null,
         tipoLicencia: null,
         anio: null,
-        imagen: null,
       },
       tiposLicencia: ["Estrés", "Ordinaria", "Salubridad"],
     };
   },
   methods: {
     validateFechaInicio() {
-      if (!this.licenciaSolicitada.fechaInicio) {
+      if (!this.licenciaAgregada.fechaInicio) {
         this.validationErrors.fechaInicio =
           "Debe seleccionar una fecha de inicio.";
       } else {
@@ -216,11 +217,11 @@ export default {
       }
     },
     validateFechaFin() {
-      if (!this.licenciaSolicitada.fechaFin) {
+      if (!this.licenciaAgregada.fechaFin) {
         this.validationErrors.fechaFin = "Debe seleccionar una fecha de fin.";
       } else if (
-        new Date(this.licenciaSolicitada.fechaFin) <=
-        new Date(this.licenciaSolicitada.fechaInicio)
+        new Date(this.licenciaAgregada.fechaFin) <=
+        new Date(this.licenciaAgregada.fechaInicio)
       ) {
         this.validationErrors.fechaFin =
           "La fecha de fin debe ser posterior a la fecha de inicio.";
@@ -239,14 +240,14 @@ export default {
       }
     },
     validarTipoLicencia(nextCallback) {
-      if (!this.licenciaSolicitada.tipoLicencia) {
+      if (!this.licenciaAgregada.tipoLicencia) {
         this.validationErrors.tipoLicencia = "Debes elegir un tipo de licencia";
-      } else if (this.licenciaSolicitada.tipoLicencia === "Ordinaria") {
-        if (!this.licenciaSolicitada.anio) {
+      } else if (this.licenciaAgregada.tipoLicencia === "Ordinaria") {
+        if (!this.licenciaAgregada.anio) {
           this.validationErrors.anio = "Debes escribir un año de la licencia";
         } else if (
-          this.licenciaSolicitada.anio <= 1900 ||
-          this.licenciaSolicitada.anio > new Date().getFullYear()
+          this.licenciaAgregada.anio <= 1900 ||
+          this.licenciaAgregada.anio > new Date().getFullYear()
         ) {
           this.validationErrors.anio = "Ingrese un año válido";
         } else {
@@ -256,8 +257,8 @@ export default {
         nextCallback();
       }
     },
-    solicitarLicencia() {
-      console.log("Licencia Solicitada");
+    agregarLicencia() {
+      console.log("Bloqueo Confirmado");
     },
     formatDate(dateString) {
       const options = { day: "2-digit", month: "2-digit", year: "numeric" };
@@ -268,72 +269,44 @@ export default {
 </script>
 
 <style>
-.requestLicencia .p-stepper-nav {
+.stepperAgenda .p-stepper-nav {
   pointer-events: none;
-  margin: 1rem 0;
 }
 
-.requestLicencia .p-stepper-panels {
-  height: 90%;
-}
-
-.requestLicencia .p-stepper-content {
+.stepperAgenda .p-stepper-panels {
   height: 100%;
+}
+
+.stepperAgenda .p-stepper-content {
+  height: 87.5%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
-.inputCalendar .p-input-icon {
-  top: 27.5%;
-  left: 0.625rem;
-  right: auto;
-}
-
-.inputCalendar .p-calendar .p-datepicker-trigger-icon {
-  font-size: 1rem;
-  position: absolute;
-  top: 27.5%;
-  left: 0.688rem;
-  color: var(--color-blue);
-}
-
-.inputCalendar .p-inputtext {
-  padding-left: 2.188rem;
-}
-
-.uploadImagen .p-fileupload .p-button {
-  gap: 0.75rem;
-  background: transparent;
-  border-radius: 5px;
-  border: 1px solid var(--color-blue);
-  color: var(--color-blue);
-  padding: 0.625rem;
+.inputAgenda .p-inputtext {
+  font-weight: 500 !important;
 }
 </style>
 
 <style scoped>
 label {
-  font-weight: 600;
-}
-
-.editar {
+  font-weight: 500;
   font-size: 0.875rem;
 }
 
-.datoLicencia p:first-child {
+.datosContainer p {
   font-size: 0.75rem;
-  font-weight: 500;
   line-height: 15.62px;
 }
 
-.datoLicencia p:last-child {
+.datosContainer .datos {
+  font-size: 1rem;
   font-weight: 700;
-  color: var(--color-blue);
   line-height: 20.83px;
 }
 
-.tipoContainer {
+.fechasContainer {
   border-top: 1px solid var(--color-blue);
   border-bottom: 1px solid var(--color-blue);
 }

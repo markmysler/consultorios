@@ -1,6 +1,7 @@
 <template>
   <main class="w-full">
     <h2>Licencias</h2>
+    <router-link :to="routes.AddLicencia" class="primaryButtonLink mt-3">Agregar una licencia</router-link>
     <div class="w-full column gap-3 mt-3">
       <!-- Licencias aprobadas -->
       <div class="column gap-2">

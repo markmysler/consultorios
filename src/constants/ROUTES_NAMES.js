@@ -24,6 +24,8 @@ export const ROUTES_NAMES = {
 	Admin: "/admin",
 	Reports: "/admin/reports",
 	Licencias: "/admin/licencias",
-	BlockAgenda: "/admin/bloquear-agenda",
-	BlockAgendaConfirmation: "/admin/bloquear-agenda/confirmacion",
+	AddLicencia: "/admin/agregar-licencia",
+	AddLicenciaConfirmation: "/admin/agregar-licencia/confirmacion",
+	Profesionales: "/admin/profesionales",
+	ConsultorioHours: "/admin/horarios-consultorios",
 };
