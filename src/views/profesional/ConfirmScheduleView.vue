@@ -98,12 +98,25 @@ export default {
 			const ref = doc(db, "users", this.store.user.uid);
 			await updateDoc(ref, { confirmo_horarios: true })
 				.then(() => {
-					const routeTo = this.store.route_from || this.routes.Search;
-					this.store.route_from = null;
-					this.router.push(routeTo);
+					this.$toast.add({
+						severity: "success",
+						summary: "Horarios confirmados",
+						detail: "Gracias por confirmar los horarios de tus consultorios.",
+						life: 3000,
+					});
+
+					// const routeTo =
+					// 	this.store.route_from || ROUTES_NAMES.ThanksSchedule;
+					// this.store.route_from = null;
+					this.router.push(ROUTES_NAMES.ThanksSchedule);
 				})
 				.catch((err) => {
-					console.log(err);
+					this.$toast.add({
+						severity: "danger",
+						summary: "Hubo un error",
+						detail: "Intentelo de nuevo más tarde",
+						life: 3000,
+					});
 				});
 		},
 		async submitSupport(subject, text) {
