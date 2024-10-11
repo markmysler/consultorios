@@ -30,7 +30,7 @@
 
       <!-- Paso 2: Selección de Fechas -->
       <StepperPanel>
-        <template #content="{ nextCallback }">
+        <template #content="{ nextCallback, prevCallback }">
           <div class="column gap-3">
             <div class="w-full inputCalendar column gap-1">
               <label for="fechaInicio">Seleccione una fecha de inicio</label>
@@ -43,6 +43,7 @@
                 iconDisplay="input"
                 dateFormat="dd/mm/yy"
                 id="fechaInicio"
+                :minDate="min_date_start"
                 @change="validateFechaInicio"
               />
               <div class="error mt-1" v-if="validationErrors.fechaInicio">
@@ -61,6 +62,7 @@
                 iconDisplay="input"
                 dateFormat="dd/mm/yy"
                 id="fechaFin"
+                :minDate="min_date_end"
                 @change="validateFechaFin"
               />
               <div class="error mt-1" v-if="validationErrors.fechaFin">
@@ -69,7 +71,13 @@
               </div>
             </div>
           </div>
-          <div class="column align-items-end">
+          <div class="rowSpaceBetween">
+            <Button
+              aria-label="Atrás"
+              icon="pi pi-arrow-left"
+              class="btnAtras"
+              @click="prevCallback"
+            />
             <Button
               label="Continuar"
               class="w-7 primaryButton px-3"
@@ -83,7 +91,7 @@
 
       <!-- Paso 3: Tipo de Licencia -->
       <StepperPanel>
-        <template #content="{ nextCallback }">
+        <template #content="{ nextCallback, prevCallback }">
           <div class="column gap-3">
             <div class="w-full column gap-1">
               <label for="tipoLicencia">Seleccione un tipo de licencia</label>
@@ -110,6 +118,7 @@
                 class="w-full"
                 v-model="licenciaAgregada.anio"
                 placeholder="Año de la licencia"
+                :useGrouping="false"
               />
               <div class="error mt-1" v-if="validationErrors.anio">
                 <span class="pi pi-exclamation-circle"></span>
@@ -117,7 +126,13 @@
               </div>
             </div>
           </div>
-          <div class="column align-items-end">
+          <div class="rowSpaceBetween">
+            <Button
+              aria-label="Atrás"
+              icon="pi pi-arrow-left"
+              class="btnAtras"
+              @click="prevCallback"
+            />
             <Button
               label="Continuar"
               class="w-7 primaryButton px-3"
@@ -131,7 +146,7 @@
 
       <!-- Paso 4: Confirmación -->
       <StepperPanel>
-        <template #content>
+        <template #content="{ prevCallback }">
           <div>
             <div class="rowSpaceBetween datosContainer py-2">
               <div class="datoLicencia column gap-1">
@@ -163,7 +178,10 @@
                     {{ licenciaAgregada.tipoLicencia }}
                   </p>
                 </div>
-                <div class="datoLicencia column gap-1">
+                <div
+                  v-if="licenciaAgregada.anio"
+                  class="datoLicencia column gap-1"
+                >
                   <p>Año de la licencia</p>
                   <p class="datos text-blue">
                     {{ licenciaAgregada.anio }}
@@ -173,7 +191,13 @@
             </div>
           </div>
 
-          <div class="w-full rowCenter justify-content-between">
+          <div class="w-full rowSpaceBetween gap-3">
+            <Button
+              aria-label="Atrás"
+              icon="pi pi-arrow-left"
+              class="btnAtras"
+              @click="prevCallback"
+            />
             <Button
               class="primaryButton"
               label="Confirmar datos"
@@ -191,6 +215,8 @@ export default {
   name: "AddLicenciaView",
   data() {
     return {
+      min_date_start: new Date(),
+      min_date_end: new Date(),
       licenciaAgregada: {
         input: "",
         fechaInicio: null,
@@ -290,6 +316,12 @@ export default {
 </style>
 
 <style scoped>
+.btnAtras {
+  background: none;
+  border: none;
+  color: var(--color-blue);
+}
+
 label {
   font-weight: 500;
   font-size: 0.875rem;

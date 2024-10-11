@@ -437,7 +437,7 @@ export default {
 				.then(() => {
 					sendLicenciaRequestEmail(
 						`Solicitud de licencia de ${this.store.userData.nombre} ${this.store.userData.apellido}`,
-						`El profesional ${this.store.userData.nombre} ${this.store.userData.apellido} solicito una licencia\nPara mas informacion ingresa en la aplicacion de consultorios externos\nImagen de la licencia: ${licencia.imagen}`
+						`El profesional ${this.store.userData.nombre} ${this.store.userData.apellido} solicitó una licencia\nPara más información ingresó en la aplicación de consultorios externos\nImagen de la licencia: ${licencia.imagen}`
 					);
 					this.router.push({
 						path: ROUTES_NAMES.RequestLicenciaConfirmation,
