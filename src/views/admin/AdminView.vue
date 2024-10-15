@@ -1,6 +1,6 @@
 <template>
   <main class="w-full h-full justify-content-between">
-    <section>
+    <section class="w-full">
       <h2 class="text-center">Admin</h2>
       <div class="w-full linksAdmin rowCenter flex-wrap mt-3">
         <router-link
@@ -43,12 +43,7 @@
             icon: "iconProfesionales",
             link: ROUTES_NAMES.Profesionales,
             name: "Profesionales",
-          },
-          {
-            icon: "iconHorariosConsultorios",
-            link: ROUTES_NAMES.ConsultorioHours,
-            name: "Horarios Consultorios",
-          },
+          }
         ],
       };
     },

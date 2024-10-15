@@ -299,18 +299,22 @@ const licencias = [
 		inicio: "2024-08-10T03:00:00.000Z",
 		fin: "2024-08-27T03:00:00.000Z",
 		estado: "pendiente",
+		tipo: "ordinaria",
+		anio: "2024"
 	},
 	{
 		cuil: 20182930584,
 		inicio: "2024-09-15T03:00:00.000Z",
 		fin: "2024-10-30T03:00:00.000Z",
 		estado: "aprobada",
+		tipo: "estres",
 	},
 	{
 		cuil: 20182930584,
 		inicio: "2024-09-01T03:00:00.000Z",
 		fin: "2024-09-13T03:00:00.000Z",
 		estado: "rechazada",
+		tipo: "estres",
 	},
 ];
 

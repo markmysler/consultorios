@@ -30,7 +30,6 @@ import LicenciasView from "../views/admin/LicenciasView.vue";
 import AddLicenciaView from "../views/admin/AddLicenciaView.vue";
 import AddLicenciaConfirmationView from "../views/admin/AddLicenciaConfirmationView.vue";
 import ProfesionalesView from "../views/admin/ProfesionalesView.vue";
-import ConsultoriosHoursView from "../views/admin/ConsultoriosHoursView.vue";
 
 // Layouts
 import LayoutNoAuth from "@/layouts/LayoutNoAuth.vue";
@@ -323,18 +322,6 @@ const router = createRouter({
 					path: "",
 					component: ProfesionalesView,
 					name: "Profesionales",
-				},
-			],
-			meta: { requiresAuth: true, requiresRole: "admin" },
-		},
-		{
-			path: ROUTES_NAMES.ConsultorioHours,
-			component: LayoutAuth,
-			children: [
-				{
-					path: "",
-					component: ConsultoriosHoursView,
-					name: "ConsultorioHours",
 				},
 			],
 			meta: { requiresAuth: true, requiresRole: "admin" },
