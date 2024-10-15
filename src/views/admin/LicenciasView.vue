@@ -11,6 +11,7 @@
         <div
           v-for="(aprobada, index) in licenciasAprobadas"
           :key="index"
+          @click="abrirDialogDetalle(aprobada)"
           class="w-full licenciaCard rowCenter border-round-md"
         >
           <div class="nombre bg-light-blue py-2 px-3">
@@ -31,6 +32,7 @@
         <div
           class="column gap-3"
           v-for="(pendiente, index) in licenciasPendientes"
+          @click="abrirDialogDetalle(pendiente)"
           :key="index"
         >
           <div class="w-full licenciaCard rowCenter border-round-md">
@@ -66,6 +68,7 @@
         <div
           v-for="(rechazada, index) in licenciasRechazadas"
           :key="index"
+          @click="abrirDialogDetalle(rechazada)"
           class="w-full licenciaCard rowCenter border-round-md"
         >
           <div class="nombre bg-light-blue p-2">
@@ -145,10 +148,112 @@
       </div>
     </div>
   </Dialog>
+  <Dialog class="dialogDetalle w-11" v-model:visible="dialogDetalle">
+    <div class="column gap-2 p-2" v-if="licenciaSeleccionada">
+      <h3 class="text-center mb-1">Detalle de la licencia</h3>
+      <p>
+        <span class="titleDialog">Profesional:</span>
+        {{ getProfessionalFullName(licenciaSeleccionada.cuil) }}
+      </p>
+      <p>
+        <span class="titleDialog">Fecha de inicio:</span>
+        {{ formatDate(licenciaSeleccionada.inicio) }}
+      </p>
+      <p>
+        <span class="titleDialog">Fecha de fin:</span>
+        {{ formatDate(licenciaSeleccionada.fin) }}
+      </p>
+      <p>
+        <span class="titleDialog">Tipo de licencia:</span>
+        {{ capitalize(licenciaSeleccionada.tipo) }}
+      </p>
+      <p v-if="licenciaSeleccionada.tipo === 'ordinaria'">
+        <span class="titleDialog">Año de la licencia:</span>
+        {{ licenciaSeleccionada.anio }}
+      </p>
+      <div class="w-full rowSpaceBetween mt-2">
+        <Button class="btnDialog btn-light-blue" @click="dialogDetalle = false"
+          >Cerrar</Button
+        >
+        <Button
+          class="btnDialog primaryButton text-white"
+          @click="abrirDialogEditar(licenciaSeleccionada)"
+          >Editar</Button
+        >
+      </div>
+    </div>
+  </Dialog>
+  <Dialog class="dialogDetalle w-11" v-model:visible="dialogEditar">
+    <div class="column gap-2 p-2" v-if="licenciaSeleccionada">
+      <h3 class="text-center mb-1">Editar licencia</h3>
+      <div>
+        <label for="fechaInicio">Edite la fecha de inicio</label>
+        <Calendar
+          v-model="licenciaSeleccionada.inicio"
+          class="w-full"
+          showIcon
+          fluid
+          iconDisplay="input"
+          dateFormat="dd/mm/yy"
+          id="fechaInicio"
+          :disabled="!store.userData"
+          :minDate="min_date_start"
+          @change="validateFechaInicio"
+        />
+      </div>
+      <div>
+        <label for="fechaFin">Edite la fecha de fin</label>
+        <Calendar
+          v-model="licenciaSeleccionada.fin"
+          showIcon
+          fluid
+          iconDisplay="input"
+          dateFormat="dd/mm/yy"
+          id="fechaFin"
+        />
+      </div>
+      <div>
+        <label for="tipoLicencia">Edite el tipo de la licencia</label>
+        <Dropdown
+          id="tipoLicencia"
+          class="w-full dropDownNumero"
+          v-model="licenciaSeleccionada.tipo"
+          :options="tiposLicencia"
+          showClear
+        />
+      </div>
+      <div v-if="licenciaSeleccionada.tipo === 'ordinaria'">
+        <label for="anio">Edite el año de la licencia</label>
+        <InputNumber
+          id="anio"
+          class="w-full"
+          v-model="licenciaSeleccionada.anio"
+          :useGrouping="false"
+        />
+      </div>
+      <div>
+        <label for="estado">Edite el estado de la licencia</label>
+        <Dropdown
+          id="estado"
+          class="w-full dropDownNumero"
+          v-model="licenciaSeleccionada.estado"
+          :options="estadosLicencia"
+          showClear
+        />
+      </div>
+      <div class="w-full rowSpaceBetween mt-2">
+        <Button class="btnDialog btn-light-blue" @click="dialogEditar = false"
+          >Cancelar</Button
+        >
+        <Button class="btnDialog btn-green">Confirmar</Button>
+      </div>
+    </div>
+  </Dialog>
 </template>
 
 <script>
 import { ROUTES_NAMES } from "@/constants/ROUTES_NAMES";
+import { useUserStore } from "@/stores/user";
 import { licencias } from "@/constants/models";
 import { profesionales } from "@/constants/models";
 import { capitalize } from "vue";
@@ -158,8 +263,11 @@ export default {
   data() {
     return {
       routes: ROUTES_NAMES,
+      store: useUserStore(),
       dialogRechazar: false,
       dialogAprobar: false,
+      dialogDetalle: false,
+      dialogEditar: false,
       licenciaSeleccionada: null,
       licenciasAprobadas: licencias.filter(
         (licencia) => licencia.estado === "aprobada"
@@ -170,6 +278,17 @@ export default {
       licenciasRechazadas: licencias.filter(
         (licencia) => licencia.estado === "rechazada"
       ),
+      min_date_start: null,
+      min_date_end: null,
+      validationErrors: {
+        fechaInicio: null,
+        fechaFin: null,
+        tipoLicencia: null,
+        anio: null,
+        imagen: null,
+      },
+      tiposLicencia: ["Estrés", "Ordinaria", "Salubridad"],
+      estadosLicencia: ["Aprobada", "Pendiente", "Rechazada"],
     };
   },
   methods: {
@@ -189,17 +308,36 @@ export default {
       this.licenciaSeleccionada = licencia;
       this.dialogRechazar = true;
     },
+    abrirDialogDetalle(licencia) {
+      this.licenciaSeleccionada = licencia;
+      this.dialogDetalle = true;
+    },
+    abrirDialogEditar(licencia) {
+      this.licenciaSeleccionada = licencia;
+      this.dialogEditar = true;
+      this.dialogDetalle = false;
+    },
     capitalize,
+    validateFechaInicio() {
+      if (!this.licenciaSeleccionada.fechaInicio) {
+        this.validationErrors.fechaInicio =
+          "Debe seleccionar una fecha de inicio.";
+      } else {
+        this.validationErrors.fechaInicio = null;
+      }
+    },
   },
 };
 </script>
 
 <style>
-.dialogLicencias .p-dialog-header {
+.dialogLicencias .p-dialog-header,
+.dialogDetalle .p-dialog-header {
   justify-content: flex-end;
   border-radius: 0.625rem 0.625rem 0 0;
 }
-.dialogLicencias .p-dialog-content {
+.dialogLicencias .p-dialog-content,
+.dialogDetalle .p-dialog-content {
   border-radius: 0 0 0.625rem 0.625rem;
 }
 </style>
@@ -212,6 +350,7 @@ export default {
 .licenciaCard {
   box-shadow: 0px 4px 4px 0px #00000040;
   font-size: 0.75rem;
+  cursor: pointer;
 }
 
 .nombre {
@@ -244,7 +383,8 @@ export default {
   line-height: 18.23px;
 }
 
-.dialogLicencias p {
+.dialogLicencias p,
+.dialogDetalle p {
   font-size: 0.75rem;
   line-height: 15.62px;
 }
