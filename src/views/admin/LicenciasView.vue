@@ -103,7 +103,7 @@
       </p>
       <p>
         <span class="titleDialog">Tipo de licencia:</span>
-        {{ capitalize(licenciaSeleccionada.tipo) }}
+        {{ licenciaSeleccionada.tipo }}
       </p>
       <p v-if="licenciaSeleccionada.tipo === 'ordinaria'">
         <span class="titleDialog">Año de la licencia:</span>
@@ -184,7 +184,7 @@
     </div>
   </Dialog>
   <Dialog class="dialogDetalle w-11" v-model:visible="dialogEditar">
-    <div class="column gap-2 p-2" v-if="licenciaSeleccionada">
+    <div class="editarLicencia column gap-2 p-2" v-if="licenciaSeleccionada">
       <h3 class="text-center mb-1">Editar licencia</h3>
       <div>
         <label for="fechaInicio">Edite la fecha de inicio</label>
@@ -200,17 +200,28 @@
           :minDate="min_date_start"
           @change="validateFechaInicio"
         />
+        <div class="error mt-1" v-if="validationErrors.fechaInicio">
+          <span class="pi pi-exclamation-circle"></span>
+          <p>{{ validationErrors.fechaInicio }}</p>
+        </div>
       </div>
       <div>
         <label for="fechaFin">Edite la fecha de fin</label>
         <Calendar
+          class="w-full"
           v-model="licenciaSeleccionada.fin"
           showIcon
           fluid
           iconDisplay="input"
           dateFormat="dd/mm/yy"
           id="fechaFin"
+          :minDate="min_date_end"
+          @change="validateFechaFin"
         />
+        <div class="error mt-1" v-if="validationErrors.fechaFin">
+          <span class="pi pi-exclamation-circle"></span>
+          <p>{{ validationErrors.fechaFin }}</p>
+        </div>
       </div>
       <div>
         <label for="tipoLicencia">Edite el tipo de la licencia</label>
@@ -219,8 +230,12 @@
           class="w-full dropDownNumero"
           v-model="licenciaSeleccionada.tipo"
           :options="tiposLicencia"
-          showClear
+          @change="validarTipoLicencia"
         />
+        <div class="error mt-1" v-if="validationErrors.tipoLicencia">
+          <span class="pi pi-exclamation-circle"></span>
+          <p>{{ validationErrors.tipoLicencia }}</p>
+        </div>
       </div>
       <div v-if="licenciaSeleccionada.tipo === 'ordinaria'">
         <label for="anio">Edite el año de la licencia</label>
@@ -230,6 +245,10 @@
           v-model="licenciaSeleccionada.anio"
           :useGrouping="false"
         />
+        <div class="error mt-1" v-if="validationErrors.anio">
+          <span class="pi pi-exclamation-circle"></span>
+          <p>{{ validationErrors.anio }}</p>
+        </div>
       </div>
       <div>
         <label for="estado">Edite el estado de la licencia</label>
@@ -238,7 +257,6 @@
           class="w-full dropDownNumero"
           v-model="licenciaSeleccionada.estado"
           :options="estadosLicencia"
-          showClear
         />
       </div>
       <div class="w-full rowSpaceBetween mt-2">
@@ -287,7 +305,7 @@ export default {
         anio: null,
         imagen: null,
       },
-      tiposLicencia: ["Estrés", "Ordinaria", "Salubridad"],
+      tiposLicencia: ["Estrés", "ordinaria", "Salubridad"],
       estadosLicencia: ["Aprobada", "Pendiente", "Rechazada"],
     };
   },
@@ -326,6 +344,49 @@ export default {
         this.validationErrors.fechaInicio = null;
       }
     },
+    validateFechaFin() {
+      if (!this.licenciaSolicitada.fechaFin) {
+        this.validationErrors.fechaFin = "Debe seleccionar una fecha de fin.";
+      } else if (
+        new Date(this.licenciaSolicitada.fechaFin) <=
+        new Date(this.licenciaSolicitada.fechaInicio)
+      ) {
+        this.validationErrors.fechaFin =
+          "La fecha de fin debe ser posterior a la fecha de inicio.";
+      } else {
+        this.validationErrors.fechaFin = null;
+      }
+    },
+    validarFechas() {
+      this.validateFechaInicio();
+      this.validateFechaFin();
+    },
+    validarTipoLicencia() {
+      if (!this.licenciaSolicitada.tipoLicencia) {
+        this.validationErrors.tipoLicencia = "Debes elegir un tipo de licencia";
+      } else if (this.licenciaSolicitada.tipoLicencia === "Ordinaria") {
+        if (!this.licenciaSolicitada.anio) {
+          this.validationErrors.anio = "Debes escribir un año de la licencia";
+        } else if (
+          this.licenciaSolicitada.anio <= 1900 ||
+          this.licenciaSolicitada.anio > new Date().getFullYear()
+        ) {
+          this.validationErrors.anio = "Ingrese un año válido";
+        }
+      }
+    },
+  },
+  mounted() {
+    this.min_date_start = new Date();
+    this.min_date_start.setDate(
+      this.min_date_start.getDate() + this.store.userData.anticipacion_licencia
+    );
+    this.min_date_end = new Date();
+    this.min_date_end.setDate(
+      this.min_date_end.getDate() +
+        this.store.userData.anticipacion_licencia +
+        1
+    );
   },
 };
 </script>
@@ -339,6 +400,43 @@ export default {
 .dialogLicencias .p-dialog-content,
 .dialogDetalle .p-dialog-content {
   border-radius: 0 0 0.625rem 0.625rem;
+}
+
+.editarLicencia .p-inputtext,
+.editarLicencia .p-dropdown {
+  background-color: white;
+}
+
+.editarLicencia .p-input-icon {
+  top: 27.5%;
+  left: 0.625rem;
+  right: auto;
+}
+
+.editarLicencia .p-calendar .p-datepicker-trigger-icon {
+  font-size: 1rem;
+  position: absolute;
+  top: 27.5%;
+  left: 0.688rem;
+  color: var(--color-blue);
+}
+
+.editarLicencia .p-inputtext {
+  padding-left: 2.188rem;
+}
+
+.editarLicencia .p-inputnumber-input,
+.editarLicencia .p-dropdown-label {
+  color: #000f27;
+  padding-left: 1rem;
+}
+
+.editarLicencia .p-dropdown .p-inputtext {
+  border-radius: 5px;
+}
+
+label {
+  font-weight: 500;
 }
 </style>
 
