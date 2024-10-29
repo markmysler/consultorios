@@ -29,7 +29,8 @@ import ReportsView from "../views/admin/ReportsView.vue";
 import LicenciasView from "../views/admin/LicenciasView.vue";
 import AddLicenciaView from "../views/admin/AddLicenciaView.vue";
 import AddLicenciaConfirmationView from "../views/admin/AddLicenciaConfirmationView.vue";
-import ProfesionalesView from "../views/admin/ProfesionalesView.vue";
+import AddProfesionalesView from "../views/admin/AddProfesionalesView.vue";
+import AddProfesionalesConfirmationView from "../views/admin/AddProfesionalesConfirmationView.vue";
 
 // Layouts
 import LayoutNoAuth from "@/layouts/LayoutNoAuth.vue";
@@ -315,13 +316,25 @@ const router = createRouter({
 			meta: { requiresAuth: true, requiresRole: "admin" },
 		},
 		{
-			path: ROUTES_NAMES.Profesionales,
+			path: ROUTES_NAMES.AddProfesionales,
 			component: LayoutAuth,
 			children: [
 				{
 					path: "",
-					component: ProfesionalesView,
-					name: "Profesionales",
+					component: AddProfesionalesView,
+					name: "AddProfesionales",
+				},
+			],
+			meta: { requiresAuth: true, requiresRole: "admin" },
+		},
+		{
+			path: ROUTES_NAMES.AddProfesionalesConfirmation,
+			component: LayoutAuth,
+			children: [
+				{
+					path: "",
+					component: AddProfesionalesConfirmationView,
+					name: "AddProfesionalesConfirmation",
 				},
 			],
 			meta: { requiresAuth: true, requiresRole: "admin" },

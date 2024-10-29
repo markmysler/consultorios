@@ -21,6 +21,7 @@ import StepperPanel from 'primevue/stepperpanel';
 import Toast from 'primevue/toast';
 import InputNumber from 'primevue/inputnumber';
 import FileUpload from 'primevue/fileupload';
+import MultiSelect from 'primevue/multiselect';
 
 export function importComponents(app) {
   app.component("Button", Button);
@@ -46,4 +47,5 @@ export function importComponents(app) {
   app.component("Toast", Toast);
   app.component("InputNumber", InputNumber);
   app.component("FileUpload", FileUpload);
+  app.component("MultiSelect", MultiSelect);
 }
