@@ -309,7 +309,6 @@ import { sectorSearch } from "@/constants/sectorsMap.js";
 import { consultorios } from "@/constants/models";
 import { especialidades } from "@/constants/especialidades";
 import searchProfessional from "@/utils/searchProfessional";
-import searchProfessionalFS from "@/utils/searchProfessionalFS";
 
 export default {
 	name: "SearchView",
@@ -436,7 +435,7 @@ export default {
 						? `${this.profesional.horario.getHours()}:${this.profesional.horario.getMinutes()}`
 						: null,
 			};
-			const res = searchProfessionalFS(search);
+			const res = searchProfessional(search);
 			console.log(res);
 
 			this.loading = false;
