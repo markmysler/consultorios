@@ -428,6 +428,7 @@ export default {
 			licencia["fin"] = this.licenciaSolicitada.fechaFin.toJSON();
 			licencia["imagen"] = this.licenciaSolicitada.imagen;
 			licencia["tipo"] = this.licenciaSolicitada.tipoLicencia;
+			licencia["created_at"] = +new Date().toUTCString();
 
 			if (licencia["tipo"] === "ordinaria") {
 				licencia["anio"] = this.licenciaSolicitada.anio;

@@ -31,7 +31,15 @@ export const useUserStore = defineStore("user", {
 		},
 		async preloadUserData(currentUser) {
 			this.user = currentUser;
-			if (currentUser) {
+			if (
+				currentUser &&
+				!(
+					this.userData &&
+					this.userRole &&
+					this.userAgendas &&
+					this.userLicencias
+				)
+			) {
 				this.loading = true;
 				if (!this.userData || !this.userRole) {
 					this.userData = await this.getUserData(currentUser.uid);

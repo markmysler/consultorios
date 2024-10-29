@@ -1,5 +1,5 @@
 import { db } from "@/firebase/init";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
 import { defineStore } from "pinia";
 
 export const useLicenciaStore = defineStore("licencia", {
@@ -30,10 +30,24 @@ export const useLicenciaStore = defineStore("licencia", {
 			const col = collection(db, "licencias");
 			const q = query(col, where("cuil", "in", newCuils));
 			const querySnapshot = await getDocs(q);
-			querySnapshot.forEach((snap) => {
-				this.licencias[snap.data()["cuil"]] = snap.data();
+			newCuils.forEach((cuil) => {
+				this.licencias[cuil] = querySnapshot.docs
+					.filter((doc) => doc.cuil == cuil)
+					.map((doc) => doc.data());
 			});
 			return this.licencias;
+		},
+		async getMostRecentLicencias() {
+			const col = collection(db, "licencias");
+			const q = query(col, orderBy("created_at", "desc"));
+			const querySnapshot = await getDocs(q);
+			const mostRecentLicencias = querySnapshot.docs.map((doc) => {
+				const data = doc.data();
+				data["id"] = doc.id;
+				return data;
+			});
+
+			return mostRecentLicencias;
 		},
 	},
 });
