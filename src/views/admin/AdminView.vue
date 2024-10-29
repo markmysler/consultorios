@@ -41,8 +41,8 @@
           },
           {
             icon: "iconProfesionales",
-            link: ROUTES_NAMES.Profesionales,
-            name: "Profesionales",
+            link: ROUTES_NAMES.AddProfesionales,
+            name: "Agregar Profesionales",
           }
         ],
       };
@@ -60,6 +60,7 @@
     height: 5.938rem;
     justify-content: center;
     box-shadow: 0px 4px 4px 0px #00000040;
+    padding: 0 0.5rem;
   }
   .name {
     font-size: 0.875rem;

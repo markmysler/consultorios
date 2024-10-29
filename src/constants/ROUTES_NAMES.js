@@ -26,6 +26,7 @@ export const ROUTES_NAMES = {
 	Licencias: "/admin/licencias",
 	AddLicencia: "/admin/agregar-licencia",
 	AddLicenciaConfirmation: "/admin/agregar-licencia/confirmacion",
-	Profesionales: "/admin/profesionales",
+	AddProfesionales: "/admin/agregar-profesionales",
+	AddProfesionalesConfirmation: "/admin/agregar-profesionales/confirmacion",
 	ConsultorioHours: "/admin/horarios-consultorios",
 };

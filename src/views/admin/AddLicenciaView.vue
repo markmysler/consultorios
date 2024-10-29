@@ -284,6 +284,7 @@ export default {
       }
     },
     agregarLicencia() {
+      // Router push AddLicenciaConfirmation
       console.log("Bloqueo Confirmado");
     },
     formatDate(dateString) {
