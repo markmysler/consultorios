@@ -170,7 +170,6 @@
                 v-model="profesional.tipoAgenda"
                 placeholder="Seleccione un tipo de agenda"
                 :options="tiposAgenda"
-                filter
                 showClear
               />
               <div class="error mt-1" v-if="validationErrors.tipoAgenda">
