@@ -308,7 +308,7 @@ import { ROUTES_NAMES } from "@/constants/ROUTES_NAMES";
 import { sectorSearch } from "@/constants/sectorsMap.js";
 import { consultorios } from "@/constants/models";
 import { especialidades } from "@/constants/especialidades";
-import searchProfessional from "@/utils/searchProfessional";
+import searchProfessional from "@/utils/searchProfessionalFS";
 
 export default {
 	name: "SearchView",
@@ -402,7 +402,7 @@ export default {
 			});
 		},
 
-		searchProf() {
+		async searchProf() {
 			if (this.isFormEmpty(this.profesional)) {
 				this.showError = true;
 				return;
@@ -435,7 +435,7 @@ export default {
 						? `${this.profesional.horario.getHours()}:${this.profesional.horario.getMinutes()}`
 						: null,
 			};
-			const res = searchProfessional(search);
+			const res = await searchProfessional(search);
 			console.log(res);
 
 			this.loading = false;
