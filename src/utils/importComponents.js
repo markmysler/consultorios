@@ -22,6 +22,7 @@ import Toast from 'primevue/toast';
 import InputNumber from 'primevue/inputnumber';
 import FileUpload from 'primevue/fileupload';
 import MultiSelect from 'primevue/multiselect';
+import Paginator from 'primevue/paginator';
 
 export function importComponents(app) {
   app.component("Button", Button);
@@ -48,4 +49,5 @@ export function importComponents(app) {
   app.component("InputNumber", InputNumber);
   app.component("FileUpload", FileUpload);
   app.component("MultiSelect", MultiSelect);
+  app.component("Paginator", Paginator);
 }
