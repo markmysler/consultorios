@@ -15,6 +15,11 @@
               :aprobada="true"
             />
           </div>
+          <!-- <Paginator
+            :rows="5"
+            :totalRecords="licenciasAprobadas.length"
+            template="FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
+          ></Paginator> -->
         </TabPanel>
         <TabPanel header="Pendientes">
           <div v-for="(licencia, index) in licenciasPendientes" :key="index">
