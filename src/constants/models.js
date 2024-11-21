@@ -227,6 +227,393 @@ const consultorios = {
 	PasilloRuggeri: ["18", "19", "20", "21"],
 };
 
+const CONSULTORIOS_LIST = [
+	{
+		nombre: "1",
+		sector: "A",
+	},
+	{
+		nombre: "2",
+		sector: "A",
+	},
+	{
+		nombre: "3",
+		sector: "A",
+	},
+	{
+		nombre: "4",
+		sector: "A",
+	},
+	{
+		nombre: "5",
+		sector: "A",
+	},
+	{
+		nombre: "6",
+		sector: "A",
+	},
+	{
+		nombre: "7",
+		sector: "A",
+	},
+	{
+		nombre: "8",
+		sector: "A",
+	},
+	{
+		nombre: "9",
+		sector: "A",
+	},
+	{
+		nombre: "10",
+		sector: "A",
+	},
+	{
+		nombre: "11",
+		sector: "A",
+	},
+	{
+		nombre: "12",
+		sector: "A",
+	},
+	{
+		nombre: "13",
+		sector: "A",
+	},
+	{
+		nombre: "14",
+		sector: "A",
+	},
+	{
+		nombre: "15",
+		sector: "A",
+	},
+	{
+		nombre: "16",
+		sector: "A",
+	},
+	{
+		nombre: "17",
+		sector: "A",
+	},
+	{
+		nombre: "19",
+		sector: "A",
+	},
+	{
+		nombre: "A",
+		sector: "A",
+	},
+	{
+		nombre: "B",
+		sector: "A",
+	},
+	{
+		nombre: "C",
+		sector: "A",
+	},
+	{
+		nombre: "D",
+		sector: "A",
+	},
+	{
+		nombre: "E",
+		sector: "A",
+	},
+	{
+		nombre: "F",
+		sector: "A",
+	},
+	{
+		nombre: "1",
+		sector: "B",
+	},
+	{
+		nombre: "2",
+		sector: "B",
+	},
+	{
+		nombre: "3",
+		sector: "B",
+	},
+	{
+		nombre: "4",
+		sector: "B",
+	},
+	{
+		nombre: "5",
+		sector: "B",
+	},
+	{
+		nombre: "6",
+		sector: "B",
+	},
+	{
+		nombre: "7",
+		sector: "B",
+	},
+	{
+		nombre: "8",
+		sector: "B",
+	},
+	{
+		nombre: "9",
+		sector: "B",
+	},
+	{
+		nombre: "10",
+		sector: "B",
+	},
+	{
+		nombre: "11",
+		sector: "B",
+	},
+	{
+		nombre: "12",
+		sector: "B",
+	},
+	{
+		nombre: "13",
+		sector: "B",
+	},
+	{
+		nombre: "14",
+		sector: "B",
+	},
+	{
+		nombre: "15",
+		sector: "B",
+	},
+	{
+		nombre: "16",
+		sector: "B",
+	},
+	{
+		nombre: "17",
+		sector: "B",
+	},
+	{
+		nombre: "19",
+		sector: "B",
+	},
+	{
+		nombre: "A",
+		sector: "B",
+	},
+	{
+		nombre: "B",
+		sector: "B",
+	},
+	{
+		nombre: "C",
+		sector: "B",
+	},
+	{
+		nombre: "D",
+		sector: "B",
+	},
+	{
+		nombre: "E",
+		sector: "B",
+	},
+	{
+		nombre: "F",
+		sector: "B",
+	},
+	{
+		nombre: "0A",
+		sector: "C",
+	},
+	{
+		nombre: "0B",
+		sector: "C",
+	},
+	{
+		nombre: "1",
+		sector: "C",
+	},
+	{
+		nombre: "2",
+		sector: "C",
+	},
+	{
+		nombre: "3",
+		sector: "C",
+	},
+	{
+		nombre: "4",
+		sector: "C",
+	},
+	{
+		nombre: "5",
+		sector: "C",
+	},
+	{
+		nombre: "6",
+		sector: "C",
+	},
+	{
+		nombre: "7",
+		sector: "C",
+	},
+	{
+		nombre: "8",
+		sector: "C",
+	},
+	{
+		nombre: "9",
+		sector: "C",
+	},
+	{
+		nombre: "10",
+		sector: "C",
+	},
+	{
+		nombre: "11",
+		sector: "C",
+	},
+	{
+		nombre: "12",
+		sector: "C",
+	},
+	{
+		nombre: "13",
+		sector: "C",
+	},
+	{
+		nombre: "14",
+		sector: "C",
+	},
+	{
+		nombre: "15",
+		sector: "C",
+	},
+	{
+		nombre: "16",
+		sector: "C",
+	},
+	{
+		nombre: "18",
+		sector: "C",
+	},
+	{
+		nombre: "1",
+		sector: "Infectologia",
+	},
+	{
+		nombre: "2",
+		sector: "Infectologia",
+	},
+	{
+		nombre: "3",
+		sector: "Infectologia",
+	},
+	{
+		nombre: "4",
+		sector: "Infectologia",
+	},
+	{
+		nombre: "5",
+		sector: "Infectologia",
+	},
+	{
+		nombre: "6",
+		sector: "Infectologia",
+	},
+	{
+		nombre: "7",
+		sector: "Infectologia",
+	},
+	{
+		nombre: "1",
+		sector: "OncologiaCuidadosPaliativos",
+	},
+	{
+		nombre: "2",
+		sector: "OncologiaCuidadosPaliativos",
+	},
+	{
+		nombre: "3",
+		sector: "OncologiaCuidadosPaliativos",
+	},
+	{
+		nombre: "4",
+		sector: "OncologiaCuidadosPaliativos",
+	},
+	{
+		nombre: "1",
+		sector: "CentralPracticas",
+	},
+	{
+		nombre: "2",
+		sector: "CentralPracticas",
+	},
+	{
+		nombre: "3",
+		sector: "CentralPracticas",
+	},
+	{
+		nombre: "4",
+		sector: "CentralPracticas",
+	},
+	{
+		nombre: "5",
+		sector: "CentralPracticas",
+	},
+	{
+		nombre: "6",
+		sector: "CentralPracticas",
+	},
+	{
+		nombre: "7",
+		sector: "CentralPracticas",
+	},
+	{
+		nombre: "8",
+		sector: "CentralPracticas",
+	},
+	{
+		nombre: "9",
+		sector: "CentralPracticas",
+	},
+	{
+		nombre: "10",
+		sector: "CentralPracticas",
+	},
+	{
+		nombre: "11",
+		sector: "CentralPracticas",
+	},
+	{
+		nombre: "12",
+		sector: "CentralPracticas",
+	},
+	{
+		nombre: "13",
+		sector: "CentralPracticas",
+	},
+	{
+		nombre: "14",
+		sector: "CentralPracticas",
+	},
+	{
+		nombre: "18",
+		sector: "PasilloRuggeri",
+	},
+	{
+		nombre: "19",
+		sector: "PasilloRuggeri",
+	},
+	{
+		nombre: "20",
+		sector: "PasilloRuggeri",
+	},
+	{
+		nombre: "21",
+		sector: "PasilloRuggeri",
+	},
+];
+
 const agendas = [
 	{
 		cuil: 20182930584,
@@ -300,7 +687,7 @@ const licencias = [
 		fin: "2024-08-27T03:00:00.000Z",
 		estado: "pendiente",
 		tipo: "ordinaria",
-		anio: "2024"
+		anio: "2024",
 	},
 	{
 		cuil: 20182930584,
@@ -318,4 +705,4 @@ const licencias = [
 	},
 ];
 
-export { profesionales, consultorios, agendas, licencias };
+export { profesionales, consultorios, agendas, licencias, CONSULTORIOS_LIST };

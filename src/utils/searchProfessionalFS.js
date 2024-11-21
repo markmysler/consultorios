@@ -2,7 +2,7 @@ import { db } from "@/firebase/init";
 import { getDocs, query, where, collection } from "firebase/firestore";
 import { alogliaClient } from "@/firebase/algolia.js";
 
-export default async function searchProfessional(search) {
+export async function searchProfessional(search) {
 	// Apply input_text filter (checks nombre, apellido, or cuil)
 	let queryStr = "";
 	if (search.input_text) {
@@ -86,7 +86,7 @@ export default async function searchProfessional(search) {
 }
 
 // Helper function to check if a time is within a given time range
-function isTimeInRange(time, range) {
+export function isTimeInRange(time, range) {
 	const [inputHours, inputMinutes] = time.split(":").map(Number);
 	const [startTime, endTime] = range.split("-");
 	const [startHours, startMinutes] = startTime.split(":").map(Number);
@@ -101,15 +101,3 @@ function isTimeInRange(time, range) {
 		inputTotalMinutes <= endTotalMinutes
 	);
 }
-
-// Search for "test"
-// const { results } = await alogliaClient.search({
-// 	requests: [
-// 		{
-// 			indexName: "users",
-// 			query: "mark",
-// 		},
-// 	],
-// });
-
-// console.log(results);
