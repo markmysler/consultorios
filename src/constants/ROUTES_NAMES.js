@@ -8,7 +8,6 @@ export const ROUTES_NAMES = {
 	ConfirmSchedule: "/confirmar-horarios",
 	ThanksSchedule: "/gracias-por-confirmar-horarios",
 	Search: "/buscador",
-	SearchResults: "/buscador/resultados",
 	Sectors: "/sectores",
 	SectorDetails: "/sectores",
 	ConsultorioDetails: "/sectores",

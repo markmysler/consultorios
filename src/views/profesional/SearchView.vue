@@ -321,7 +321,7 @@
 				v-for="(resultado, index) in searchResponse"
 				:key="index"
 				class="w-full resultado rowCenter border-round-md no-underline"
-				:to="routes.ProfesionalDetails + '1'"
+				:to="routes.ProfesionalDetails + '/' + resultado.objectID"
 			>
 				<div class="w-5 bg-light-blue border-round-left-md py-2 px-3">
 					<p class="text-blue font-bold">

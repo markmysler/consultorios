@@ -11,7 +11,6 @@ import ResetPasswordConfirmationView from "../views/auth/ResetPasswordConfirmati
 import ConfirmScheduleView from "../views/profesional/ConfirmScheduleView.vue";
 import ThanksScheduleView from "../views/profesional/ThanksScheduleView.vue";
 import SearchView from "../views/profesional/SearchView.vue";
-import SearchResultsView from "../views/profesional/SearchResultsView.vue";
 import SectorsView from "../views/profesional/SectorsView.vue";
 import SectorDetailsView from "../views/profesional/SectorDetailsView.vue";
 import ConsultorioDetailsView from "../views/profesional/ConsultorioDetailsView.vue";
@@ -107,18 +106,6 @@ const router = createRouter({
 					path: "",
 					component: SearchView,
 					name: "Search",
-				},
-			],
-			meta: { requiresAuth: true },
-		},
-		{
-			path: ROUTES_NAMES.SearchResults,
-			component: LayoutAuth,
-			children: [
-				{
-					path: "",
-					component: SearchResultsView,
-					name: "SearchResults",
 				},
 			],
 			meta: { requiresAuth: true },

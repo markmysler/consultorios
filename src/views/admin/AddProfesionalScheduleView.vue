@@ -48,7 +48,12 @@
                 <p>{{ validationErrors.horariosIguales }}</p>
               </div>
             </div>
-            
+            <div v-if="agenda.horariosIguales === 'Iguales'">
+              <p>Indique el horario de consultorio para los siguientes días</p>
+            </div>
+            <div v-if="agenda.horariosIguales === 'Diferentes'">
+              <p>Indique el horario de consultorio para cada día</p>
+            </div>
           </div>
           <div class="rowSpaceBetween">
             <Button aria-label="Atrás" icon="pi pi-arrow-left" class="btnAtras" @click="prevCallback()" />
@@ -72,7 +77,7 @@ export default {
         especialidad: null,
         dias: [],
         nombreAgenda: '',
-        horariosIguales: null,
+        horariosIguales: 'Iguales',
         horarios: [],
       },
       validationErrors: {
@@ -174,7 +179,7 @@ export default {
   gap: 1rem;
 }
 
-.stepContent > div {
+.stepContent>div {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -185,5 +190,4 @@ export default {
   border: none;
   color: var(--color-blue);
 }
-
 </style>
