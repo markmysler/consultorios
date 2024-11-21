@@ -1,5 +1,5 @@
 <template>
-	<div class="w-full h-screen columnSpaceBetweenCenter">
+	<div class="w-full layout">
 		<HeaderComponent />
 		<router-view />
 	</div>

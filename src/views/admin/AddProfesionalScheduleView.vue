@@ -16,7 +16,7 @@
             </div>
             <div>
               <label for="dias">Seleccione los días de la semana en los que quiere reservar</label>
-              <SelectButton v-model="agenda.dias" :options="semana" multiple />
+              <SelectButton v-model="agenda.dias" :options="semana.map(dia => dia.letra)" multiple />
               <div class="error mt-1" v-if="validationErrors.dias">
                 <span class="pi pi-exclamation-circle"></span>
                 <p>{{ validationErrors.dias }}</p>
@@ -50,9 +50,18 @@
             </div>
             <div v-if="agenda.horariosIguales === 'Iguales'">
               <p>Indique el horario de consultorio para los siguientes días</p>
+              <div>
+                <h3>{{ agenda.dias.map(letra => semana.find(dia => dia.letra === letra).dia).join(', ') }}</h3>
+              </div>
+              <InicioFin />
             </div>
             <div v-if="agenda.horariosIguales === 'Diferentes'">
               <p>Indique el horario de consultorio para cada día</p>
+              <Accordion v-for="(dia, index) in output" :key="index">
+                <AccordionTab :header="diaSeleccionado(dia.dia)">
+                  <InicioFin :dia="dia" />
+                </AccordionTab>
+              </Accordion>
             </div>
           </div>
           <div class="rowSpaceBetween">
@@ -67,9 +76,13 @@
 </template>
 
 <script>
+import InicioFin from '@/components/admin/InicioFin.vue';
 import { especialidades } from '@/constants/especialidades';
 
 export default {
+  components: {
+    InicioFin,
+  },
   data() {
     return {
       especialidades: especialidades,
@@ -80,12 +93,20 @@ export default {
         horariosIguales: 'Iguales',
         horarios: [],
       },
+      output: [],
       validationErrors: {
         especialidad: false,
         dias: false,
         nombreAgenda: false,
       },
-      semana: ["L", "M", "X", "J", "V", "S"],
+      semana: [
+        { dia: "Lunes", letra: "L" },
+        { dia: "Martes", letra: "M" },
+        { dia: "Miércoles", letra: "X" },
+        { dia: "Jueves", letra: "J" },
+        { dia: "Viernes", letra: "V" },
+        { dia: "Sábado", letra: "S" },
+      ],
       igualesDiferentes: ["Iguales", "Diferentes"],
     }
   },
@@ -126,6 +147,20 @@ export default {
         this.validationErrors.nombreAgenda = null;
       }
     },
+    diaSeleccionado(letra) {
+      return this.semana.find(s => s.letra === letra).dia;
+    }
+  },
+  watch: {
+    'agenda.dias': function (dias) {
+      this.output = dias.map(dia => {
+        return {
+          'dia': dia,
+          'horarios': []
+        }
+      });
+      console.log(this.output);
+    }
   }
 }
 </script>

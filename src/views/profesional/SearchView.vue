@@ -1,140 +1,62 @@
 <template>
-	<main class="w-full">
+	<main class="w-full column">
 		<h2>Buscar por:</h2>
-		<TabView class="w-full mt-3">
+		<TabView class="w-full">
 			<TabPanel header="Profesional">
 				<form class="pt-3" @submit.prevent="searchProf">
 					<IconField class="searchInput">
 						<InputIcon class="text-blue pi pi-search" />
-						<InputText
-							placeholder="Nombre, Apellido, CUIL"
-							class="i"
-							v-model="profesional.input"
-						/>
+						<InputText placeholder="Nombre, Apellido, CUIL" class="i" v-model="profesional.input" />
 					</IconField>
 					<div class="accordions pt-2">
-						<Accordion
-							class="accordionEspecialidad"
-							expand-icon="pi pi-plus"
-							collapse-icon="pi pi-minus"
-						>
+						<Accordion class="accordionEspecialidad" expand-icon="pi pi-plus" collapse-icon="pi pi-minus">
 							<AccordionTab header="Especialidad">
-								<Dropdown
-									class="w-full"
-									v-model="profesional.especialidad"
-									placeholder="Seleccione una especialidad"
-									:options="especialidades"
-									filter
-									showClear
-								/>
+								<Dropdown class="w-full" v-model="profesional.especialidad" placeholder="Seleccione una especialidad"
+									:options="especialidades" filter showClear />
 							</AccordionTab>
 						</Accordion>
-						<Accordion
-							class="accordionEspecialidad"
-							expand-icon="pi pi-plus"
-							collapse-icon="pi pi-minus"
-						>
+						<Accordion class="accordionEspecialidad" expand-icon="pi pi-plus" collapse-icon="pi pi-minus">
 							<AccordionTab header="Subespecialidad">
-								<Dropdown
-									class="w-full"
-									v-model="profesional.subespecialidad"
-									placeholder="Seleccione una subespecialidad"
-									:options="subespecialidades"
-									filter
-									showClear
-								/>
+								<Dropdown class="w-full" v-model="profesional.subespecialidad"
+									placeholder="Seleccione una subespecialidad" :options="subespecialidades" filter showClear />
 							</AccordionTab>
 						</Accordion>
-						<Accordion
-							expand-icon="pi pi-plus"
-							collapse-icon="pi pi-minus"
-						>
+						<Accordion expand-icon="pi pi-plus" collapse-icon="pi pi-minus">
 							<AccordionTab header="Turno">
 								<div class="checkboxes rowCenter">
 									<div class="rowCenter gap-1">
-										<Checkbox
-											v-model="profesional.turno"
-											inputId="matutino"
-											name="turno"
-											value="matutino"
-										/>
-										<label class="text-blue" for="matutino"
-											>Matutino</label
-										>
+										<Checkbox v-model="profesional.turno" inputId="matutino" name="turno" value="matutino" />
+										<label class="text-blue" for="matutino">Matutino</label>
 									</div>
 									<div class="rowCenter gap-1">
-										<Checkbox
-											v-model="profesional.turno"
-											inputId="vespertino"
-											name="turno"
-											value="vespertino"
-										/>
-										<label
-											class="text-blue"
-											for="vespertino"
-											>Vespertino</label
-										>
+										<Checkbox v-model="profesional.turno" inputId="vespertino" name="turno" value="vespertino" />
+										<label class="text-blue" for="vespertino">Vespertino</label>
 									</div>
 								</div>
 							</AccordionTab>
 						</Accordion>
-						<Accordion
-							expand-icon="pi pi-plus"
-							collapse-icon="pi pi-minus"
-						>
+						<Accordion expand-icon="pi pi-plus" collapse-icon="pi pi-minus">
 							<AccordionTab header="Especificar horario laboral">
 								<div class="rowCenter gap-6">
 									<div class="rowCenter gap-1">
-										<RadioButton
-											v-model="profesional.horarioLaboral"
-											inputId="si"
-											name="horarioLaboral"
-											value="si"
-										/>
-										<label class="text-blue" for="si"
-											>Si</label
-										>
+										<RadioButton v-model="profesional.horarioLaboral" inputId="si" name="horarioLaboral" value="si" />
+										<label class="text-blue" for="si">Si</label>
 									</div>
 									<div class="rowCenter gap-1">
-										<RadioButton
-											v-model="profesional.horarioLaboral"
-											inputId="no"
-											name="horarioLaboral"
-											value="no"
-										/>
+										<RadioButton v-model="profesional.horarioLaboral" inputId="no" name="horarioLaboral" value="no" />
 										<label for="no">No</label>
 									</div>
 								</div>
 							</AccordionTab>
 						</Accordion>
-						<Accordion
-							v-if="profesional.horarioLaboral === 'si'"
-							expand-icon="pi pi-plus"
-							collapse-icon="pi pi-minus"
-						>
+						<Accordion v-if="profesional.horarioLaboral === 'si'" expand-icon="pi pi-plus" collapse-icon="pi pi-minus">
 							<AccordionTab header="Horario Laboral">
 								<div class="rowCenter gap-2">
-									<Calendar
-										v-model="profesional.fecha"
-										showIcon
-										fluid
-										iconDisplay="input"
-										dateFormat="dd/mm/yy"
-										id="date"
-									/>
-									<Calendar
-										v-model="profesional.horario"
-										showIcon
-										fluid
-										timeOnly
-										iconDisplay="input"
-										id="time"
-									>
+									<Calendar v-model="profesional.fecha" showIcon fluid iconDisplay="input" dateFormat="dd/mm/yy"
+										id="date" />
+									<Calendar v-model="profesional.horario" showIcon fluid timeOnly iconDisplay="input" id="time">
 										<template #inputicon="slotProps">
-											<i
-												class="pi pi-clock"
-												@click="slotProps.clickCallback"
-											/>
+											<i class="pi pi-clock" @click="slotProps.clickCallback" />
 										</template>
 									</Calendar>
 								</div>
@@ -145,158 +67,78 @@
 						<span class="pi pi-exclamation-circle"></span>
 						<p>Complete al menos un campo antes de buscar.</p>
 					</div>
-					<Button
-						:loading="loading"
-						class="primaryButton mt-3"
-						label="Buscar"
-						type="submit"
-					></Button>
+					<Button :loading="loading" class="primaryButton mt-3" label="Buscar" type="submit"></Button>
 				</form>
 			</TabPanel>
 			<TabPanel header="Consultorio">
 				<form class="pt-3" @submit.prevent="searchCons">
 					<IconField class="searchInput mb-2">
 						<InputIcon class="text-blue pi pi-search" />
-						<InputText
-							placeholder="Nombre de Agenda"
-							class="i"
-							v-model="consultorio.input"
-						/>
+						<InputText placeholder="Nombre de Agenda" class="i" v-model="consultorio.input" />
 					</IconField>
 					<div class="rowCenter gap-2">
-						<Dropdown
-							class="w-full dropDownSector"
-							v-model="consultorio.sector"
-							placeholder="Sector"
-							:options="Object.keys(sectors)"
-							showClear
-						/>
-						<Dropdown
-							class="w-full dropDownNumero"
-							v-model="consultorio.numero"
-							placeholder="Número"
-							:options="consultorios[sectors[consultorio.sector]]"
-							showClear
-						/>
+						<Dropdown class="w-full dropDownSector" v-model="consultorio.sector" placeholder="Sector"
+							:options="Object.keys(sectors)" showClear />
+						<Dropdown class="w-full dropDownNumero" v-model="consultorio.numero" placeholder="Número"
+							:options="consultorios[sectors[consultorio.sector]]" showClear />
 					</div>
 					<div class="accordions pt-2">
-						<Accordion
-							class="accordionEspecialidad"
-							expand-icon="pi pi-plus"
-							collapse-icon="pi pi-minus"
-						>
+						<Accordion class="accordionEspecialidad" expand-icon="pi pi-plus" collapse-icon="pi pi-minus">
 							<AccordionTab header="Especialidad">
-								<Dropdown
-									class="w-full"
-									v-model="consultorio.especialidad"
-									placeholder="Seleccione una especialidad"
-									:options="especialidades"
-									filter
-									showClear
-									:disabled="isEspecialidadDisabled"
-									@change="onEspecialidadChange"
-								/>
-								<small
-									v-if="
-										consultorio.disponibilidad === 'libre'
-									"
-									class="text-disabled mt-1 block"
-								>
+								<Dropdown class="w-full" v-model="consultorio.especialidad" placeholder="Seleccione una especialidad"
+									:options="especialidades" filter showClear :disabled="isEspecialidadDisabled"
+									@change="onEspecialidadChange" />
+								<small v-if="
+									consultorio.disponibilidad === 'libre'
+								" class="text-disabled mt-1 block">
 									Si elige buscar por un consultorio libre, no
 									puedes elegir una especialidad
 								</small>
 							</AccordionTab>
 						</Accordion>
-						<Accordion
-							expand-icon="pi pi-plus"
-							collapse-icon="pi pi-minus"
-						>
+						<Accordion expand-icon="pi pi-plus" collapse-icon="pi pi-minus">
 							<AccordionTab header="Disponibilidad">
 								<div class="w-full rowCenter gap-6">
 									<div class="rowCenter gap-1">
-										<RadioButton
-											v-model="consultorio.disponibilidad"
-											inputId="ocupado"
-											name="disponibilidad"
-											value="ocupado"
-										/>
+										<RadioButton v-model="consultorio.disponibilidad" inputId="ocupado" name="disponibilidad"
+											value="ocupado" />
 
-										<label
-											for="ocupado"
-											:class="
-												getDisponibilidadLabelClass(
-													'ocupado'
-												)
-											"
-											>Ocupado</label
-										>
+										<label for="ocupado" :class="getDisponibilidadLabelClass(
+											'ocupado'
+										)
+											">Ocupado</label>
 									</div>
 									<div class="rowCenter gap-1">
-										<RadioButton
-											v-model="consultorio.disponibilidad"
-											inputId="libre"
-											name="disponibilidad"
-											value="libre"
-										/>
+										<RadioButton v-model="consultorio.disponibilidad" inputId="libre" name="disponibilidad"
+											value="libre" />
 
-										<label
-											for="libre"
-											:class="
-												getDisponibilidadLabelClass(
-													'libre'
-												)
-											"
-											>Libre</label
-										>
+										<label for="libre" :class="getDisponibilidadLabelClass(
+											'libre'
+										)
+											">Libre</label>
 									</div>
-									<button
-										class="btnCruz"
-										v-if="
-											!consultorio.especialidad &&
-											consultorio.disponibilidad
-										"
-										@click="consultorio.disponibilidad = ''"
-									>
+									<button class="btnCruz" v-if="
+										!consultorio.especialidad &&
+										consultorio.disponibilidad
+									" @click="consultorio.disponibilidad = ''">
 										X
 									</button>
 								</div>
-								<small
-									v-if="consultorio.especialidad"
-									class="text-disabled mt-1 block"
-								>
+								<small v-if="consultorio.especialidad" class="text-disabled mt-1 block">
 									Si elige buscar por una especialidad, no
 									puedes elegir un consultorio libre
 								</small>
 							</AccordionTab>
 						</Accordion>
-						<Accordion
-							v-if="consultorio.disponibilidad.length > 0"
-							expand-icon="pi pi-plus"
-							collapse-icon="pi pi-minus"
-						>
+						<Accordion v-if="consultorio.disponibilidad.length > 0" expand-icon="pi pi-plus"
+							collapse-icon="pi pi-minus">
 							<AccordionTab header="Fecha y hora">
 								<div class="rowCenter gap-2">
-									<Calendar
-										v-model="consultorio.fecha"
-										showIcon
-										fluid
-										iconDisplay="input"
-										dateFormat="dd/mm/yy"
-										id="date"
-									/>
-									<Calendar
-										v-model="consultorio.horario"
-										showIcon
-										fluid
-										timeOnly
-										iconDisplay="input"
-										id="time"
-									>
+									<Calendar v-model="consultorio.fecha" showIcon fluid iconDisplay="input" dateFormat="dd/mm/yy"
+										id="date" />
+									<Calendar v-model="consultorio.horario" showIcon fluid timeOnly iconDisplay="input" id="time">
 										<template #inputicon="slotProps">
-											<i
-												class="pi pi-clock"
-												@click="slotProps.clickCallback"
-											/>
+											<i class="pi pi-clock" @click="slotProps.clickCallback" />
 										</template>
 									</Calendar>
 								</div>
@@ -307,47 +149,34 @@
 						<span class="pi pi-exclamation-circle"></span>
 						<p>Complete al menos un campo antes de buscar.</p>
 					</div>
-					<Button
-						:loading="loading"
-						class="primaryButton mt-3"
-						label="Buscar"
-						type="submit"
-					></Button>
+					<Button :loading="loading" class="primaryButton mt-3" label="Buscar" type="submit"></Button>
 				</form>
 			</TabPanel>
 		</TabView>
-		<div v-if="searchResponse !== null">
-			<router-link
-				v-for="(resultado, index) in searchResponse"
-				:key="index"
-				class="w-full resultado rowCenter border-round-md no-underline"
-				:to="routes.ProfesionalDetails + '/' + resultado.cuil"
-			>
-				<div class="w-5 bg-light-blue border-round-left-md py-2 px-3">
-					<p
-						class="text-blue font-bold"
-						v-html="
-							resultado._highlightResult.especialidades
-								.map((e) => e.value)
-								.join(', ')
-						"
-					></p>
-				</div>
-				<div class="w-8 bg-dark-gray border-round-right-md py-2 px-3">
-					<p
-						class="text-blue font-bold"
-						v-html="
-							resultado._highlightResult.nombre.value +
+		<div class="results column" v-if="searchResponse !== null && searchResponse.length !== 0">
+			<router-link v-for="(resultado, index) in searchResponse" :key="index"
+				class="w-full resultado column bg-dark-gray no-underline"
+				:to="routes.ProfesionalDetails + '/' + resultado.cuil">
+				<div class="rowCenter">
+					<div class="w-5 bg-light-blue py-2 px-3">
+						<p class="text-blue font-bold" v-html="resultado._highlightResult.nombre.value +
 							' ' +
 							resultado._highlightResult.apellido.value
-						"
-					></p>
+							"></p>
+					</div>
+					<div class="w-8 bg-dark-gray py-2 px-3">
+						<p class="text-blue font-bold" v-html="resultado._highlightResult.cuil.value"></p>
+					</div>
+				</div>
+				<div class="bg-dark-gray">
+					<p class="text-blue font-bold"
+						v-html="resultado._highlightResult.especialidades.map((e) => capitalize(e.value)).join(', ')"></p>
+					<p class="text-blue font-bold"
+						v-html="resultado._highlightResult.subespecialidades.map((s) => capitalize(s.value)).join(', ')"></p>
 				</div>
 			</router-link>
 		</div>
-		<div
-			v-if="Array.isArray(searchResponse) && searchResponse.length === 0"
-		>
+		<div class="results" v-else-if="searchResponse !== null && searchResponse.length === 0">
 			<div class="noResultados bg-red border-round-md px-3 py-2">
 				<p class="text-center text-white">
 					No hay resultados para tu búsqueda.
@@ -366,6 +195,7 @@ import { sectorSearch } from "@/constants/sectorsMap.js";
 import { consultorios } from "@/constants/models";
 import { especialidades, subespecialidades } from "@/constants/especialidades";
 import searchProfessional from "@/utils/searchProfessionalFS";
+import { capitalize } from "vue";
 
 export default {
 	name: "SearchView",
@@ -475,29 +305,29 @@ export default {
 				input_text: this.profesional.input,
 				subspecialty: this.profesional.subespecialidad
 					? this.profesional.subespecialidad
-							.toLowerCase()
-							.normalize("NFD")
-							.replace(/[\u0300-\u036f]/g, "")
+						.toLowerCase()
+						.normalize("NFD")
+						.replace(/[\u0300-\u036f]/g, "")
 					: null,
 				specialty: this.profesional.especialidad
 					? this.profesional.especialidad
-							.toLowerCase()
-							.normalize("NFD")
-							.replace(/[\u0300-\u036f]/g, "")
+						.toLowerCase()
+						.normalize("NFD")
+						.replace(/[\u0300-\u036f]/g, "")
 					: null,
 				shift:
 					this.profesional.turno &&
-					this.profesional.turno.length !== 0
+						this.profesional.turno.length !== 0
 						? [...this.profesional.turno]
 						: null,
 				date_string:
 					this.profesional.fecha &&
-					this.profesional.horarioLaboral === "si"
+						this.profesional.horarioLaboral === "si"
 						? this.profesional.fecha.toLocaleDateString("en-US")
 						: null,
 				time:
 					this.profesional.horario &&
-					this.profesional.horarioLaboral === "si"
+						this.profesional.horarioLaboral === "si"
 						? `${this.profesional.horario.getHours()}:${this.profesional.horario.getMinutes()}`
 						: null,
 			};
@@ -520,6 +350,8 @@ export default {
 
 			this.loading = false;
 		},
+
+		capitalize,
 	},
 	computed: {
 		isEspecialidadDisabled() {
@@ -626,12 +458,16 @@ export default {
 	background: var(--color-blue);
 }
 
-* > em {
+*>em {
 	background-color: yellow !important;
 }
 </style>
 
 <style scoped>
+main {
+	gap: 1.25rem;
+}
+
 .btnCruz {
 	align-self: flex-end;
 	border: none;
@@ -641,8 +477,31 @@ export default {
 	cursor: pointer;
 }
 
+.results {
+	width: 100%;
+	gap: 0.75rem;
+	border-top: 1px solid #777777;
+	padding-top: 1.25rem;
+}
+
 .resultado {
+	border-radius: 5px;
 	box-shadow: 0px 4px 4px 0px #00000040;
+}
+
+.resultado>div:first-of-type>div:first-of-type {
+	border-top-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+
+.resultado>div:first-of-type>div:last-of-type {
+	border-top-right-radius: 5px;
+}
+
+.resultado>div:last-of-type {
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	padding: 0.5rem 1rem;
 }
 
 .resultado p,
