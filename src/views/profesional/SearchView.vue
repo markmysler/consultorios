@@ -324,13 +324,14 @@
 				:to="routes.ProfesionalDetails + '/' + resultado.cuil"
 			>
 				<div class="w-5 bg-light-blue border-round-left-md py-2 px-3">
-					<p class="text-blue font-bold">
-						{{
+					<p
+						class="text-blue font-bold"
+						v-html="
 							resultado._highlightResult.especialidades
 								.map((e) => e.value)
-								.join(", ")
-						}}
-					</p>
+								.join(', ')
+						"
+					></p>
 				</div>
 				<div class="w-8 bg-dark-gray border-round-right-md py-2 px-3">
 					<p
