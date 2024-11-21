@@ -700,6 +700,7 @@ main {
 
 .results {
 	width: 100%;
+	max-width: 400px;
 	gap: 0.75rem;
 	border-top: 1px solid #777777;
 	padding-top: 1.25rem;
