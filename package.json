@@ -10,6 +10,7 @@
     "start": "git pull origin main && npm i && vite --open"
   },
   "dependencies": {
+    "algoliasearch": "^5.15.0",
     "axios": "^1.7.7",
     "firebase": "^10.10.0",
     "pinia": "^2.1.7",

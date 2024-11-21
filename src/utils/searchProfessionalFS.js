@@ -1,39 +1,31 @@
 import { db } from "@/firebase/init";
-import { getDocs, query, where, collection, or } from "firebase/firestore";
+import { getDocs, query, where, collection } from "firebase/firestore";
+import { alogliaClient } from "@/firebase/algolia.js";
 
 export default async function searchProfessional(search) {
-	const usersRef = collection(db, "users");
-	let q = query(usersRef);
-
 	// Apply input_text filter (checks nombre, apellido, or cuil)
+	let queryStr = "";
 	if (search.input_text) {
-		q = query(
-			q,
-			or(
-				where("nombre", "==", search.input_text),
-				where("apellido", "==", search.input_text),
-				where("cuil", "==", search.input_text)
-			)
-		);
+		queryStr = search.input_text;
 	}
-
-	// Separate specialty query to work around Firestore limitations
 	if (search.specialty) {
-		q = query(
-			q,
-			where("especialidades", "array-contains", search.specialty)
-		);
+		queryStr += `, ${search.specialty}`;
 	}
-
-	const userDocs = await getDocs(q);
-	let users = userDocs.docs.map((doc) => doc.data());
-
-	// Apply shift filter in memory if both specialty and shift are provided
-	if (search.shift && search.shift.length > 0) {
-		users = users.filter((user) =>
-			search.shift.every((shift) => user.turnos.includes(shift))
-		);
+	if (search.shift) {
+		search.shift.forEach((sh) => {
+			queryStr += `, ${sh}`;
+		});
 	}
+	const { results } = await alogliaClient.search({
+		requests: [
+			{
+				indexName: "users",
+				query: queryStr,
+			},
+		],
+	});
+
+	let users = results[0].hits;
 
 	// Apply date and time filter if provided
 	if (search.date_string && search.time) {
@@ -106,3 +98,15 @@ function isTimeInRange(time, range) {
 		inputTotalMinutes <= endTotalMinutes
 	);
 }
+
+// Search for "test"
+// const { results } = await alogliaClient.search({
+// 	requests: [
+// 		{
+// 			indexName: "users",
+// 			query: "mark",
+// 		},
+// 	],
+// });
+
+// console.log(results);
