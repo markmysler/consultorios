@@ -31,6 +31,7 @@ import AddLicenciaView from "../views/admin/AddLicenciaView.vue";
 import AddLicenciaConfirmationView from "../views/admin/AddLicenciaConfirmationView.vue";
 import AddProfesionalesView from "../views/admin/AddProfesionalesView.vue";
 import AddProfesionalesConfirmationView from "../views/admin/AddProfesionalesConfirmationView.vue";
+import AddProfesionalScheduleView from "../views/admin/AddProfesionalScheduleView.vue";
 
 // Layouts
 import LayoutNoAuth from "@/layouts/LayoutNoAuth.vue";
@@ -335,6 +336,18 @@ const router = createRouter({
 					path: "",
 					component: AddProfesionalesConfirmationView,
 					name: "AddProfesionalesConfirmation",
+				},
+			],
+			meta: { requiresAuth: true, requiresRole: "admin" },
+		},
+		{
+			path: ROUTES_NAMES.AddProfesionalSchedule,
+			component: LayoutAuth,
+			children: [
+				{
+					path: "",
+					component: AddProfesionalScheduleView,
+					name: "AddProfesionalSchedule",
 				},
 			],
 			meta: { requiresAuth: true, requiresRole: "admin" },

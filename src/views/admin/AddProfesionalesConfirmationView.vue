@@ -16,7 +16,7 @@
         sección “Mi Perfil”.
       </p>
       <div class="w-full column gap-2 mt-3">
-        <router-link class="primaryButtonLink" :to="routes.Licencias">
+        <router-link class="primaryButtonLink" :to="routes.AddProfesionalSchedule">
           Agregar Consultorios a {{ formatName(profesional.nombre) }}
           {{ profesional.apellido }}
         </router-link>

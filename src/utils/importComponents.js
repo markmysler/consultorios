@@ -23,6 +23,7 @@ import InputNumber from 'primevue/inputnumber';
 import FileUpload from 'primevue/fileupload';
 import MultiSelect from 'primevue/multiselect';
 import Paginator from 'primevue/paginator';
+import SelectButton from 'primevue/selectbutton';
 
 export function importComponents(app) {
   app.component("Button", Button);
@@ -50,4 +51,5 @@ export function importComponents(app) {
   app.component("FileUpload", FileUpload);
   app.component("MultiSelect", MultiSelect);
   app.component("Paginator", Paginator);
+  app.component("SelectButton", SelectButton);
 }

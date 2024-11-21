@@ -29,4 +29,5 @@ export const ROUTES_NAMES = {
 	AddProfesionales: "/admin/agregar-profesionales",
 	AddProfesionalesConfirmation: "/admin/agregar-profesionales/confirmacion",
 	ConsultorioHours: "/admin/horarios-consultorios",
+	AddProfesionalSchedule: "/admin/agregar-horarios-profesional",
 };

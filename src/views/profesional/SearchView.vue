@@ -30,6 +30,22 @@
 							</AccordionTab>
 						</Accordion>
 						<Accordion
+							class="accordionEspecialidad"
+							expand-icon="pi pi-plus"
+							collapse-icon="pi pi-minus"
+						>
+							<AccordionTab header="Subespecialidad">
+								<Dropdown
+									class="w-full"
+									v-model="profesional.subespecialidad"
+									placeholder="Seleccione una subespecialidad"
+									:options="subespecialidades"
+									filter
+									showClear
+								/>
+							</AccordionTab>
+						</Accordion>
+						<Accordion
 							expand-icon="pi pi-plus"
 							collapse-icon="pi pi-minus"
 						>
@@ -307,7 +323,7 @@
 import { ROUTES_NAMES } from "@/constants/ROUTES_NAMES";
 import { sectorSearch } from "@/constants/sectorsMap.js";
 import { consultorios } from "@/constants/models";
-import { especialidades } from "@/constants/especialidades";
+import { especialidades, subespecialidades } from "@/constants/especialidades";
 import searchProfessional from "@/utils/searchProfessionalFS";
 
 export default {
@@ -320,9 +336,11 @@ export default {
 			sectors: sectorSearch,
 			consultorios: consultorios,
 			especialidades: especialidades,
+			subespecialidades: subespecialidades,
 			profesional: {
 				input: "",
 				especialidad: null,
+				subespecialidad: null,
 				turno: null,
 				horarioLaboral: "no",
 				fecha: new Date(),
