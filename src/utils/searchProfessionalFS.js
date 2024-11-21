@@ -11,6 +11,9 @@ export default async function searchProfessional(search) {
 	if (search.specialty) {
 		queryStr += `, ${search.specialty}`;
 	}
+	if (search.subspecialty) {
+		queryStr += `, ${search.subspecialty}`;
+	}
 	if (search.shift) {
 		search.shift.forEach((sh) => {
 			queryStr += `, ${sh}`;

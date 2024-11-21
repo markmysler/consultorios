@@ -10,15 +10,14 @@ export const especialidades = [
 ];
 
 export const subespecialidades = [
-	"vias biliares",
-	"general",
-	"columna",
-	"super capo",
-	"miembro superior",
-	"general",
-	"backend",
-	"paredes",
-	"torax",
-	"cadera",
-	"rodilla",
+	"Vias biliares",
+	"General",
+	"Columna",
+	"Super capo",
+	"Miembro superior",
+	"Backend",
+	"Paredes",
+	"Torax",
+	"Cadera",
+	"Rodilla",
 ];

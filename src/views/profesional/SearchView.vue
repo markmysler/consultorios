@@ -316,6 +316,46 @@
 				</form>
 			</TabPanel>
 		</TabView>
+		<div v-if="searchResponse !== null">
+			<router-link
+				v-for="(resultado, index) in searchResponse"
+				:key="index"
+				class="w-full resultado rowCenter border-round-md no-underline"
+				:to="routes.ProfesionalDetails + '1'"
+			>
+				<div class="w-5 bg-light-blue border-round-left-md py-2 px-3">
+					<p class="text-blue font-bold">
+						{{
+							resultado._highlightResult.especialidades
+								.map((e) => e.value)
+								.join(", ")
+						}}
+					</p>
+				</div>
+				<div class="w-8 bg-dark-gray border-round-right-md py-2 px-3">
+					<p
+						class="text-blue font-bold"
+						v-html="
+							resultado._highlightResult.nombre.value +
+							' ' +
+							resultado._highlightResult.apellido.value
+						"
+					></p>
+				</div>
+			</router-link>
+		</div>
+		<div
+			v-if="Array.isArray(searchResponse) && searchResponse.length === 0"
+		>
+			<div class="noResultados bg-red border-round-md px-3 py-2">
+				<p class="text-center text-white">
+					No hay resultados para tu búsqueda.
+				</p>
+				<p class="text-center text-white">
+					Pruebe de nuevo con otros filtros.
+				</p>
+			</div>
+		</div>
 	</main>
 </template>
 
@@ -355,6 +395,7 @@ export default {
 				fecha: new Date(),
 				horario: new Date(),
 			},
+			searchResponse: null,
 		};
 	},
 	methods: {
@@ -431,6 +472,12 @@ export default {
 
 			const search = {
 				input_text: this.profesional.input,
+				subspecialty: this.profesional.subespecialidad
+					? this.profesional.subespecialidad
+							.toLowerCase()
+							.normalize("NFD")
+							.replace(/[\u0300-\u036f]/g, "")
+					: null,
 				specialty: this.profesional.especialidad
 					? this.profesional.especialidad
 							.toLowerCase()
@@ -453,8 +500,8 @@ export default {
 						? `${this.profesional.horario.getHours()}:${this.profesional.horario.getMinutes()}`
 						: null,
 			};
-			const res = await searchProfessional(search);
-			console.log(res);
+			this.searchResponse = await searchProfessional(search);
+			console.log(this.searchResponse);
 
 			this.loading = false;
 		},
@@ -577,6 +624,10 @@ export default {
 	border-color: var(--color-blue);
 	background: var(--color-blue);
 }
+
+* > em {
+	background-color: yellow !important;
+}
 </style>
 
 <style scoped>
@@ -587,5 +638,14 @@ export default {
 	color: var(--color-blue);
 	font-weight: bold;
 	cursor: pointer;
+}
+
+.resultado {
+	box-shadow: 0px 4px 4px 0px #00000040;
+}
+
+.resultado p,
+.noResultados p {
+	font-size: 0.75rem;
 }
 </style>
