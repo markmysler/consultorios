@@ -28,7 +28,10 @@ export async function searchProfessional(search) {
 		],
 	});
 
-	let users = results[0].hits;
+	let users = results[0].hits.map((hit) => {
+		delete hit.role;
+		return hit;
+	});
 
 	// Apply date and time filter if provided
 	if (search.date_string && search.time) {

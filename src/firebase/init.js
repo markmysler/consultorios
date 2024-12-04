@@ -6,7 +6,7 @@ import {
 	setPersistence,
 } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
-import { getFunctions } from "firebase/functions";
+import { connectFunctionsEmulator, getFunctions } from "firebase/functions";
 import { getStorage } from "firebase/storage";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -28,6 +28,10 @@ export const db = getFirestore(firebaseApp);
 export const auth = getAuth(firebaseApp);
 export const functions = getFunctions(firebaseApp);
 export const storage = getStorage(firebaseApp);
+
+// if (location.hostname === "localhost") {
+// 	connectFunctionsEmulator(functions, "localhost", 5001);
+// }
 
 setPersistence(auth, browserLocalPersistence).catch((error) => {
 	console.error("Error setting persistence: ", error);
