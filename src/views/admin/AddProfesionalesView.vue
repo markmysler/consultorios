@@ -200,7 +200,7 @@
 
 					<div class="w-full rowSpaceBetween gap-3">
 						<Button aria-label="Atrás" icon="pi pi-arrow-left" class="btnAtras" @click="prevCallback" />
-						<Button class="primaryButton" label="Confirmar datos" @click="agregarProfesional" />
+						<Button :loading="loading" class="primaryButton" label="Confirmar datos" @click="agregarProfesional" />
 					</div>
 				</template>
 			</StepperPanel>
@@ -219,6 +219,7 @@ export default {
 	name: "AddLicenciaView",
 	data() {
 		return {
+			loading: false,
 			router: useRouter(),
 			profesional: {
 				nombre: "",
@@ -391,9 +392,11 @@ export default {
 			return array.join(", ");
 		},
 		async agregarProfesional() {
+			this.loading = true;
 			const addProfesional = httpsCallable(functions, "addProfesional");
 			await addProfesional(this.profesional)
 				.then((res) => {
+					this.loading = false;
 					this.router.push({
 						path: ROUTES_NAMES.AddProfesionalesConfirmation,
 						query: {
@@ -404,6 +407,7 @@ export default {
 				})
 				.catch((error) => {
 					console.error(error);
+					this.loading = false;
 				});
 		},
 	},
