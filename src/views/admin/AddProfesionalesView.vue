@@ -8,74 +8,40 @@
 					<div class="stepContent column">
 						<div>
 							<label for="nombre">Nombre</label>
-							<InputText
-								placeholder="Ingrese un nombre"
-								id="nombre"
-								v-model="profesional.nombre"
-							/>
-							<div
-								class="error mt-1"
-								v-if="validationErrors.nombre"
-							>
+							<InputText placeholder="Ingrese un nombre" id="nombre" v-model="profesional.nombre" />
+							<div class="error mt-1" v-if="validationErrors.nombre">
 								<span class="pi pi-exclamation-circle"></span>
 								<p>{{ validationErrors.nombre }}</p>
 							</div>
 						</div>
 						<div>
 							<label for="apellido">Apellido</label>
-							<InputText
-								placeholder="Ingrese un apellido"
-								id="apellido"
-								v-model="profesional.apellido"
-							/>
-							<div
-								class="error mt-1"
-								v-if="validationErrors.apellido"
-							>
+							<InputText placeholder="Ingrese un apellido" id="apellido" v-model="profesional.apellido" />
+							<div class="error mt-1" v-if="validationErrors.apellido">
 								<span class="pi pi-exclamation-circle"></span>
 								<p>{{ validationErrors.apellido }}</p>
 							</div>
 						</div>
 						<div class="column">
 							<label for="cuil">CUIL</label>
-							<InputNumber
-								placeholder="Ingrese un cuil"
-								id="cuil"
-								:useGrouping="false"
-								v-model="profesional.cuil"
-							/>
-							<div
-								class="error mt-1"
-								v-if="validationErrors.cuil"
-							>
+							<InputNumber placeholder="Ingrese un cuil" id="cuil" :useGrouping="false" v-model="profesional.cuil" />
+							<div class="error mt-1" v-if="validationErrors.cuil">
 								<span class="pi pi-exclamation-circle"></span>
 								<p>{{ validationErrors.cuil }}</p>
 							</div>
 						</div>
 						<div>
 							<label for="email">Correo electrónico</label>
-							<InputText
-								placeholder="Ingrese un correo electrónico"
-								id="email"
-								v-model="profesional.email"
-							/>
-							<div
-								class="error mt-1"
-								v-if="validationErrors.email"
-							>
+							<InputText placeholder="Ingrese un correo electrónico" id="email" v-model="profesional.email" />
+							<div class="error mt-1" v-if="validationErrors.email">
 								<span class="pi pi-exclamation-circle"></span>
 								<p>{{ validationErrors.email }}</p>
 							</div>
 						</div>
 					</div>
 					<div class="column align-items-end">
-						<Button
-							label="Continuar"
-							class="w-7 primaryButton px-3"
-							icon="pi pi-arrow-right"
-							iconPos="right"
-							@click="validarInformacion(nextCallback)"
-						/>
+						<Button label="Continuar" class="w-7 primaryButton px-3" icon="pi pi-arrow-right" iconPos="right"
+							@click="validarInformacion(nextCallback)" />
 					</div>
 				</template>
 			</StepperPanel>
@@ -85,55 +51,27 @@
 					<div class="stepContent column">
 						<div>
 							<label for="especialidades">Especialidad</label>
-							<MultiSelect
-								id="especialidades"
-								v-model="profesional.especialidades"
-								:options="especialidades"
-								placeholder="Seleccione una especialidad"
-								class="w-full"
-							/>
-							<div
-								class="error mt-1"
-								v-if="validationErrors.especialidades"
-							>
+							<MultiSelect id="especialidades" v-model="profesional.especialidades" :options="especialidades" filter
+								placeholder="Seleccione una especialidad" class="w-full" />
+							<div class="error mt-1" v-if="validationErrors.especialidades">
 								<span class="pi pi-exclamation-circle"></span>
 								<p>{{ validationErrors.especialidades }}</p>
 							</div>
 						</div>
 						<div>
-							<label for="subespecialidades"
-								>Subespecialidad</label
-							>
-							<MultiSelect
-								id="subespecialidades"
-								v-model="profesional.subespecialidades"
-								:options="subespecialidades"
-								placeholder="Seleccione una subespecialidad"
-								class="w-full"
-							/>
-							<div
-								class="error mt-1"
-								v-if="validationErrors.subespecialidades"
-							>
+							<label for="subespecialidades">Subespecialidad</label>
+							<MultiSelect id="subespecialidades" v-model="profesional.subespecialidades" :options="subespecialidades"
+								filter placeholder="Seleccione una subespecialidad" class="w-full" />
+							<div class="error mt-1" v-if="validationErrors.subespecialidades">
 								<span class="pi pi-exclamation-circle"></span>
 								<p>{{ validationErrors.subespecialidades }}</p>
 							</div>
 						</div>
 					</div>
 					<div class="rowSpaceBetween">
-						<Button
-							aria-label="Atrás"
-							icon="pi pi-arrow-left"
-							class="btnAtras"
-							@click="prevCallback()"
-						/>
-						<Button
-							label="Continuar"
-							class="w-7 primaryButton px-3"
-							icon="pi pi-arrow-right"
-							iconPos="right"
-							@click="validarProfesion(nextCallback)"
-						/>
+						<Button aria-label="Atrás" icon="pi pi-arrow-left" class="btnAtras" @click="prevCallback()" />
+						<Button label="Continuar" class="w-7 primaryButton px-3" icon="pi pi-arrow-right" iconPos="right"
+							@click="validarProfesion(nextCallback)" />
 					</div>
 				</template>
 			</StepperPanel>
@@ -142,88 +80,45 @@
 				<template #content="{ nextCallback, prevCallback }">
 					<div class="stepContent column">
 						<div>
-							<label for="jefesReporta"
-								>Jefe al que reporta</label
-							>
-							<MultiSelect
-								id="jefesReporta"
-								v-model="profesional.jefesReporta"
-								:options="jefes"
-								placeholder="Seleccione un jefe al que reporta"
-								class="w-full"
-								filter
-							/>
-							<div
-								class="error mt-1"
-								v-if="validationErrors.jefesReporta"
-							>
+							<label for="jefesReporta">Jefe al que reporta</label>
+							<MultiSelect id="jefesReporta" v-model="profesional.jefesReporta" :options="jefes"
+								placeholder="Seleccione un jefe al que reporta" class="w-full" filter />
+							<div class="error mt-1" v-if="validationErrors.jefesReporta">
 								<span class="pi pi-exclamation-circle"></span>
 								<p>{{ validationErrors.jefesReporta }}</p>
 							</div>
 						</div>
 						<div>
-							<p>Turno</p>
+							<p class="labelText">Turno</p>
 							<div class="checkboxes rowCenter">
 								<div class="rowCenter gap-1">
-									<Checkbox
-										v-model="profesional.turnos"
-										inputId="matutino"
-										name="turno"
-										value="matutino"
-									/>
+									<Checkbox v-model="profesional.turnos" inputId="matutino" name="turno" value="matutino" />
 									<label for="matutino">Matutino</label>
 								</div>
 								<div class="rowCenter gap-1">
-									<Checkbox
-										v-model="profesional.turnos"
-										inputId="vespertino"
-										name="turno"
-										value="vespertino"
-									/>
+									<Checkbox v-model="profesional.turnos" inputId="vespertino" name="turno" value="vespertino" />
 									<label for="vespertino">Vespertino</label>
 								</div>
 							</div>
-							<div
-								class="error mt-1"
-								v-if="validationErrors.turnos"
-							>
+							<div class="error mt-1" v-if="validationErrors.turnos">
 								<span class="pi pi-exclamation-circle"></span>
 								<p>{{ validationErrors.turnos }}</p>
 							</div>
 						</div>
 						<div>
 							<label for="tipoAgenda">Tipo de agenda</label>
-							<Dropdown
-								class="w-full"
-								id="tipoAgenda"
-								v-model="profesional.tipoAgenda"
-								placeholder="Seleccione un tipo de agenda"
-								:options="tiposAgenda"
-								showClear
-							/>
-							<div
-								class="error mt-1"
-								v-if="validationErrors.tipoAgenda"
-							>
+							<Dropdown class="w-full" id="tipoAgenda" v-model="profesional.tipoAgenda"
+								placeholder="Seleccione un tipo de agenda" :options="tiposAgenda" showClear />
+							<div class="error mt-1" v-if="validationErrors.tipoAgenda">
 								<span class="pi pi-exclamation-circle"></span>
 								<p>{{ validationErrors.tipoAgenda }}</p>
 							</div>
 						</div>
 					</div>
 					<div class="rowSpaceBetween">
-						<Button
-							aria-label="Atrás"
-							icon="pi pi-arrow-left"
-							class="btnAtras"
-							@click="prevCallback()"
-						/>
-						<Button
-							label="Continuar"
-							class="w-7 primaryButton px-3"
-							icon="pi pi-arrow-right"
-							iconPos="right"
-							@click="validarAgenda(nextCallback)"
-						/>
+						<Button aria-label="Atrás" icon="pi pi-arrow-left" class="btnAtras" @click="prevCallback()" />
+						<Button label="Continuar" class="w-7 primaryButton px-3" icon="pi pi-arrow-right" iconPos="right"
+							@click="validarAgenda(nextCallback)" />
 					</div>
 				</template>
 			</StepperPanel>
@@ -257,9 +152,7 @@
 								</p>
 							</div>
 						</div>
-						<div
-							class="w-full column gap-2 especialidadesContainer datosContainer py-2"
-						>
+						<div class="w-full column gap-2 especialidadesContainer datosContainer py-2">
 							<div class="column gap-1">
 								<p>Especialidad</p>
 								<p class="datos text-blue">
@@ -306,17 +199,8 @@
 					</div>
 
 					<div class="w-full rowSpaceBetween gap-3">
-						<Button
-							aria-label="Atrás"
-							icon="pi pi-arrow-left"
-							class="btnAtras"
-							@click="prevCallback"
-						/>
-						<Button
-							class="primaryButton"
-							label="Confirmar datos"
-							@click="agregarProfesional"
-						/>
+						<Button aria-label="Atrás" icon="pi pi-arrow-left" class="btnAtras" @click="prevCallback" />
+						<Button class="primaryButton" label="Confirmar datos" @click="agregarProfesional" />
 					</div>
 				</template>
 			</StepperPanel>
@@ -532,11 +416,11 @@ export default {
 }
 
 .stepperProfesional .p-stepper-panels,
-.stepperProfesional .p-stepper-panels > div {
+.stepperProfesional .p-stepper-panels>div {
 	height: 92.5%;
 }
 
-.stepperProfesional .p-stepper-panels > div {
+.stepperProfesional .p-stepper-panels>div {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
@@ -553,11 +437,29 @@ export default {
 	padding: 0.5rem 0.875rem;
 }
 
+.p-multiselect-header .p-multiselect-close,
+.p-multiselect-header .p-checkbox {
+	display: none;
+}
+
+.p-multiselect-header .p-inputtext {
+	background: #B5BACA;
+	border-radius: 2.5px;
+}
+
+.p-multiselect-filter-container .p-icon {
+	top: 30%;
+	color: var(--color-blue);
+}
+
 .stepperProfesional .p-multiselect-trigger {
 	color: var(--color-blue);
 }
 
 .p-multiselect-panel {
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
 	border: 1px solid var(--color-blue);
 	border-radius: 5px;
 	padding: 0.45rem;
@@ -572,13 +474,13 @@ export default {
 	gap: 0.3rem;
 	color: var(--color-blue);
 	font-weight: 600;
+	padding: 5px 8px;
 }
 
-.p-multiselect-panel
-	.p-multiselect-items
-	.p-multiselect-item:not(.p-highlight):not(.p-disabled).p-focus {
+.p-multiselect-panel .p-multiselect-items .p-multiselect-item:not(.p-highlight):not(.p-disabled).p-focus {
 	color: var(--color-blue);
 	background: #e3e5ea;
+	border-radius: 5px;
 }
 
 .p-checkbox.p-highlight .p-checkbox-box {

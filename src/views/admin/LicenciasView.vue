@@ -485,10 +485,6 @@ export default {
 .dialogLicencias .p-dropdown .p-inputtext {
   border-radius: 5px;
 }
-
-label {
-  font-weight: 500;
-}
 </style>
 
 <style scoped>
