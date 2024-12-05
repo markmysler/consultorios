@@ -151,6 +151,7 @@
 								:options="jefes"
 								placeholder="Seleccione un jefe al que reporta"
 								class="w-full"
+								filter
 							/>
 							<div
 								class="error mt-1"
@@ -161,7 +162,7 @@
 							</div>
 						</div>
 						<div>
-							<label for="jefesReporta">Turno</label>
+							<p>Turno</p>
 							<div class="checkboxes rowCenter">
 								<div class="rowCenter gap-1">
 									<Checkbox
