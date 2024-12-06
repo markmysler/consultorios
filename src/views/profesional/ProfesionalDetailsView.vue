@@ -8,14 +8,14 @@
 			</div>
 		</div>
 		<div v-if="store.userData.role === 'admin'" class="w-full editarBorrar columnAlignCenter">
-			<router-link :to="routes.AddProfesionalSchedule" class="primaryButtonLink">
+			<!-- <router-link :to="routes.AddProfesionalSchedule" class="primaryButtonLink">
 				Editar profesional
-			</router-link>
+			</router-link> -->
+			<Button @click="editarProfesional" label="Editar profesional" class="primaryButton"></Button>
 			<Button label="Eliminar profesional" class="deleteBtn" icon="pi pi-trash" iconPos="left"
 				@click="dialogEliminar = true" />
 		</div>
-		<div v-if="agendasAgrupadas && Object.keys(agendasAgrupadas).length > 0"
-			class="w-full column gap-3">
+		<div v-if="agendasAgrupadas && Object.keys(agendasAgrupadas).length > 0" class="w-full column gap-3">
 			<DiaSemanaComponent :routes="routes" :agendasAgrupadas="agendasAgrupadas" />
 		</div>
 		<div v-else class="noAgenda columnAlignCenter">
@@ -25,7 +25,14 @@
 				consultorios.</router-link>
 		</div>
 		<Dialog class="dialogEliminar" v-model:visible="dialogEliminar">
-			
+			<p>¿Estas seguro que queres eliminar al profesional <span class="font-bold">{{ profesional.nombre }} {{
+				profesional.apellido }}</span>?</p>
+			<p>Al eliminar al profesional {{ profesional.nombre }} {{ profesional.apellido }}, también estarás eliminando los
+				horarios de sus consultorios, que se marcarán con “Libre”.</p>
+			<div class="w-full rowSpaceBetween mt-2">
+				<Button class="btnDialog btn-light-blue" @click="dialogEliminar = false">Cancelar</Button>
+				<Button class="btnDialog btn-red" @click="eliminarLicencia()">Eliminar</Button>
+			</div>
 		</Dialog>
 	</main>
 </template>
@@ -68,7 +75,7 @@ export default {
 					agendasPorDia[agenda.dia].push(agenda);
 				});
 			}
-			
+
 			return agendasPorDia;
 		},
 		profCuil() {
@@ -82,20 +89,34 @@ export default {
 	},
 	methods: {
 		capitalize,
-		openDeleteModal() {
-			this.$confirm.require({
-				message: '¿Está seguro de que desea eliminar este profesional?',
-				header: 'Confirmar eliminación',
-				icon: 'pi pi-exclamation-triangle',
-				accept: async () => {
-					console.log("Eliminar profesional");
-					
-				},
-			});
+		eliminarLicencia() {
+			console.log("Eliminar profesional");
+		},
+		editarProfesional() {
+			console.log("Editar profesional");
 		}
 	},
 };
 </script>
+
+<style>
+.dialogEliminar {
+	width: 90%;
+}
+
+.dialogEliminar .p-dialog-header {
+	justify-content: flex-end;
+	border-radius: 10px 10px 0 0 ;
+}
+
+.dialogEliminar .p-dialog-content {
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+	border-radius: 0 0 10px 10px;
+	padding: 0.625rem;
+}
+</style>
 
 <style scoped>
 .especialidad {
@@ -134,5 +155,33 @@ export default {
 .noAgenda p,
 .noAgenda a {
 	font-size: 0.75rem;
+}
+
+.dialogEliminar p:first-of-type {
+	font-size: 0.875rem;
+}
+
+.dialogEliminar p {
+	font-size: 0.75rem;
+}
+
+.btnDialog {
+	width: 48%;
+	height: 2.5rem;
+	display: flex;
+	justify-content: center;
+	background: #B2D5FF;
+	border-radius: 0.625rem;
+	border: none;
+	box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+	color: rgba(0, 55, 148, 1);
+	font-weight: 700;
+	font-size: 0.875rem;
+	line-height: 20.83px;
+	padding: 0 0.875rem;
+}
+
+.btn-red {
+	background-color: rgba(222, 94, 94, 1);
 }
 </style>
