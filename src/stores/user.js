@@ -66,7 +66,6 @@ export const useUserStore = defineStore("user", {
 					this.userLicencias = await licenciasStore.getLicenciasUser(
 						this.userData.cuil
 					);
-					console.log(this.userLicencias);
 				}
 				this.loading = false;
 			} else {

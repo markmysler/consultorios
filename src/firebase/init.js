@@ -29,9 +29,9 @@ export const auth = getAuth(firebaseApp);
 export const functions = getFunctions(firebaseApp);
 export const storage = getStorage(firebaseApp);
 
-if (location.hostname === "localhost") {
-	connectFunctionsEmulator(functions, "localhost", 5001);
-}
+// if (location.hostname === "localhost") {
+// 	connectFunctionsEmulator(functions, "localhost", 5001);
+// }
 
 setPersistence(auth, browserLocalPersistence).catch((error) => {
 	console.error("Error setting persistence: ", error);

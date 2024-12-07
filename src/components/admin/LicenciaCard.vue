@@ -22,7 +22,7 @@
 				v-if="aprobada && licencia.aprobada_o_rechazada_por"
 			>
 				<p class="text-blue">
-					Aprobada por: {{ licencia.aprobada_o_rechazada_por }}
+					Aprobada por: {{ licencia.nombre_aprobada_o_rechazada_por }}
 				</p>
 			</div>
 			<div
@@ -30,7 +30,8 @@
 				v-if="rechazada && licencia.aprobada_o_rechazada_por"
 			>
 				<p class="text-blue">
-					Rechazada por: {{ licencia.aprobada_o_rechazada_por }}
+					Rechazada por:
+					{{ licencia.nombre_aprobada_o_rechazada_por }}
 				</p>
 			</div>
 		</div>

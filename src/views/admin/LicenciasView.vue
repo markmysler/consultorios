@@ -5,15 +5,24 @@
 			<TabView>
 				<TabPanel header="Aprobadas">
 					<div
-						v-for="(licencia, index) in licenciasAprobadas"
-						:key="index"
+						v-if="
+							licenciasAprobadas && licenciasAprobadas.length > 0
+						"
 					>
-						<LicenciaCard
-							@click="abrirDialog('detalle', licencia)"
-							:licencia="licencia"
-							:formatDate="formatDate"
-							:aprobada="true"
-						/>
+						<div
+							v-for="(licencia, index) in licenciasAprobadas"
+							:key="index"
+						>
+							<LicenciaCard
+								@click="abrirDialog('detalle', licencia)"
+								:licencia="licencia"
+								:formatDate="formatDate"
+								:aprobada="true"
+							/>
+						</div>
+					</div>
+					<div v-else>
+						<p class="text-center">No hay licencias aprobadas.</p>
 					</div>
 					<!-- <Paginator
             :rows="5"
@@ -23,28 +32,48 @@
 				</TabPanel>
 				<TabPanel header="Pendientes">
 					<div
-						v-for="(licencia, index) in licenciasPendientes"
-						:key="index"
+						v-if="
+							licenciasPendientes &&
+							licenciasPendientes.length > 0
+						"
 					>
-						<LicenciaCard
-							:licencia="licencia"
-							:formatDate="formatDate"
-							:pendiente="true"
-							@abrirDialog="handleDialog"
-						/>
+						<div
+							v-for="(licencia, index) in licenciasPendientes"
+							:key="index"
+						>
+							<LicenciaCard
+								:licencia="licencia"
+								:formatDate="formatDate"
+								:pendiente="true"
+								@abrirDialog="handleDialog"
+							/>
+						</div>
+					</div>
+					<div v-else>
+						<p class="text-center">No hay licencias pendientes.</p>
 					</div>
 				</TabPanel>
 				<TabPanel header="Rechazadas">
 					<div
-						v-for="(licencia, index) in licenciasRechazadas"
-						:key="index"
+						v-if="
+							licenciasRechazadas &&
+							licenciasRechazadas.length > 0
+						"
 					>
-						<LicenciaCard
-							@click="abrirDialog('detalle', licencia)"
-							:licencia="licencia"
-							:formatDate="formatDate"
-							:rechazada="true"
-						/>
+						<div
+							v-for="(licencia, index) in licenciasRechazadas"
+							:key="index"
+						>
+							<LicenciaCard
+								@click="abrirDialog('detalle', licencia)"
+								:licencia="licencia"
+								:formatDate="formatDate"
+								:rechazada="true"
+							/>
+						</div>
+					</div>
+					<div v-else>
+						<p class="text-center">No hay licencias rechazadas.</p>
 					</div>
 				</TabPanel>
 			</TabView>
@@ -418,6 +447,17 @@ export default {
 					const fullname = await this.getProfessionalFullName(
 						lic.cuil
 					);
+					if (lic.aprobada_o_rechazada_por) {
+						const nombre_aprobada_o_rechazada_por =
+							await this.getProfessionalFullName(
+								lic.aprobada_o_rechazada_por
+							);
+						return {
+							...lic,
+							fullname,
+							nombre_aprobada_o_rechazada_por,
+						};
+					}
 
 					return { ...lic, fullname };
 				})
@@ -488,7 +528,7 @@ export default {
 	font-weight: 700;
 }
 
-.tabsLicencia .p-tabview-panel {
+.tabsLicencia .p-tabview-panel > div {
 	display: flex;
 	flex-direction: column;
 	gap: 1.25rem;
