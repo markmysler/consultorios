@@ -475,3 +475,22 @@ label,
 	font-size: 0.625rem;
 	color: var(--color-red);
 }
+
+@keyframes p-progress-spinner-color {
+	100%,
+	0% {
+		stroke: var(--color-blue);
+	}
+	20% {
+		stroke: var(--color-light-blue);
+	}
+	40% {
+		stroke: var(--color-blue);
+	}
+	60% {
+		stroke: var(--color-light-blue);
+	}
+	80% {
+		stroke: var(--color-blue);
+	}
+}
