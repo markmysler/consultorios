@@ -29,7 +29,7 @@
 			<div class="rowCenter gap-6">
 				<div class="licenciaDiv">
 					<p>Certificado de licencia</p>
-					<img :src="licencia.imagen" />
+					<img class="imagenLicencia" :src="licencia.imagen" />
 				</div>
 			</div>
 			<router-link class="primaryButtonLink" :to="routes.Profile">
@@ -96,5 +96,9 @@ export default {
 	font-weight: 700;
 	color: var(--color-blue);
 	line-height: 20.83px;
+}
+
+.imagenLicencia {
+	max-width: 50%;
 }
 </style>

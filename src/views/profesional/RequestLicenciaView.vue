@@ -219,9 +219,7 @@
 								>
 									<p>Año de la licencia</p>
 									<p>
-										{{
-											formatDate(licenciaSolicitada.anio)
-										}}
+										{{ licenciaSolicitada.anio }}
 									</p>
 								</div>
 							</div>
@@ -258,12 +256,13 @@
 
 <script>
 import { ROUTES_NAMES } from "@/constants/ROUTES_NAMES";
-import { db, storage } from "@/firebase/init";
+import { db, functions, storage } from "@/firebase/init";
 import { useUserStore } from "@/stores/user";
 import { addDoc, collection } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { useRouter } from "vue-router";
 import { sendLicenciaRequestEmail } from "@/utils/sendEmail.js";
+import { httpsCallable } from "firebase/functions";
 
 export default {
 	name: "RequestLicenciaView",
@@ -420,26 +419,24 @@ export default {
 		async solicitarLicencia() {
 			console.log(this.licenciaSolicitada);
 
-			const ref = collection(db, "licencias");
 			const licencia = {};
 			licencia["cuil"] = this.store.userData.cuil;
-			licencia["estado"] = "pendiente";
 			licencia["inicio"] = this.licenciaSolicitada.fechaInicio.toJSON();
 			licencia["fin"] = this.licenciaSolicitada.fechaFin.toJSON();
 			licencia["imagen"] = this.licenciaSolicitada.imagen;
 			licencia["tipo"] = this.licenciaSolicitada.tipoLicencia;
-			licencia["created_at"] = +new Date().toUTCString();
+			licencia["operacion"] = "solicitud";
 
 			if (licencia["tipo"] === "ordinaria") {
 				licencia["anio"] = this.licenciaSolicitada.anio;
 			}
-
-			await addDoc(ref, licencia)
-				.then(() => {
-					sendLicenciaRequestEmail(
-						`Solicitud de licencia de ${this.store.userData.nombre} ${this.store.userData.apellido}`,
-						`El profesional ${this.store.userData.nombre} ${this.store.userData.apellido} solicitó una licencia\nPara más información ingresó en la aplicación de consultorios externos\nImagen de la licencia: ${licencia.imagen}`
-					);
+			const requestOrAddLicencia = httpsCallable(
+				functions,
+				"requestOrAddLicencia"
+			);
+			await requestOrAddLicencia(licencia)
+				.then((res) => {
+					console.log(res);
 					this.router.push({
 						path: ROUTES_NAMES.RequestLicenciaConfirmation,
 						query: {

@@ -2,39 +2,89 @@
 	<main class="w-full" v-if="profesional">
 		<h2>{{ profesional.nombre }} {{ profesional.apellido }}</h2>
 		<div class="especialidades mt-1">
-			<div class="especialidad border-round-md py-1 px-2" v-for="(especialidad, index) in profesional.especialidades"
-				:key="index">
+			<div
+				class="especialidad border-round-md py-1 px-2"
+				v-for="(especialidad, index) in profesional.especialidades"
+				:key="index"
+			>
 				<p class="text-blue">{{ capitalize(especialidad) }}</p>
 			</div>
 		</div>
-		<div v-if="store.userData.role === 'admin'" class="w-full editarBorrar columnAlignCenter">
-			<!-- <router-link :to="routes.AddProfesionalSchedule" class="primaryButtonLink">
-				Editar profesional
-			</router-link> -->
-			<Button @click="editarProfesional" label="Editar profesional" class="primaryButton"></Button>
-			<Button label="Eliminar profesional" class="deleteBtn" icon="pi pi-trash" iconPos="left"
-				@click="dialogEliminar = true" />
+		<div
+			v-if="store.userData.role === 'admin'"
+			class="w-full editarBorrar columnAlignCenter"
+		>
+			<Button
+				@click="editarProfesional"
+				label="Editar profesional"
+				class="primaryButton"
+			></Button>
+			<router-link
+				:to="{ path: routes.AddLicencia, query: { cuil: profCuil } }"
+				>Agregar licencia</router-link
+			>
+			<Button
+				label="Eliminar profesional"
+				class="deleteBtn"
+				icon="pi pi-trash"
+				iconPos="left"
+				@click="dialogEliminar = true"
+			/>
 		</div>
-		<div v-if="agendasAgrupadas && Object.keys(agendasAgrupadas).length > 0" class="w-full column gap-3">
-			<DiaSemanaComponent :routes="routes" :agendasAgrupadas="agendasAgrupadas" />
+		<div
+			v-if="agendasAgrupadas && Object.keys(agendasAgrupadas).length > 0"
+			class="w-full column gap-3"
+		>
+			<DiaSemanaComponent
+				:routes="routes"
+				:agendasAgrupadas="agendasAgrupadas"
+			/>
 		</div>
 		<div v-else class="noAgenda columnAlignCenter">
-			<p class="text-center text-white">El profesional {{ profesional.nombre }} {{ profesional.apellido }} no tiene
-				consultorios asignados.</p>
-			<router-link :to="routes.AddProfesionalSchedule" class="text-center text-white">Agregar horarios de
-				consultorios.</router-link>
+			<p class="text-center text-white">
+				El profesional {{ profesional.nombre }}
+				{{ profesional.apellido }} no tiene consultorios asignados.
+			</p>
+			<router-link
+				:to="routes.AddProfesionalSchedule"
+				class="text-center text-white"
+				>Agregar horarios de consultorios.</router-link
+			>
 		</div>
 		<Dialog class="dialogEliminar" v-model:visible="dialogEliminar">
-			<p>¿Estas seguro que queres eliminar al profesional <span class="font-bold">{{ profesional.nombre }} {{
-				profesional.apellido }}</span>?</p>
-			<p>Al eliminar al profesional {{ profesional.nombre }} {{ profesional.apellido }}, también estarás eliminando los
-				horarios de sus consultorios, que se marcarán con “Libre”.</p>
+			<p>
+				¿Estas seguro que queres eliminar al profesional
+				<span class="font-bold"
+					>{{ profesional.nombre }} {{ profesional.apellido }}</span
+				>?
+			</p>
+			<p>
+				Al eliminar al profesional {{ profesional.nombre }}
+				{{ profesional.apellido }}, también estarás eliminando los
+				horarios de sus consultorios, que se marcarán con “Libre”.
+			</p>
 			<div class="w-full rowSpaceBetween mt-2">
-				<Button class="btnDialog btn-light-blue" @click="dialogEliminar = false">Cancelar</Button>
-				<Button class="btnDialog btn-red" @click="eliminarLicencia()">Eliminar</Button>
+				<Button
+					class="btnDialog btn-light-blue"
+					@click="dialogEliminar = false"
+					>Cancelar</Button
+				>
+				<Button class="btnDialog btn-red" @click="eliminarLicencia()"
+					>Eliminar</Button
+				>
 			</div>
 		</Dialog>
 	</main>
+	<div v-else class="allCenter">
+		<ProgressSpinner
+			style="width: 50px; height: 50px"
+			strokeWidth="8"
+			stroke="blue"
+			fill="transparent"
+			animationDuration="2s"
+			aria-label="Loading"
+		/>
+	</div>
 </template>
 
 <script>
@@ -45,6 +95,7 @@ import { useRoute } from "vue-router";
 import DiaSemanaComponent from "@/components/profesional/DiaSemanaComponent.vue";
 import { useUserStore } from "@/stores/user";
 import { useProfesionalStore } from "@/stores/profesional";
+import { query } from "firebase/database";
 
 export default {
 	name: "ProfesionalDetailsView",
@@ -94,7 +145,7 @@ export default {
 		},
 		editarProfesional() {
 			console.log("Editar profesional");
-		}
+		},
 	},
 };
 </script>
@@ -106,7 +157,7 @@ export default {
 
 .dialogEliminar .p-dialog-header {
 	justify-content: flex-end;
-	border-radius: 10px 10px 0 0 ;
+	border-radius: 10px 10px 0 0;
 }
 
 .dialogEliminar .p-dialog-content {
@@ -170,7 +221,7 @@ export default {
 	height: 2.5rem;
 	display: flex;
 	justify-content: center;
-	background: #B2D5FF;
+	background: #b2d5ff;
 	border-radius: 0.625rem;
 	border: none;
 	box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);

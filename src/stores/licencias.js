@@ -39,7 +39,11 @@ export const useLicenciaStore = defineStore("licencia", {
 		},
 		async getMostRecentLicencias() {
 			const col = collection(db, "licencias");
-			const q = query(col, orderBy("created_at", "desc"));
+			const q = query(
+				col,
+				where("cuil", "!=", null),
+				orderBy("created_at", "desc")
+			);
 			const querySnapshot = await getDocs(q);
 			const mostRecentLicencias = querySnapshot.docs.map((doc) => {
 				const data = doc.data();
