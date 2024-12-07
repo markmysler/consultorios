@@ -16,9 +16,9 @@ export const useLicenciaStore = defineStore("licencia", {
 				const col = collection(db, "licencias");
 				const q = query(col, where("cuil", "==", Number(cuil)));
 				const querySnapshot = await getDocs(q);
-				this.licencias[cuil] = querySnapshot.docs.map((doc) =>
-					doc.data()
-				);
+				this.licencias[cuil] = querySnapshot.docs.map((doc) => {
+					return { ...doc.data(), id: doc.id };
+				});
 				return this.licencias[cuil];
 			}
 		},

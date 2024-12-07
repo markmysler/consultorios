@@ -277,11 +277,12 @@ import { ROUTES_NAMES } from "@/constants/ROUTES_NAMES";
 import { useUserStore } from "@/stores/user";
 import { capitalize } from "vue";
 import { doc, updateDoc } from "firebase/firestore";
-import { db } from "@/firebase/init";
+import { db, functions } from "@/firebase/init";
 import { useLicenciaStore } from "@/stores/licencias";
 import { useProfesionalStore } from "@/stores/profesional";
 
 import LicenciaCard from "@/components/admin/LicenciaCard.vue";
+import { httpsCallable } from "firebase/functions";
 
 export default {
 	name: "MyLicenciasView",
@@ -314,18 +315,26 @@ export default {
 	},
 	methods: {
 		async updateLicenciaState(new_state) {
-			const ref = doc(db, "licencias", this.licenciaSeleccionada.id);
-			await updateDoc(ref, { estado: new_state })
+			const confirmOrDenyLicencia = httpsCallable(
+				functions,
+				"confirmOrDenyLicencia"
+			);
+			await confirmOrDenyLicencia({
+				estado: new_state,
+				lic_id: this.licenciaSeleccionada.id,
+			})
 				.then((res) => {
+					console.log(res);
+
 					const index = this.licencias.findIndex(
 						(lic) => lic.id === this.licenciaSeleccionada.id
 					);
+					const indexStore = this.store.userLicencias.findIndex(
+						(lic) => lic.id === this.licenciaSeleccionada.id
+					);
 					this.licencias[index].estado = new_state;
-					if (new_state === "aprobada") {
-						this.dialogAprobar = false;
-					} else if (new_state === "rechazada") {
-						this.dialogRechazar = false;
-					}
+					this.store.userLicencias[indexStore].estado = new_state;
+					this.dialogVisible = false;
 					this.licenciaSeleccionada = null;
 				})
 				.catch((err) => {

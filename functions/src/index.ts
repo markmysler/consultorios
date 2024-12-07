@@ -286,7 +286,7 @@ exports.requestOrAddLicencia = functions.https.onCall(
 				const emailRes = await sendEmail({
 					to: "liobensignor@gmail.com",
 					subject: `Solicitud de licencia de ${caller["nombre"]} ${caller["apellido"]}`,
-					text: `El profesional ${caller["nombre"]} ${caller["apellido"]} solicitó una licencia\nPara más información ingresó en la aplicación de consultorios externos\nImagen de la licencia: ${data.imagen}`,
+					text: `El profesional ${caller["nombre"]} ${caller["apellido"]} solicitó una licencia\nPara más información ingresá en la aplicación de consultorios externos\nImagen de la licencia: ${data.imagen}`,
 				});
 				if (!emailRes.success) {
 					return "Error enviando solicitud";
